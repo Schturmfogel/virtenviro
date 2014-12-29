@@ -18,3 +18,13 @@ Packages required
 * 'Pillow',
 * 'sorl-thumbnail',
 * 'django-filebrowser-no-grappelli',
+
+
+ToDo
+====
+
+* Create smart-forms application: smart forms constructor
+* Gallery application
+* Add User registration and authorisation
+* Blogging functionality
+* E-commerce application
