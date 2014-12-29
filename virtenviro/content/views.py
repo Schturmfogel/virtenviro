@@ -1,7 +1,9 @@
 # ~*~ coding: utf-8 ~*~
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from virtenviro.content.models import *
 from django.http import Http404
+from django.utils.http import urlquote
+from django.conf import settings
 
 
 def home(request):
@@ -23,6 +25,8 @@ def view(request):
         path = path.strip('/').split('/')
         page = Page.objects.get(slug=path[-1], is_home=False) or Page.objects.get(slug=path[-1], parent__slug=path[-2],
                                                                                   is_home=False)
+        if page.login_required and not request.user.is_authenticated():
+            return redirect(settings.LOGIN_URL, next=urlquote(request.get_full_path()))
     except Page.DoesNotExist:
         raise Http404
     return render(request, page.template.filename, {'page': page, 'request': request}, )

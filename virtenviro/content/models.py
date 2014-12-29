@@ -23,6 +23,10 @@ class PageManager(models.Managera):
 
 
 class Page(MPTTModel):
+    SHOW_AS_CHOICES = (
+        ('simple', _('Simple page')),
+        ('blog', _('Blog')),
+    )
     title = models.CharField(max_length=250, verbose_name=_('Title'))
     slug = models.CharField(max_length=60, blank=True, verbose_name=_('Slug'))
     is_home = models.BooleanField(default=False, verbose_name=_('Is home page'))
@@ -43,6 +47,7 @@ class Page(MPTTModel):
     ordering = models.IntegerField(default=999999, verbose_name=_('Ordering'))
 
     author = models.ForeignKey(User, verbose_name=_('Author'), related_name='pages', blank=True, null=True)
+    login_required = models.BooleanField(default=False, verbose_name=_('Login required'))
 
     def __unicode__(self):
         return self.title

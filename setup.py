@@ -37,7 +37,6 @@ setup(
         'Pillow>=2.5.3',
         'sorl-thumbnail',
         'django-filebrowser-no-grappelli>=3.5.7',
-        'django-plugins',
     ],
     packages=find_packages(exclude=["project", "project.*"]),
     include_package_data=True,
