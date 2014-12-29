@@ -1,10 +1,14 @@
-virtenviro
-==========
+What is virtenviro
+==================
 
 Open source content management system (CMS) based on the django framework.
 
-requires
-========
+* it's simple to start
+* it's simple to use
+* it's simple to extend
+
+Packages required
+=================
 
 
 * 'Django 1.7.*',
