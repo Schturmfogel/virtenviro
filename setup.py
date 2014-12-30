@@ -24,7 +24,7 @@ setup(
     name='virtenviro',
     version=virtenviro.__version__,
     description='Open source content management system (CMS) based on the django framework.',
-    long_description=open(os.path.join(os.path.dirname(__file__), 'README.rst')).read(),
+    long_description=open(os.path.join(os.path.dirname(__file__), 'README.md')).read(),
     url='https://www.virtenviro.com/',
     license='Apache License, Version 2.0',
     platforms=['OS Independent'],
@@ -38,7 +38,7 @@ setup(
         'sorl-thumbnail',
         'django-filebrowser-no-grappelli>=3.5.7',
     ],
-    packages=find_packages(exclude=["project", "project.*"]),
+    packages=find_packages(exclude=["samplesite", "samplesite.*"]),
     include_package_data=True,
     zip_safe=False,
 )

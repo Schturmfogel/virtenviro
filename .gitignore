@@ -55,3 +55,11 @@ target/
 
 # PyCharm
 .idea/
+
+# Sqlite databases
+*.db
+*.db3
+*.sqlite
+*.sqlite3
+
+

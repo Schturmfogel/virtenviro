@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 import datetime
 
 
-class PageManager(models.Managera):
+class PageManager(models.Manager):
     def get_pages(self, parent=None, order=['ordering', '-pub_datetime', 'title'], author=None):
         pages = self.filter(published=True, pub_datetime__lte=datetime.datetime.now())
         if not parent is None:
@@ -47,6 +47,7 @@ class Page(MPTTModel):
     ordering = models.IntegerField(default=999999, verbose_name=_('Ordering'))
 
     author = models.ForeignKey(User, verbose_name=_('Author'), related_name='pages', blank=True, null=True)
+    last_modified_by = models.ForeignKey(User, verbose_name=_('Author'), blank=True, null=True, related_name='modified_pages')
     login_required = models.BooleanField(default=False, verbose_name=_('Login required'))
 
     def __unicode__(self):

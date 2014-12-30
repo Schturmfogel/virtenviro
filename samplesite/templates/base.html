@@ -3,9 +3,45 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link href="/media/samplesite/stylesheets/styles.css" rel="stylesheet" type="text/css" />
+    <link href="/media/stylesheets/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div class="container">
+    <header class="row">
+        <div class="logo pull-left">
+            <a href="/" class="logo_h logo_h__img"><img src="/media/images/logo.png" alt="samplesite" title="Internet  technology consultants"></a>
+            <p class="logo_tagline">Internet technology consultants</p>
+        </div>
+    </header>
+    <nav id="topnav" class="row">
+        <ul class="nav nav-pills">
+            <li class="active"><a href="">Home</a></li>
+            <li><a href="">About</a>
+                <ul class="sub-menu">
+                    <li><a href="">Testimonials</a></li>
+                    <li><a href="">Archives</a></li>
+                    <li><a href="">FAQs</a></li>
+                </ul>
+            </li>
+            <li><a href="">Services</a></li>
+            <li><a href="">Projects</a>
+                <ul class="sub-menu" style="visibility: hidden;">
+                    <li><a href="">Projects 2</a></li>
+                    <li><a href="">Projects 3</a></li>
+                    <li><a href="">Projects 4</a></li>
+                </ul>
+            </li>
+            <li><a href="">Blog</a></li>
+            <li><a href="">Contacts</a></li>
+        </ul>
+    </nav>
+    <div class="row"></div>
+    <div class="row content">{% block content %}{% endblock content %}</div>
+    <div class="row"></div>
+    <div class="row"></div>
+</div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/media/javascripts/bootstrap.js"></script>
 </body>
 </html>

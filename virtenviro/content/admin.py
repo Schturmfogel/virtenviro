@@ -30,8 +30,8 @@ class PageAdminForm(forms.ModelForm):
             'seo_description',
             'published',
             'pub_datetime',
-            'last_modified',
             'author',
+            'login_required',
         ]
 
         def clean_author(self):
@@ -44,7 +44,7 @@ class PageAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
-    search_fields = ['title',]
+    search_fields = ['title', ]
 
     form = PageAdminForm
 
