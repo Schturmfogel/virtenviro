@@ -62,4 +62,6 @@ target/
 *.sqlite
 *.sqlite3
 
-
+# SASS
+samplesite/media/.sass-cahce/
+samplesite/media/sass/
