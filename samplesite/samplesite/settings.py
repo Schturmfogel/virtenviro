@@ -41,8 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'mptt',
     'filebrowser',
-    'content',
-    'news'
+    'virtenviro.content',
+    'virtenviro.news'
 )
 
 MIDDLEWARE_CLASSES = (
