@@ -25,8 +25,8 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = [
-    '.stroivopros.ru', # Allow domain and subdomains
-    '.stroivopros.ru.', # Also allow FQDN and subdomains
+    #'.samplesite.com', # Allow domain and subdomains
+    #'.samplesite.com.', # Also allow FQDN and subdomains
 ]
 
 
@@ -55,22 +55,20 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'djcms.urls'
+ROOT_URLCONF = 'samplesite.urls'
 
-WSGI_APPLICATION = 'djcms.wsgi.application'
+WSGI_APPLICATION = 'samplesite.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-'''
-from db import *
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -94,11 +92,10 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-UPLOAD_PATH = os.path.join(STATIC_ROOT, 'uploads')
-IMAGES_PATH = os.path.join(STATIC_ROOT, 'img')
+UPLOAD_PATH = os.path.join(MEDIA_ROOT, 'uploads')
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, '..', 'templates'),
+    os.path.join(BASE_DIR, 'templates'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -117,17 +114,17 @@ FILEBROWSER_DIRECTORY = ''
 FILEBROWSER_URL_FILEBROWSER_MEDIA = STATIC_URL + "filebrowser/"
 FILEBROWSER_PATH_FILEBROWSER_MEDIA = os.path.join(STATIC_ROOT, 'filebrowser/')
 FILEBROWSER_EXTENSIONS = {
-    'Image': ['.jpg','.jpeg','.gif','.png','.tif','.tiff'],
-    'Document': ['.pdf','.doc','.rtf','.txt','.xls','.csv'],
-    'Video': ['.mov','.wmv','.mpeg','.mpg','.avi','.rm'],
-    'Audio': ['.mp3','.mp4','.wav','.aiff','.midi','.m4p']
+    'Image': ['.jpg', '.jpeg', '.gif', '.png', '.tif', '.tiff'],
+    'Document': ['.pdf', '.doc', '.docx', '.rtf', '.txt', '.xls', '.xlsx', '.csv'],
+    'Video': ['.mov', '.wmv', '.mpeg', '.mpg', '.avi', '.rm'],
+    'Audio': ['.mp3', '.mp4', '.wav', '.aiff', '.midi', '.m4p']
 }
 
 FILEBROWSER_SELECT_FORMATS = {
-    'file': ['Folder','Image','Document','Video','Audio'],
+    'file': ['Folder', 'Image', 'Document', 'Video', 'Audio'],
     'image': ['Image'],
     'document': ['Document'],
-    'media': ['Video','Audio'],
+    'media': ['Video', 'Audio'],
 }
 FILEBROWSER_VERSIONS = {
     'admin_thumbnail': {'verbose_name': 'Admin Thumbnail', 'width': 60, 'height': 60, 'opts': 'crop'},
@@ -137,7 +134,6 @@ FILEBROWSER_VERSIONS = {
     'big': {'verbose_name': 'Big (6 col)', 'width': 460, 'height': '', 'opts': ''},
     'large': {'verbose_name': 'Large (8 col)', 'width': 680, 'height': '', 'opts': ''},
 }
-COMPRESS_HTML = False
 
 LAST_NEWS_COUNT = 10
 

@@ -28,3 +28,4 @@ ToDo
 * Add User registration and authorisation
 * Blogging functionality
 * E-commerce application
+* Create portfolio functionality as standalone app 
