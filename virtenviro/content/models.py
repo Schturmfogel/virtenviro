@@ -33,9 +33,9 @@ class Page(MPTTModel):
     parent = TreeForeignKey('self', blank=True, null=True, related_name='child_set', verbose_name=_('Parent'))
 
     # SEO FIELDS
-    meta_title = models.CharField(max_length=250, verbose_name=_('SEO Title'), null=True, blank=True)
-    meta_keywords = models.TextField(verbose_name=_('SEO Keywords'), null=True, blank=True)
-    meta_description = models.TextField(verbose_name=_('SEO Description'), null=True, blank=True)
+    meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
+    meta_keywords = models.TextField(verbose_name=_('Meta Keywords'), null=True, blank=True)
+    meta_description = models.TextField(verbose_name=_('Meta Description'), null=True, blank=True)
 
     # SERVICE FIELDS
     published = models.BooleanField(default=False, verbose_name=_('Published'))
