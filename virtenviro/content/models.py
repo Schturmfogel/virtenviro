@@ -28,6 +28,7 @@ class Page(MPTTModel):
         ('blog', _('Blog')),
     )
     title = models.CharField(max_length=250, verbose_name=_('Title'))
+    h1 = models.CharField(max_length=250, verbose_name=_('H1 tag'), null=True, blank=True)
     slug = models.CharField(max_length=60, blank=True, verbose_name=_('Slug'))
     is_home = models.BooleanField(default=False, verbose_name=_('Is home page'))
     intro = models.TextField(verbose_name=_('Intro'), null=True, blank=True)
@@ -175,5 +176,3 @@ class Tag(models.Model):
         ordering = ['tag',]
         verbose_name = _('Tag')
         verbose_name_plural = _('Tags')
-
-        
