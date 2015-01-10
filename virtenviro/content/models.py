@@ -32,7 +32,7 @@ class Page(MPTTModel):
     template = models.ForeignKey('Template', verbose_name=_('Template'))
     parent = TreeForeignKey('self', blank=True, null=True, related_name='child_set', verbose_name=_('Parent'))
 
-    # SEO FIELDS
+    # META FIELDS
     meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
     meta_keywords = models.TextField(verbose_name=_('Meta Keywords'), null=True, blank=True)
     meta_description = models.TextField(verbose_name=_('Meta Description'), null=True, blank=True)

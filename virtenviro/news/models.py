@@ -22,7 +22,7 @@ class PostManager(models.Manager):
                 count = settings.LAST_NEWS_COUNT
             except Exception:
                 count = 10
-        posts = self.filter(published=True).order_by('-created')[0:count]
+        posts = self.filter(published=True).order_by('-pub_datetime')[0:count]
         if not category is None:
             posts = posts.filter(category=category)
         return posts
@@ -39,9 +39,9 @@ class Category(models.Model):
     slug = models.CharField(max_length=60, verbose_name=_('Slug'), blank=True, null=False)
     description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
 
-    seo_title = models.CharField(max_length=255, verbose_name=_('SEO title'), null=True, blank=True)
-    seo_keywords = models.CharField(max_length=255, verbose_name=_('Keywords meta tag'), null=True, blank=True)
-    seo_description = models.CharField(max_length=255, verbose_name=_('Description meta tag'), null=True, blank=True)
+    meta_title = models.CharField(max_length=255, verbose_name=_('Meta title'), null=True, blank=True)
+    meta_keywords = models.CharField(max_length=255, verbose_name=_('Meta keywords'), null=True, blank=True)
+    meta_description = models.CharField(max_length=255, verbose_name=_('Meta description'), null=True, blank=True)
 
     def clean(self):
         if not self.slug:
@@ -57,20 +57,26 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length = 255, verbose_name=_('Title'))
+    title = models.CharField(max_length=255, verbose_name=_('Title'))
     category = models.ForeignKey(Category, verbose_name=_('Category'), null=True, blank=True)
-    slug = models.CharField(max_length = 60, unique=True, verbose_name=_('Slug'), null=True, blank=True)
+    slug = models.CharField(max_length=60, unique=True, verbose_name=_('Slug'), null=True, blank=True)
+
+    # CONTENT FIELDS
     intro = models.TextField(verbose_name=_('Intro'), null=True, blank=True)
     content = models.TextField(verbose_name=_('Content'))
-    until = models.DateField(verbose_name=_('Publicate until'), null=True, blank=True)
-    origin = models.URLField(null=True, blank=True)
-    author = models.ForeignKey(User, null=True, blank=True, verbose_name=_('Author'))
-    published = models.BooleanField(default=False, verbose_name=_('Published'))
-    created = models.DateField(default=datetime.datetime.now(), verbose_name=_('Created'))
 
-    seo_title = models.CharField(max_length=255, verbose_name=_('SEO title'), null=True, blank=True)
-    seo_keywords = models.CharField(max_length=255, verbose_name=_('Keywords meta tag'), null=True, blank=True)
-    seo_description = models.CharField(max_length=255, verbose_name=_('Description meta tag'), null=True, blank=True)
+    origin = models.URLField(null=True, blank=True, verbose_name=_('Origin\'s url address'))
+    author = models.ForeignKey(User, null=True, blank=True, verbose_name=_('Author'))
+
+    # SERVICE FIELDS
+    published = models.BooleanField(default=False, verbose_name=_('Published'))
+    pub_datetime = models.DateTimeField(default=datetime.datetime.now(), verbose_name=_('Created datetime'))
+    last_modified = models.DateTimeField(auto_now=True, verbose_name=_('Last modified datetime'))
+
+    # META FIELDS
+    meta_title = models.CharField(max_length=255, verbose_name=_('Meta title'), null=True, blank=True)
+    meta_keywords = models.CharField(max_length=255, verbose_name=_('Meta keywords'), null=True, blank=True)
+    meta_description = models.CharField(max_length=255, verbose_name=_('Meta description'), null=True, blank=True)
 
     objects = PostManager()
     
@@ -82,7 +88,7 @@ class Post(models.Model):
             self.slug = set_slug(Post, self.title, length=60)
 
     class Meta:
-        ordering = ('-created', 'title')
+        ordering = ('-pub_datetime', 'title')
         verbose_name = _('News post')
         verbose_name_plural = _('News posts')
                               
