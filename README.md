@@ -1,15 +1,15 @@
-What is virtenviro
-==================
+# Virtenviro - Your VIRTual ENVIROment
 
 Open source content management system (CMS) based on the django framework.
 
-* it's simple to start
+
+## What is virtenviro
+
+* [it's simple to start][start]
 * it's simple to use
 * it's simple to extend
 
-Packages required
-=================
-
+## Packages required
 
 * 'Django 1.7.*',
 * 'django-mptt',
@@ -20,8 +20,14 @@ Packages required
 * 'django-filebrowser-no-grappelli',
 
 
-ToDo
-====
+## [start]START
+
+
+
+
+
+## ToDo
+
 
 * Create smart-forms application: smart forms constructor
 * Gallery application
