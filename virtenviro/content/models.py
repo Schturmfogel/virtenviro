@@ -36,9 +36,9 @@ class Page(MPTTModel):
     parent = TreeForeignKey('self', blank=True, null=True, related_name='child_set', verbose_name=_('Parent'))
 
     # SEO FIELDS
-    seo_title = models.CharField(max_length=250, verbose_name=_('SEO Title'), null=True, blank=True)
-    seo_keywords = models.TextField(verbose_name=_('SEO Keywords'), null=True, blank=True)
-    seo_description = models.TextField(verbose_name=_('SEO Description'), null=True, blank=True)
+    meta_title = models.CharField(max_length=250, verbose_name=_('SEO Title'), null=True, blank=True)
+    meta_keywords = models.TextField(verbose_name=_('SEO Keywords'), null=True, blank=True)
+    meta_description = models.TextField(verbose_name=_('SEO Description'), null=True, blank=True)
 
     # SERVICE FIELDS
     published = models.BooleanField(default=False, verbose_name=_('Published'))
@@ -162,3 +162,18 @@ class FieldValue(models.Model):
     class Meta:
         verbose_name = _('Additional field\'s value')
         verbose_name_plural = _('Additional field\'s values')
+
+
+class Tag(models.Model):
+    tag = models.CharField(max_length=200, verbose_name=_('Tag'))
+    page = models.ManyToManyField(Page, related_name='tags')
+
+    def __unicode__(self):
+        return self.tag
+
+    class Meta:
+        ordering = ['tag',]
+        verbose_name = _('Tag')
+        verbose_name_plural = _('Tags')
+
+        
