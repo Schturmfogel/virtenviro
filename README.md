@@ -5,7 +5,7 @@ Open source content management system (CMS) based on the django framework.
 
 ## What is virtenviro
 
-* [it's simple to start][start]
+* [it's simple to start](#start)
 * it's simple to use
 * it's simple to extend
 
@@ -20,11 +20,7 @@ Open source content management system (CMS) based on the django framework.
 * 'django-filebrowser-no-grappelli',
 
 
-## [start]START
-
-
-
-
+## <a name="start"></a>START
 
 ## ToDo
 
