@@ -1,5 +1,7 @@
+#~*~ coding: utf-8 ~*~
 from django import forms
-from shop.models import *
+from virtenviro.shop.models import *
+
 
 class XmlImportForm(forms.Form):
     xml_file = forms.FileField()

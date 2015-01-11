@@ -1,6 +1,6 @@
 #~*~ coding: utf-8 ~*~
-from shop.models import *
-from shop.navigation import Navigation
+from virtenviro.shop.models import *
+from virtenviro.shop.navigation import Navigation
 from django.template import RequestContext
 from django.shortcuts import render_to_response, render
 from django.http import Http404
@@ -32,6 +32,7 @@ def navigation(request, slug=None):
     }
 
     return render_to_response('base.html', context, context_instance = RequestContext(request))
+
 
 def import_xml(request):
     from forms import XmlImportForm
