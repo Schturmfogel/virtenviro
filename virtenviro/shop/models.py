@@ -196,3 +196,12 @@ class Manufacturer(models.Model):
         ordering = ['name']
         verbose_name = _('Manufacturer')
         verbose_name_plural = _('Manufacturers')
+
+
+# todo: Disount class
+# todo: Delivery
+# todo: payment modules
+# todo: Currency class
+# todo: Warehouse
+# todo: Add statistics
+# todo: Orders
