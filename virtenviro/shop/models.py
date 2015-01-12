@@ -27,6 +27,7 @@ class Product(MPTTModel):
 
     # SERVICE FIELDS
     ordering = models.IntegerField(default=0, verbose_name=_('Ordering'), blank=True, null=True)
+    view_count = models.IntegerField(default=0, verbose_name=_('Count of views'), blank=True, null=True)
 
     tree = TreeManager()
     objects = ProductManager()
@@ -225,6 +226,23 @@ class Manufacturer(models.Model):
 # todo: Delivery
 # todo: payment modules
 # todo: Currency class
+class Currency(models.Model):
+    name = models.CharField(max_length=50, verbose_name=_('Currency'))
+    default = models.BooleanField(default=False, verbose_name=_('Is default currency'))
+    symbol = models.CharField(max_length=10, verbose_name=_('Symbol'), blank=True, null=True)
+    char_code = models.CharField(max_length=10, verbose_name=_('Char code of currency'), blank=True, null=True)
+    num_code = models.IntegerField(verbose_name=_('Code of currency'), blank=True, null=True)
+    nominal = models.FloatField(verbose_name=_('Nominal'), blank=True, null=True)
+    value = models.FloatField(verbose_name=_('Value'), blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = _('Currency')
+        verbose_name_plural = _('Currencies')
+
 # todo: Warehouse
 # todo: Add statistics
 # todo: Orders
