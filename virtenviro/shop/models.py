@@ -17,10 +17,16 @@ class Product(MPTTModel):
     is_group = models.BooleanField(default=False, verbose_name=_('Is Group'))
     description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
     category = models.ForeignKey('Category', verbose_name=_('Production Type'))
-    discontinued = models.BooleanField(default=False, verbose_name=_('Discontinued'))
     price = models.FloatField(verbose_name=_('Price'), default=0.0)
-    ordering = models.IntegerField(default=0, verbose_name=_('Ordering'), blank=True, null=True)
     manufacturer = models.ForeignKey('Manufacturer', verbose_name=_('Manufacturer'), null=True, blank=True)
+
+    # META FIELDS
+    meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
+    meta_keywords = models.TextField(verbose_name=_('Meta Keywords'), null=True, blank=True)
+    meta_description = models.TextField(verbose_name=_('Meta Description'), null=True, blank=True)
+
+    # SERVICE FIELDS
+    ordering = models.IntegerField(default=0, verbose_name=_('Ordering'), blank=True, null=True)
 
     tree = TreeManager()
     objects = ProductManager()
@@ -54,6 +60,23 @@ class Product(MPTTModel):
 
     def filter_parent_group(self):
         return self.filter(is_group=True, parent__isnull=True)
+
+    def get_absolute_url(self):
+        if self.parent is None:
+            return '/%s/' % self.slug
+        if self.is_home:
+            return '/'
+        url = self.get_all_ancestors(self.parent, self.slug)
+        return '%s' % url
+
+    get_absolute_url.short_description = _('URL')
+
+    def get_all_ancestors(self, parent, url=''):
+        url = '%s/%s' % (parent.slug, url)
+        if parent.parent:
+            return self.get_all_ancestors(parent.parent, url)
+        else:
+            return '/%s/' % url
 
     class Meta:
         ordering = ['ordering', 'name']
@@ -198,7 +221,7 @@ class Manufacturer(models.Model):
         verbose_name_plural = _('Manufacturers')
 
 
-# todo: Disount class
+# todo: Discount class
 # todo: Delivery
 # todo: payment modules
 # todo: Currency class
