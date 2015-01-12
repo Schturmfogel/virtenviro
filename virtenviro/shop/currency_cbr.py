@@ -3,6 +3,8 @@ import os
 import urllib2
 from lxml import etree
 import datetime
+from django.conf import settings
+from models import Currency
 
 
 def update_currency():
@@ -34,7 +36,7 @@ def update_currency():
     for valute in tree.iterfind('.//Valute'):
         name = valute.find('Name').text
         try:
-            currency = Currency..objects.get(name=name)
+            currency = Currency.objects.get(name=name)
         except Currency.DoesNotExist:
             continue
         currency.char_code = valute.find('CharCode').text
