@@ -1,7 +1,9 @@
+#~*~ coding: utf-8 ~*~
 from django.db import models
 from shop.models import *
+from mptt.managers import TreeManager
 
-class ImageManager(models.Manager):
+class ImageManager(TreeManager):
     def get_one_image(self, product, image_type):
         try:
             image = self.get(product = product, image_type = image_type)

@@ -1,12 +1,11 @@
 # ~*~ coding: utf-8 ~*~
 import os
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 from mptt.models import MPTTModel, TreeForeignKey
-from mptt.managers import TreeManager
 from managers import *
 from virtenviro.utils import set_slug
 from filebrowser.fields import FileBrowseField
+from django.conf import settings
 
 
 class Product(MPTTModel):
@@ -29,7 +28,6 @@ class Product(MPTTModel):
     ordering = models.IntegerField(default=0, verbose_name=_('Ordering'), blank=True, null=True)
     view_count = models.IntegerField(default=0, verbose_name=_('Count of views'), blank=True, null=True)
 
-    tree = TreeManager()
     objects = ProductManager()
 
     def __unicode__(self):
@@ -186,7 +184,8 @@ class ImageTypeCategoryRelation(models.Model):
 
 
 class Image(models.Model):
-    image = FileBrowseField("Image", max_length=200, directory=settings.IMAGES_PATH, blank=True, null=True)
+    image = FileBrowseField("Image", max_length=200, directory=os.path.join(settings.MEDIA_ROOT, 'img', 'shop'),
+                            blank=True, null=True)
     name = models.CharField(max_length=255, verbose_name=_('Name'), blank=True, null=True)
     product = models.ForeignKey(Product, verbose_name=_('Product'))
     image_type = models.ForeignKey(ImageType, verbose_name=_('Image Type'))
@@ -204,7 +203,7 @@ class Image(models.Model):
 class Manufacturer(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Manufacturer'), unique=True)
     description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
-    logo = models.ImageField(upload_to=os.path.join(settings.IMAGES_PATH, 'manufacturers'), verbose_name=_('Logo'),
+    logo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT, 'img', 'shop', 'manufacturers'), verbose_name=_('Logo'),
                              null=True, blank=True)
 
     # Contacts
