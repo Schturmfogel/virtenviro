@@ -4,7 +4,7 @@ from django.http import Http404
 
 
 def home(request):
-    render(
+    return render(
         request,
         'admin/home.html',
         {}
