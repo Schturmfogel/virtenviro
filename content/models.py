@@ -144,7 +144,7 @@ class AdditionalField(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['name',]
+        ordering = ['name']
         verbose_name = _('Additional field')
         verbose_name_plural = _('Additional fields')
 

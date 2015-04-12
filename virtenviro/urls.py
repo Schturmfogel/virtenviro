@@ -1,3 +1,4 @@
+#~*~ coding: utf-8 ~*~
 import os
 from django.conf.urls import patterns, include, url
 from django.conf import settings
@@ -8,6 +9,7 @@ urlpatterns = patterns('',
                        # url(r'^blog/', include('blog.urls')),
 
                        url(r'^admin/', include('admin.urls')),
+                       url(r'^accounts/', include('registration.urls')),
 )
 
 if settings.DEBUG:
