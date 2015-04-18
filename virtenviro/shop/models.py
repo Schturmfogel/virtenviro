@@ -1,6 +1,6 @@
 # ~*~ coding: utf-8 ~*~
 import os
-
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 from filebrowser.fields import FileBrowseField
