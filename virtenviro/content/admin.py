@@ -20,15 +20,23 @@ class ContentAdminForm(forms.ModelForm):
         model = Content
         fields = [
             'title',
-            'slug',
-            'is_home',
+            'h1',
+            'intro',
+            'content',
             'template',
             'parent',
+            'language',
+
+            'meta_title',
+            'meta_keywords',
+            'meta_description',
+
             'published',
             'pub_datetime',
+            'last_modified',
+
             'author',
             # 'last_modified_by',
-            'login_required'
         ]
 
         def clean_author(self):
