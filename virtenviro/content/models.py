@@ -42,6 +42,9 @@ class Page(MPTTModel):
                                          related_name='modified_pages')
     login_required = models.BooleanField(default=False, verbose_name=_('Login required'))
 
+    def get_content(self, language):
+        return self.contents.filter(language=language)
+
     def __unicode__(self):
         return self.title
 
@@ -127,18 +130,6 @@ class Content(models.Model):
         return self.parent.get_absolute_url()
 
     get_absolute_url.short_description = _('URL')
-
-    def clean(self):
-        # slugify
-        if not self.slug:
-            slug = self.title
-        else:
-            slug = self.slug
-        self.slug = slugify(slug)
-        if Page.objects.filter(slug=self.slug, parent=None).exclude(id=self.id).exists() and self.parent is None:
-            raise ValidationError(
-                _('Record with this slug already exists')
-            )
 
 
 class Template(MPTTModel):
