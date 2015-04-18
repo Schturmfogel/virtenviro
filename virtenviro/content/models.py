@@ -97,7 +97,7 @@ class Content(models.Model):
     intro = models.TextField(verbose_name=_('Intro'), null=True, blank=True)
     content = models.TextField(verbose_name=_('Content'), null=True, blank=True)
     template = models.ForeignKey('Template', verbose_name=_('Template'), null=True, blank=True)
-    parent = models.ForeignKey(Page, blank=True, null=True, related_name='child_set', verbose_name=_('Parent'))
+    parent = models.ForeignKey(Page, blank=True, null=True, related_name='contents', verbose_name=_('Parent'))
     language = models.CharField(max_length=10, verbose_name=_('Language'), choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE)
 
     # META FIELDS
@@ -110,7 +110,7 @@ class Content(models.Model):
     pub_datetime = models.DateTimeField(default=timezone.now, verbose_name=_('Created datetime'))
     last_modified = models.DateTimeField(auto_now=True, verbose_name=_('Last modified datetime'))
 
-    author = models.ForeignKey(User, verbose_name=_('Author'), related_name='contents', blank=True, null=True)
+    author = models.ForeignKey(User, verbose_name=_('Author'), related_name='created_contents', blank=True, null=True)
     last_modified_by = models.ForeignKey(User, verbose_name=_('Corrector'), blank=True, null=True,
                                          related_name='modified_contents')
 
