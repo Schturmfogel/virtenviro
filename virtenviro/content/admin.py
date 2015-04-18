@@ -33,7 +33,7 @@ class ContentAdminForm(forms.ModelForm):
 
             'published',
             'pub_datetime',
-            'last_modified',
+            # 'last_modified',
 
             'author',
             # 'last_modified_by',
