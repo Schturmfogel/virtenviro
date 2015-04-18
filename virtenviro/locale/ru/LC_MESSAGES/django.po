@@ -1,0 +1,294 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-13 08:51+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: news/models.py:39 news/models.py:61
+msgid "Title"
+msgstr ""
+
+#: news/models.py:40 news/models.py:63 shop/models.py:13
+msgid "Slug"
+msgstr ""
+
+#: news/models.py:41 shop/models.py:17 shop/models.py:205
+msgid "Description"
+msgstr ""
+
+#: news/models.py:43 news/models.py:78
+msgid "Meta title"
+msgstr ""
+
+#: news/models.py:44 news/models.py:79
+msgid "Meta keywords"
+msgstr ""
+
+#: news/models.py:45 news/models.py:80
+msgid "Meta description"
+msgstr ""
+
+#: news/models.py:56 news/models.py:62 shop/models.py:97 shop/models.py:125
+#: shop/models.py:178
+msgid "Category"
+msgstr ""
+
+#: news/models.py:57 shop/models.py:98
+msgid "Categories"
+msgstr ""
+
+#: news/models.py:66
+msgid "Intro"
+msgstr ""
+
+#: news/models.py:67
+msgid "Content"
+msgstr ""
+
+#: news/models.py:69
+msgid "Origin's url address"
+msgstr ""
+
+#: news/models.py:70
+msgid "Author"
+msgstr ""
+
+#: news/models.py:73
+msgid "Published"
+msgstr ""
+
+#: news/models.py:74
+msgid "Created datetime"
+msgstr ""
+
+#: news/models.py:75
+msgid "Last modified datetime"
+msgstr ""
+
+#: news/models.py:93
+msgid "News post"
+msgstr ""
+
+#: news/models.py:94
+msgid "News posts"
+msgstr ""
+
+#: shop/models.py:12 shop/models.py:90 shop/models.py:110 shop/models.py:150
+#: shop/models.py:158 shop/models.py:189
+msgid "Name"
+msgstr ""
+
+#: shop/models.py:14
+msgid "Parent"
+msgstr ""
+
+#: shop/models.py:15
+msgid "Articul"
+msgstr ""
+
+#: shop/models.py:16
+msgid "Is Group"
+msgstr ""
+
+#: shop/models.py:18 shop/models.py:159
+msgid "Production Type"
+msgstr ""
+
+#: shop/models.py:19
+msgid "Price"
+msgstr ""
+
+#: shop/models.py:20 shop/models.py:204 shop/models.py:220
+msgid "Manufacturer"
+msgstr ""
+
+#: shop/models.py:23
+msgid "Meta Title"
+msgstr ""
+
+#: shop/models.py:24
+msgid "Meta Keywords"
+msgstr ""
+
+#: shop/models.py:25
+msgid "Meta Description"
+msgstr ""
+
+#: shop/models.py:28
+msgid "Ordering"
+msgstr ""
+
+#: shop/models.py:29
+msgid "Count of views"
+msgstr ""
+
+#: shop/models.py:71
+msgid "URL"
+msgstr ""
+
+#: shop/models.py:82 shop/models.py:136 shop/models.py:151 shop/models.py:190
+msgid "Product"
+msgstr ""
+
+#: shop/models.py:83
+msgid "Products"
+msgstr ""
+
+#: shop/models.py:103
+msgid "Integer"
+msgstr ""
+
+#: shop/models.py:104
+msgid "Float"
+msgstr ""
+
+#: shop/models.py:105
+msgid "String"
+msgstr ""
+
+#: shop/models.py:106
+msgid "Text"
+msgstr ""
+
+#: shop/models.py:107
+msgid "Boolean"
+msgstr ""
+
+#: shop/models.py:108
+msgid "Html"
+msgstr ""
+
+#: shop/models.py:112
+msgid "Data type"
+msgstr ""
+
+#: shop/models.py:119
+msgid "Properties type"
+msgstr ""
+
+#: shop/models.py:120
+msgid "Properties Types"
+msgstr ""
+
+#: shop/models.py:124
+msgid "Property Type"
+msgstr ""
+
+#: shop/models.py:126 shop/models.py:179
+msgid "Count"
+msgstr ""
+
+#: shop/models.py:127
+msgid "Maximum number of properties by this property type in category"
+msgstr ""
+
+#: shop/models.py:135 shop/models.py:235
+msgid "Value"
+msgstr ""
+
+#: shop/models.py:144
+msgid "Property"
+msgstr ""
+
+#: shop/models.py:145
+msgid "Properties"
+msgstr ""
+
+#: shop/models.py:172
+msgid "Images Type"
+msgstr ""
+
+#: shop/models.py:173
+msgid "Images Types"
+msgstr ""
+
+#: shop/models.py:177
+msgid "Image type"
+msgstr ""
+
+#: shop/models.py:180
+msgid "Maximum number of images by this image type in category"
+msgstr ""
+
+#: shop/models.py:191
+msgid "Image Type"
+msgstr ""
+
+#: shop/models.py:192
+msgid "Is Main"
+msgstr ""
+
+#: shop/models.py:199
+msgid "Image"
+msgstr ""
+
+#: shop/models.py:200
+msgid "Images"
+msgstr ""
+
+#: shop/models.py:206
+msgid "Logo"
+msgstr ""
+
+#: shop/models.py:210
+msgid "Country"
+msgstr ""
+
+#: shop/models.py:211
+msgid "City"
+msgstr ""
+
+#: shop/models.py:212
+msgid "Address"
+msgstr ""
+
+#: shop/models.py:213
+msgid "Phones"
+msgstr ""
+
+#: shop/models.py:221
+msgid "Manufacturers"
+msgstr ""
+
+#: shop/models.py:229 shop/models.py:242
+msgid "Currency"
+msgstr ""
+
+#: shop/models.py:230
+msgid "Is default currency"
+msgstr ""
+
+#: shop/models.py:231
+msgid "Symbol"
+msgstr ""
+
+#: shop/models.py:232
+msgid "Char code of currency"
+msgstr ""
+
+#: shop/models.py:233
+msgid "Code of currency"
+msgstr ""
+
+#: shop/models.py:234
+msgid "Nominal"
+msgstr ""
+
+#: shop/models.py:243
+msgid "Currencies"
+msgstr ""

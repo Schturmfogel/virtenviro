@@ -8,3 +8,5 @@
 ==== 0.5.1b (2015-04-08) ====
 
 - registratin module (beta)
+- content module has bin modified to multilingual support
+

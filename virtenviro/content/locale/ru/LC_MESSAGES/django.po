@@ -1,0 +1,194 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: virtenviro.content\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-13 08:51+0400\n"
+"PO-Revision-Date: 2015-01-11 03:33+0600\n"
+"Last-Translator: \n"
+"Language-Team: http://www.haikson.com <kamo@haikson.com>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-Basepath: H:\\GITHUB\\virtenviro\\virtenviro\\content\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: H:\\GITHUB\\virtenviro\\virtenviro\\content\n"
+
+#: content/models.py:27 content/models.py:102
+msgid "Title"
+msgstr "Заголовок"
+
+#: content/models.py:28
+msgid "H1 tag"
+msgstr "Тэг H1"
+
+#: content/models.py:29
+msgid "Slug"
+msgstr "Псевдостатический адрес"
+
+#: content/models.py:30
+msgid "Is home page"
+msgstr "Является домашней страницей"
+
+#: content/models.py:31
+msgid "Intro"
+msgstr "Анонс"
+
+#: content/models.py:32
+msgid "Content"
+msgstr "Контент"
+
+#: content/models.py:33 content/models.py:111 content/models.py:119
+msgid "Template"
+msgstr "Шаблон"
+
+#: content/models.py:34 content/models.py:104
+msgid "Parent"
+msgstr "Родитель"
+
+#: content/models.py:37
+msgid "Meta Title"
+msgstr "Мета Заголовок"
+
+#: content/models.py:38
+msgid "Meta Keywords"
+msgstr "Мета \"Ключевые слова\""
+
+#: content/models.py:39
+msgid "Meta Description"
+msgstr "Мета \"Описание\""
+
+#: content/models.py:42
+msgid "Published"
+msgstr "Опубликовано"
+
+#: content/models.py:43
+msgid "Created datetime"
+msgstr "Дата и время создания"
+
+#: content/models.py:44
+msgid "Last modified datetime"
+msgstr "Дата и время последних изменений"
+
+#: content/models.py:45
+msgid "Ordering"
+msgstr "Сортировка"
+
+#: content/models.py:47
+msgid "Author"
+msgstr "Автор"
+
+#: content/models.py:48
+msgid "Corrector"
+msgstr ""
+
+#: content/models.py:50
+msgid "Login required"
+msgstr "Требуется авторизация"
+
+#: content/models.py:63
+msgid "URL"
+msgstr "URL"
+
+#: content/models.py:81
+msgid "Record with this slug already exists"
+msgstr "Запись с таким Псевдостатическим адресом уже существует"
+
+#: content/models.py:96 content/models.py:154
+msgid "Page"
+msgstr "Страница"
+
+#: content/models.py:97
+msgid "Pages"
+msgstr "Страница"
+
+#: content/models.py:103
+msgid "Filename"
+msgstr "Имя файла"
+
+#: content/models.py:112 content/models.py:141
+msgid "Templates"
+msgstr "Шаблоны"
+
+#: content/models.py:116 content/models.py:139
+msgid "Name"
+msgstr "Имя"
+
+#: content/models.py:117
+msgid "Code"
+msgstr "Код"
+
+#: content/models.py:118
+msgid "Render"
+msgstr "Обработать"
+
+#: content/models.py:126
+msgid "Snippet"
+msgstr "Сниппет"
+
+#: content/models.py:127
+msgid "Snippets"
+msgstr "Сниппеты"
+
+#: content/models.py:132
+msgid "Char field"
+msgstr "Поле строки"
+
+#: content/models.py:133
+msgid "Text field"
+msgstr "Текстовое поле"
+
+#: content/models.py:134
+msgid "Integer field"
+msgstr "Целочисленное поле"
+
+#: content/models.py:135
+msgid "Float field"
+msgstr "Поле числа с плавающей точкой"
+
+#: content/models.py:136
+msgid "Image field"
+msgstr "Поле изображения"
+
+#: content/models.py:140
+msgid "Field's data type"
+msgstr "Тип данных поля"
+
+#: content/models.py:142
+msgid "Render field's value"
+msgstr "Обработать значения поля"
+
+#: content/models.py:149 content/models.py:155
+msgid "Additional field"
+msgstr "Дополнительное поле"
+
+#: content/models.py:150
+msgid "Additional fields"
+msgstr "Дополнительные поля"
+
+#: content/models.py:156
+msgid "Value"
+msgstr "Значение"
+
+#: content/models.py:159
+msgid "for"
+msgstr "для"
+
+#: content/models.py:162
+msgid "Additional field's value"
+msgstr "Значение дополнительного поля"
+
+#: content/models.py:163
+msgid "Additional field's values"
+msgstr "Значения дополнительных полей"
+
+#: content/models.py:167 content/models.py:175
+msgid "Tag"
+msgstr "Тег"
+
+#: content/models.py:176
+msgid "Tags"
+msgstr "Теги"
