@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='virtenviro',
-    version='0.1',
+    version='0.5.1b',
     packages=['virtenviro'],
     url='https://github.com/Haikson/virtenviro',
     license='GPL3',
