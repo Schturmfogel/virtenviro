@@ -23,7 +23,7 @@ Open source content management system (CMS) based on the django framework.
 ## How to install
 
 ```sh
-pip install -e git+https://github.com/Haikson/virtenviro.git#egg=Package
+pip install git+git://github.com/Haikson/virtenviro.git#virtenviro
 ```
 
 
