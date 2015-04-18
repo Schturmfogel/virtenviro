@@ -3,7 +3,6 @@ from django.contrib import admin
 from django.forms import CheckboxSelectMultiple
 from django import forms
 from django.conf import settings
-
 from virtenviro.content.models import *
 
 
@@ -76,6 +75,7 @@ class PageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Page, PageAdmin)
+admin.site.register(Content)
 admin.site.register(Template, TemplateAdmin)
 admin.site.register(AdditionalField)
 admin.site.register(FieldValue)
