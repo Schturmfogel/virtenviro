@@ -110,9 +110,9 @@ class Content(models.Model):
     pub_datetime = models.DateTimeField(default=timezone.now, verbose_name=_('Created datetime'))
     last_modified = models.DateTimeField(auto_now=True, verbose_name=_('Last modified datetime'))
 
-    author = models.ForeignKey(User, verbose_name=_('Author'), related_name='pages', blank=True, null=True)
+    author = models.ForeignKey(User, verbose_name=_('Author'), related_name='contents', blank=True, null=True)
     last_modified_by = models.ForeignKey(User, verbose_name=_('Corrector'), blank=True, null=True,
-                                         related_name='modified_pages')
+                                         related_name='modified_contents')
 
     def __unicode__(self):
         return self.title
