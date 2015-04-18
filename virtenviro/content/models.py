@@ -26,7 +26,7 @@ class PageManager(models.Manager):
 
 class Page(MPTTModel):
     title = models.CharField(max_length=250, verbose_name=_('Title'))
-    slug = models.CharField(max_length=60, blank=True, verbose_name=_('Slug'))
+    slug = models.CharField(max_length=60, blank=True, verbose_name=_('Slug'), unique=True)
     is_home = models.BooleanField(default=False, verbose_name=_('Is home page'))
     template = models.ForeignKey('Template', verbose_name=_('Template'))
     parent = TreeForeignKey('self', blank=True, null=True, related_name='child_set', verbose_name=_('Parent'))
