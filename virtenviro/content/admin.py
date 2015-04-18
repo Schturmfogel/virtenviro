@@ -115,7 +115,7 @@ class ContentAdmin(admin.ModelAdmin):
 
         if db_field.name == 'last_modified_by':
             kwargs['initial'] = request.user.id
-        return super(PageAdmin, self).formfield_for_foreignkey(
+        return super(ContentAdmin, self).formfield_for_foreignkey(
             db_field, request, **kwargs
         )
 
