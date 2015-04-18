@@ -10,11 +10,14 @@ class TemplateAdmin(admin.ModelAdmin):
     search_fields = ['title', 'filename']
 
 
-class PageAdminForm(forms.ModelForm):
+'''
     def __init__(self, *args, **kwargs):
         super(PageAdminForm, self).__init__(*args, **kwargs)
-
         self.fields['content'].widget.attrs['class'] = 'ckeditor'
+'''
+
+
+class PageAdminForm(forms.ModelForm):
 
     class Meta:
         model = Page
