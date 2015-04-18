@@ -33,7 +33,7 @@ class ContentAdminForm(forms.ModelForm):
 
             'published',
             'pub_datetime',
-            # 'last_modified',
+            'last_modified',
 
             'author',
             # 'last_modified_by',
@@ -101,7 +101,7 @@ class ContentAdmin(admin.ModelAdmin):
     }
     search_fields = ['title', ]
 
-    form = PageAdminForm
+    form = ContentAdminForm
 
     def save_model(self, request, obj, form, change):
         if not obj.author.id:
