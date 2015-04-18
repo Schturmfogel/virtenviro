@@ -20,6 +20,13 @@ Open source content management system (CMS) based on the django framework.
 * 'django-filebrowser-no-grappelli',
 
 
+## How to install
+
+```sh
+pip install -e git@github.com:Haikson/virtenviro.git
+```
+
+
 ## <a name="start"></a>START
 
 ## ToDo
