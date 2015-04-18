@@ -77,7 +77,7 @@ class PageAdmin(admin.ModelAdmin):
     form = PageAdminForm
 
     def save_model(self, request, obj, form, change):
-        if not obj.author.id:
+        if not obj.author:
             obj.author = request.user
         obj.last_modified_by = request.user
         obj.save()
@@ -104,7 +104,7 @@ class ContentAdmin(admin.ModelAdmin):
     form = ContentAdminForm
 
     def save_model(self, request, obj, form, change):
-        if not obj.author.id:
+        if not obj.author:
             obj.author = request.user
         obj.last_modified_by = request.user
         obj.save()
