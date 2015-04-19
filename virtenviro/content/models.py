@@ -61,10 +61,10 @@ class Page(MPTTModel):
         return self.title
 
     def get_absolute_url(self):
-        if self.parent is None:
-            return '/%s/' % self.slug
         if self.is_home:
             return '/'
+        if self.parent is None:
+            return '/%s/' % self.slug
         url = self.get_all_ancestors(self.parent, self.slug)
         return '%s' % url
 
