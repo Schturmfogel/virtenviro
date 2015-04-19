@@ -76,7 +76,7 @@ DATABASES = {
 LANGUAGE_CODE = 'ru'
 LANGUAGES = (
     ('ru', 'Russian'),
-    ('en-en', 'English'),
+    ('en', 'English'),
     ('fr', 'France'),
 )
 

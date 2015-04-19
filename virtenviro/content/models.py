@@ -7,7 +7,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django.contrib.auth.models import User
 import datetime
 from django.utils import timezone
-from virtenviro import settings
+from django.conf import settings
 
 
 class PageManager(models.Manager):
@@ -95,13 +95,19 @@ class Page(MPTTModel):
 
 
 class Content(models.Model):
+    if hasattr(settings, 'LANGUAGES'):
+        LANGUAGES = settings.LANGUAGES
+    else:
+        LANGUAGES = (
+            ('ru', _('Russian')),
+        )
     title = models.CharField(max_length=250, verbose_name=_('Title'))
     h1 = models.CharField(max_length=250, verbose_name=_('H1 tag'), null=True, blank=True)
     intro = models.TextField(verbose_name=_('Intro'), null=True, blank=True)
     content = models.TextField(verbose_name=_('Content'), null=True, blank=True)
     template = models.ForeignKey('Template', verbose_name=_('Template'), null=True, blank=True)
     parent = models.ForeignKey(Page, blank=True, null=True, related_name='contents', verbose_name=_('Parent'))
-    language = models.CharField(max_length=10, verbose_name=_('Language'), choices=settings.LANGUAGES, default=settings.LANGUAGE_CODE)
+    language = models.CharField(max_length=10, verbose_name=_('Language'), choices=LANGUAGES, default=settings.LANGUAGE_CODE)
 
     # META FIELDS
     meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
