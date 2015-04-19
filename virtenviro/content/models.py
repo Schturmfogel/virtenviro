@@ -43,7 +43,19 @@ class Page(MPTTModel):
     login_required = models.BooleanField(default=False, verbose_name=_('Login required'))
 
     def get_content(self, language):
-        return self.contents.filter(language=language)
+        contents = self.contents.filter(language=language)
+        if contents:
+            return contents[0]
+        return None
+
+    def get_contents(self):
+        return self.contents.all()
+
+    def get_languages(self):
+        languages = []
+        for c in self.get_contents():
+            languages.append(c.language)
+        return languages
 
     def __unicode__(self):
         return self.title
