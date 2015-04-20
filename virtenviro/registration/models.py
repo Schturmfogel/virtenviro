@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated at'))
 
 
-def user_post_save(sender, instance, **kwargs):
-    (profile, new) = UserProfile.objects.get_or_create(user=instance)
+#def user_post_save(sender, instance, **kwargs):
+#    (profile, new) = UserProfile.objects.get_or_create(user=instance)
 
-models.signals.post_save.connect(user_post_save, sender=User)
+#models.signals.post_save.connect(user_post_save, sender=User)
