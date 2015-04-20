@@ -47,9 +47,6 @@ LANGUAGES = (
     ('ru', 'Russian'),
 )
 
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'virtenviro/locale'), )
-
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
