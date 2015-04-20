@@ -1,5 +1,9 @@
 from required_settings import *
 
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'lvp778_p-fhyu_%58(64nr3ein#)geca^c_p-vxt15!w%bjw3m'
 
@@ -50,7 +54,7 @@ FILEBROWSER_EXTENSIONS = {
 }
 
 FILEBROWSER_SELECT_FORMATS = {
-    'file': ['Folder','Image','Document','Video','Audio'],
+    'file': ['Folder', 'Image', 'Document', 'Video', 'Audio'],
     'image': ['Image'],
     'document': ['Document'],
     'media': ['Video','Audio'],
