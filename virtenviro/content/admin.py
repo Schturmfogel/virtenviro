@@ -68,9 +68,10 @@ class PageAdminForm(forms.ModelForm):
             return self.cleaned_data['author']
 
 
-class ContentTabularInline(admin.TabularInline):
+class ContentTabularInline(admin.StackedInline):
     model = Content
     form = ContentAdminForm
+    extra = 1
 
 
 class PageAdmin(admin.ModelAdmin):
