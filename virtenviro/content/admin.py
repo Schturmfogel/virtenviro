@@ -71,7 +71,7 @@ class PageAdminForm(forms.ModelForm):
 class ContentTabularInline(admin.StackedInline):
     model = Content
     form = ContentAdminForm
-    extra = 1
+    extra = 0
 
 
 class PageAdmin(admin.ModelAdmin):
