@@ -100,6 +100,18 @@ class PageAdmin(admin.ModelAdmin):
             db_field, request, **kwargs
         )
 
+    class Media:
+        try:
+            if settings.CKEDITOR:
+                js = (
+                    '/static/ckeditor/ckeditor.js',
+                    '/static/filebrowser/js/FB_CKEditor.js',
+                    '/static/js/ckeditor.js',
+                )
+                css = {'all': ('/static/css/ckeditor.css',), }
+        except AttributeError:
+            pass
+
 
 class ContentAdmin(admin.ModelAdmin):
     list_display = ('title', 'parent', 'language')
