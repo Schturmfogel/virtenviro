@@ -80,3 +80,8 @@ def get_pages(context, *args, **kwargs):
     if kwargs.get('limit', False):
         queryset = paginate(queryset, rpage, int(kwargs['limit']))
     return queryset
+
+@register.assignment_tag
+def get_content_ml(page, lang):
+    content = page.contents.filter(language=lang)
+    return content

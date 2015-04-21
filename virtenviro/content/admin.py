@@ -68,6 +68,11 @@ class PageAdminForm(forms.ModelForm):
             return self.cleaned_data['author']
 
 
+class ContentTabularInline(admin.TabularInline):
+    model = Content
+    form = PageAdminForm
+
+
 class PageAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
@@ -75,6 +80,9 @@ class PageAdmin(admin.ModelAdmin):
     search_fields = ['title', ]
 
     form = PageAdminForm
+    inlines = [
+        ContentTabularInline,
+    ]
 
     def save_model(self, request, obj, form, change):
         if not obj.author:
