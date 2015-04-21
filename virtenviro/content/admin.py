@@ -70,7 +70,7 @@ class PageAdminForm(forms.ModelForm):
 
 class ContentTabularInline(admin.TabularInline):
     model = Content
-    form = PageAdminForm
+    form = ContentAdminForm
 
 
 class PageAdmin(admin.ModelAdmin):
