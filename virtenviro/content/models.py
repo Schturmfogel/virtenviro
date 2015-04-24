@@ -223,6 +223,6 @@ class Tag(models.Model):
         return self.tag
 
     class Meta:
-        ordering = ['tag',]
+        ordering = ['tag', ]
         verbose_name = _('Tag')
         verbose_name_plural = _('Tags')

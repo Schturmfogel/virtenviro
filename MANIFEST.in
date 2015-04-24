@@ -1,0 +1,7 @@
+include AUTHORS
+include README.rst
+include LICENSE
+recursive-include docs *
+recursive-include virtenviro/static *
+recursive-include virtenviro/templates *
+recursive-include virtenviro/admin/templates *
