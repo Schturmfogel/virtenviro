@@ -6,10 +6,10 @@ from django.utils.http import urlquote
 from django.conf import settings
 from virtenviro.content.models import *
 
-template_str = 'virtenviro/admin/content/%s'
+template_str = 'virtenviro/admin/%s'
 
 
 def index(request):
     base_pages = Page.objects.filter(parent__isnull=True)
     context = {'base_pages': base_pages,}
-    return render(request, template_str % 'change_list.html', context)
+    return render(request, template_str % 'index.html', context)
