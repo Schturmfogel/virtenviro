@@ -6,7 +6,7 @@ from django.utils.http import urlquote
 from django.conf import settings
 from virtenviro.content.models import *
 
-template_str = 'virtenviro/admin/%s'
+template_str = 'virtenviro/admin/virtenviro/%s'
 
 
 def index(request):
