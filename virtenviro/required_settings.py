@@ -15,6 +15,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Application definition
 
 INSTALLED_APPS = (
+    'mptt',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
