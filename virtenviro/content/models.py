@@ -42,7 +42,7 @@ class Page(MPTTModel):
                                          related_name='modified_pages')
     login_required = models.BooleanField(default=False, verbose_name=_('Login required'))
 
-    def get_content(self, language):
+    def get_content(self, language=settings.LANGUAGE_CODE):
         contents = self.contents.filter(language=language)
         if contents:
             return contents[0]
