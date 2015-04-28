@@ -83,5 +83,5 @@ def get_pages(context, *args, **kwargs):
 
 @register.assignment_tag(takes_context=True)
 def get_content_ml(context, page, lang):
-    content = page.contents.filter(language=lang)
+    content = page.get_content(language=lang)
     return content
