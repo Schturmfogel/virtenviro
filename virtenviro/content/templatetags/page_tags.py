@@ -81,7 +81,7 @@ def get_pages(context, *args, **kwargs):
         queryset = paginate(queryset, rpage, int(kwargs['limit']))
     return queryset
 
-@register.assignment_tag
+@register.assignment_tag(takes_context=True)
 def get_content_ml(page, lang):
-    content = page.contents.filter(language=lang)
-    return content
+    context['content_ml'] = page.contents.filter(language=lang)
+    return ''
