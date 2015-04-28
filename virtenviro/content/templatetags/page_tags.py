@@ -82,6 +82,6 @@ def get_pages(context, *args, **kwargs):
     return queryset
 
 @register.assignment_tag(takes_context=True)
-def get_content_ml(page, lang):
-    context['content_ml'] = page.contents.filter(language=lang)
-    return ''
+def get_content_ml(context, page, lang):
+    content = page.contents.filter(language=lang)
+    return content
