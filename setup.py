@@ -5,7 +5,7 @@ EXCLUDE_FROM_PACKAGES = []
 
 setup(
     name='virtenviro',
-    version='0.5.5b2',
+    version='0.5.5b3',
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     include_package_data=True,
     url='https://github.com/Haikson/virtenviro',

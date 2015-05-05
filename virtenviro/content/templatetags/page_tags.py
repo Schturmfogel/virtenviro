@@ -81,7 +81,31 @@ def get_pages(context, *args, **kwargs):
         queryset = paginate(queryset, rpage, int(kwargs['limit']))
     return queryset
 
+
 @register.assignment_tag(takes_context=True)
 def get_content_ml(context, page, lang):
     content = page.get_content(language=lang)
     return content
+
+
+@register.assignment_tag
+def leaf_pages(root=None, root_id=None, count=0):
+    if root is None:
+        if root_id is None:
+            return []
+        else:
+            try:
+                root = Page.objects.get(pk=root_id)
+            except Page.DoesNotExist:
+                return []
+    nodes = []
+    m_nodes = root.get_descendants(include_self=False)
+    if count == 0:
+        count = m_nodes.count()
+    for m_node in m_nodes:
+        if m_node.is_leaf_node():
+            nodes.append(m_node)
+        count -= 1
+        if count == 0:
+            break
+    return nodes
