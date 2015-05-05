@@ -99,7 +99,7 @@ def leaf_pages(root=None, root_id=None, count=0):
             except Page.DoesNotExist:
                 return []
     nodes = []
-    m_nodes = root.get_descendants(include_self=False)
+    m_nodes = root.get_descendants(include_self=False).order_by('-pub_datetime')
     if count == 0:
         count = m_nodes.count()
     for m_node in m_nodes:
