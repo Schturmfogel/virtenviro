@@ -97,6 +97,8 @@ class PageAdmin(admin.ModelAdmin):
 
         if db_field.name == 'last_modified_by':
             kwargs['initial'] = request.user.id
+        if db_field.name == 'parent':
+            kwargs["queryset"] = Page.objects.filter(is_category=True)
         return super(PageAdmin, self).formfield_for_foreignkey(
             db_field, request, **kwargs
         )
