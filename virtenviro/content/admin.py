@@ -52,6 +52,7 @@ class PageAdminForm(forms.ModelForm):
         fields = [
             'title',
             'slug',
+            'is_category',
             'is_home',
             'template',
             'parent',
