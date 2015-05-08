@@ -75,7 +75,7 @@ def xml_import(tree):
         except:
             xml_articul = id_generator(15)
 
-        unique_code_string = '{}{}{}'.format(xml_name, xml_manufacturer, xml_articul)
+        unique_code_string = '%s%s%s' % (xml_name, xml_manufacturer, xml_articul)
         unique_code = sha256(unique_code_string)
 
         if not xml_manufacturer == '':
