@@ -75,27 +75,27 @@ def xml_import(tree):
         except:
             xml_articul = id_generator(15)
 
-        unique_code_string = '%s%s%s' % (xml_name, xml_manufacturer, xml_articul)
-        unique_code = sha256(unique_code_string.encode('utf-8'))
+        unique_code_string = '%s%s%s' % (xml_name.encode('utf-8'), xml_manufacturer.encode('utf-8'), xml_articul.encode('utf-8'))
+        unique_code = sha256(unique_code_string)
 
         if not xml_manufacturer == '':
-            manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer)
+            manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer.encode('utf-8'))
         else:
             manufacturer = None
 
         if not xml_category == '':
-            category, created = Category.objects.get_or_create(name=xml_category, defaults={
+            category, created = Category.objects.get_or_create(name=xml_category.encode('utf-8'), defaults={
                 'parent': None
             })
         else:
             category = None
 
         product, created = Product.objects.get_or_create(unique_code=unique_code, defaults={
-            'name': xml_name,
-            'description': xml_description,
+            'name': xml_name.encode('utf-8'),
+            'description': xml_description.encode('utf-8'),
             'category': category,
             'manufacturer': manufacturer,
-            'articul': xml_articul
+            'articul': xml_articul.encode('utf-8')
         })
         for xml_image in xml_product.findall('photo'):
             xml_image_attribs = xml_image.attrib
