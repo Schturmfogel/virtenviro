@@ -123,7 +123,6 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, verbose_name='Name')),
                 ('slug', models.CharField(max_length=60, null=True, verbose_name='Slug', blank=True)),
                 ('articul', models.CharField(max_length=200, null=True, verbose_name='Articul', blank=True)),
-                ('unique_code', models.CharField(unique=True, max_length=250, verbose_name='Unique code')),
                 ('description', models.TextField(null=True, verbose_name='Description', blank=True)),
                 ('price', models.FloatField(default=0.0, verbose_name='Price')),
                 ('meta_title', models.CharField(max_length=250, null=True, verbose_name='Meta Title', blank=True)),
