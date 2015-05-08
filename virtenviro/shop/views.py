@@ -48,7 +48,7 @@ def import_simple_xml(request):
     else:
         form = SimpleXmlImportForm()
 
-    return render(request, 'virtenviro/shop/xml_import.html', {'form': form,})
+    return render(request, 'virtenviro/shop/xmlimport.html', {'form': form,})
 
 
 def init_tree(xml_file):
