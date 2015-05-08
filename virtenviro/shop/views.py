@@ -71,7 +71,7 @@ def xml_import(tree):
         except:
             xml_manufacturer = ''
         try:
-            xml_articul = xml_product.find('articul').text
+            xml_articul = xml_product.find('articul').text.decode('utf8')
         except:
             xml_articul = id_generator(15)
 
@@ -103,9 +103,13 @@ def xml_import(tree):
             else:
                 image_type = None
             if not category is None:
-                image_type_category, created = ImageTypeCategoryRelation.objects.get_or_create(image_type=image_type,
-                                                                                      category=category,
-                                                                                      defaults={'max_count': 4})
+                image_type_category, created = ImageTypeCategoryRelation.objects.get_or_create(
+                    image_type=image_type,
+                    category=category,
+                    defaults={
+                        'max_count': 4
+                    }
+                )
             image = Image()
             image.name = product.name
             image.image = xml_image.text
