@@ -59,7 +59,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, verbose_name=_('Category'), related_name='children', null=True, blank=True)
     subcategory = models.ManyToManyField(Category, verbose_name=_('Subcategory'), related_name='products', blank=True)
     articul = models.CharField(max_length=200, verbose_name=_('Articul'), null=True, blank=True)
-    unique_code = models.CharField(max_length=250, verbose_name=_('Unique code'), unique=True)
+    unique_code = models.CharField(max_length=250, verbose_name=_('Unique code'), unique=True, blank=True)
     description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
     price = models.FloatField(verbose_name=_('Price'), default=0.0)
     manufacturer = models.ForeignKey('Manufacturer', verbose_name=_('Manufacturer'), null=True, blank=True)
