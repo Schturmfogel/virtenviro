@@ -62,10 +62,7 @@ def set_any_image():
 
 def handle_uploads(request, keys):
     saved = {}
-    # directory to upload
-    upload_dir = date.today().strftime(UPLOAD_PATH)
-    # full path
-    upload_full_path = os.path.join(settings.STATIC_ROOT, upload_dir)
+    upload_full_path = os.path.join(settings.STATIC_ROOT, 'upload')
 
     # check and make upload_full_path
     if not os.path.exists(upload_full_path):
@@ -81,7 +78,7 @@ def handle_uploads(request, keys):
             for chunk in upload.chunks():
                 dest.write(chunk)
             dest.close()
-            saved[key] = os.path.join(upload_dir, upload.name)
+            saved[key] = os.path.join(upload_full_path, upload.name)
     # returns {key1: path1, key2: path2, ...}
     return saved
 
