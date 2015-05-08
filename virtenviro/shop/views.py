@@ -43,8 +43,7 @@ def import_simple_xml(request):
         form = SimpleXmlImportForm(request.POST, request.FILES)
         if form.is_valid():
             saved_file = handle_uploads(request, ['xml_file',])['xml_file']
-            xml_import(
-                init_tree(os.path.join(MEDIA_ROOT, saved_file)))
+            xml_import(init_tree(saved_file))
     else:
         form = SimpleXmlImportForm()
 
