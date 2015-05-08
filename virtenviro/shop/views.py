@@ -71,7 +71,7 @@ def xml_import(tree):
         except:
             xml_manufacturer = ''
         try:
-            xml_articul = xml_product.find('articul').text.decode('utf8')
+            xml_articul = xml_product.find('articul').text
         except:
             xml_articul = id_generator(15)
 
@@ -94,7 +94,7 @@ def xml_import(tree):
             'description': xml_description,
             'category': category,
             'manufacturer': manufacturer,
-            'articul': xml_articul,
+            'articul': xml_articul
         })
         for xml_image in xml_product.findall('photo'):
             xml_image_attribs = xml_image.attrib
