@@ -94,7 +94,7 @@ def xml_import(tree):
             'description': xml_description,
             'category': category,
             'manufacturer': manufacturer,
-            'articul': xml_articul
+            #'articul': xml_articul
         })
         for xml_image in xml_product.findall('photo'):
             xml_image_attribs = xml_image.attrib
