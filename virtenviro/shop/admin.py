@@ -110,9 +110,9 @@ class ProductAdmin(admin.ModelAdmin):
         if category_id:
             form.base_fields['category'].queryset = form.base_fields['category'].queryset.filter(id = category_id)
             if request.GET.has_key('parent'):
-                form.base_fields['parent'].queryset = form.base_fields['parent'].queryset.filter(id = request.GET['parent'])
+                form.base_fields['category'].queryset = form.base_fields['category'].queryset.filter(id = request.GET['parent'])
             else:
-                form.base_fields['parent'].queryset = form.base_fields['parent'].queryset.filter(category = category_id, is_group = True)
+                form.base_fields['category'].queryset = form.base_fields['category'].queryset.filter(category = category_id, is_group = True)
         return form
 
     def lookup_allowed(self, lookup, value):
