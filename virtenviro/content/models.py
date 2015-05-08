@@ -9,6 +9,8 @@ import datetime
 from django.utils import timezone
 from django.conf import settings
 
+LANGUAGE_CODE = getattr(settings, 'LANGUAGE_CODE', 'ru')
+LANGUAGES = getattr(settings, 'LANGUAGES', ('ru',))
 
 class PageManager(models.Manager):
     def get_pages(self, parent=None, order=['ordering', '-pub_datetime', 'title'], author=None):
@@ -43,7 +45,7 @@ class Page(MPTTModel):
                                          related_name='modified_pages')
     login_required = models.BooleanField(default=False, verbose_name=_('Login required'))
 
-    def get_content(self, language=settings.LANGUAGE_CODE):
+    def get_content(self, language=LANGUAGE_CODE):
         contents = self.contents.filter(language=language)
         if contents:
             return contents[0]
@@ -108,19 +110,13 @@ class Page(MPTTModel):
 
 
 class Content(models.Model):
-    if hasattr(settings, 'LANGUAGES'):
-        LANGUAGES = settings.LANGUAGES
-    else:
-        LANGUAGES = (
-            ('ru', _('Russian')),
-        )
     title = models.CharField(max_length=250, verbose_name=_('Title'))
     h1 = models.CharField(max_length=250, verbose_name=_('H1 tag'), null=True, blank=True)
     intro = models.TextField(verbose_name=_('Intro'), null=True, blank=True)
     content = models.TextField(verbose_name=_('Content'), null=True, blank=True)
     template = models.ForeignKey('Template', verbose_name=_('Template'), null=True, blank=True)
     parent = models.ForeignKey(Page, blank=True, null=True, related_name='contents', verbose_name=_('Parent'))
-    language = models.CharField(max_length=10, verbose_name=_('Language'), choices=LANGUAGES, default=settings.LANGUAGE_CODE)
+    language = models.CharField(max_length=10, verbose_name=_('Language'), choices=LANGUAGES, default=LANGUAGE_CODE)
 
     # META FIELDS
     meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)

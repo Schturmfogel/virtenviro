@@ -5,9 +5,10 @@ from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 from filebrowser.fields import FileBrowseField
 from django.conf import settings
-
 from virtenviro.shop.managers import *
-from virtenviro.utils import set_slug
+from virtenviro.utils import set_slug, sha256, id_generator
+
+MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
 
 
 class Category(MPTTModel):
@@ -15,7 +16,7 @@ class Category(MPTTModel):
     slug = models.CharField(max_length=60, verbose_name=_('Slug'), null=True, blank=True)
     parent = TreeForeignKey('self', verbose_name=_('Parent'), related_name='subcategories', null=True, blank=True)
     description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
-    image = models.ImageField(upload_to=_(os.path.join(settings.MEDIA_ROOT, 'img', 'shop', 'category')), verbose_name=_('Image'), null=True, blank=True)
+    image = models.ImageField(upload_to=_(os.path.join(MEDIA_ROOT, 'img', 'shop', 'category')), verbose_name=_('Image'), null=True, blank=True)
 
     # META FIELDS
     meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
@@ -58,6 +59,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, verbose_name=_('Category'), related_name='children', null=True, blank=True)
     subcategory = models.ManyToManyField(Category, verbose_name=_('Subcategory'), related_name='products', blank=True)
     articul = models.CharField(max_length=200, verbose_name=_('Articul'), null=True, blank=True)
+    unique_code = models.CharField(max_length=250, verbose_name=_('Unique code'), unique=True)
     description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
     price = models.FloatField(verbose_name=_('Price'), default=0.0)
     manufacturer = models.ForeignKey('Manufacturer', verbose_name=_('Manufacturer'), null=True, blank=True)
@@ -79,6 +81,16 @@ class Product(models.Model):
     def clean(self, *args, **kwargs):
         if not self.slug:
             self.slug = set_slug(Product, self.name, length=60)
+
+        if not self.articul:
+            self.articul = id_generator(size=15)
+        if not self.unique_code:
+            if self.manufacturer:
+                manufacturer = self.manufacturer.name
+            else:
+                manufacturer = ''
+            unique_code_string = '{}{}{}'.format(self.name, manufacturer, self.articul)
+            self.unique_code = sha256(unique_code_string)
 
     def get_main_images(self):
         return self.image_set.all().filter(is_main=True)
@@ -203,7 +215,7 @@ class ImageTypeCategoryRelation(models.Model):
 
 
 class Image(models.Model):
-    image = FileBrowseField("Image", max_length=200, directory=os.path.join(settings.MEDIA_ROOT, 'img', 'shop'),
+    image = FileBrowseField("Image", max_length=200, directory=os.path.join(MEDIA_ROOT, 'img', 'shop'),
                             blank=True, null=True)
     name = models.CharField(max_length=255, verbose_name=_('Name'), blank=True, null=True)
     product = models.ForeignKey(Product, verbose_name=_('Product'))
@@ -211,7 +223,7 @@ class Image(models.Model):
     is_main = models.BooleanField(default=False, verbose_name=_('Is Main'))
 
     def __unicode__(self):
-        return '%s [%s%s]' % (self.name, settings.MEDIA_ROOT, self.image)
+        return '%s [%s%s]' % (self.name, MEDIA_ROOT, self.image)
 
     class Meta:
         ordering = ['image_type', 'name']
@@ -222,7 +234,7 @@ class Image(models.Model):
 class Manufacturer(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Manufacturer'), unique=True)
     description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
-    logo = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT, 'img', 'shop', 'manufacturers'), verbose_name=_('Logo'),
+    logo = models.ImageField(upload_to=os.path.join(MEDIA_ROOT, 'img', 'shop', 'manufacturers'), verbose_name=_('Logo'),
                              null=True, blank=True)
 
     # Contacts

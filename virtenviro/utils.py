@@ -1,10 +1,14 @@
 #~*~ coding: utf-8 ~*~
+import os
 import string
+from django.conf import settings
 from datetime import date
-import random
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from pytils.translit import slugify
+import random
+from virtenviro.shop.models import *
 
+UPLOAD_PATH = getattr(settings, 'UPLOAD_PATH', 'upload')
 
 
 def set_slug(model, src, length=60):
@@ -14,6 +18,7 @@ def set_slug(model, src, length=60):
         slug = set_slug(model, slug, length)
     except model.DoesNotExist:
         return slug
+
 
 def set_main_images():
     production = Product.objects.all()
@@ -31,6 +36,7 @@ def set_main_images():
                     print 'Product %s [%s] has no image' % (product.title, product.pk)
                 except:
                     print 'Product RUS [%s] has no image' % (product.pk)
+
 
 def set_any_image():
     production = Product.objects.all()
@@ -53,15 +59,19 @@ def set_any_image():
                         break
     print 'I\'ve set %s images' % i
 
+
 def handle_uploads(request, keys):
     saved = {}
-
-    upload_dir = date.today().strftime(settings.UPLOAD_PATH)
+    # directory to upload
+    upload_dir = date.today().strftime(UPLOAD_PATH)
+    # full path
     upload_full_path = os.path.join(settings.STATIC_ROOT, upload_dir)
 
+    # check and make upload_full_path
     if not os.path.exists(upload_full_path):
         os.makedirs(upload_full_path)
 
+    # read request.FILES and write files
     for key in keys:
         if key in request.FILES:
             upload = request.FILES[key]
@@ -76,8 +86,9 @@ def handle_uploads(request, keys):
     return saved
 
 
-def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+def id_generator(size=6, chars=string.ascii_uppercase + string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
+
 
 def paginate(objects, page=1, count=10):
     paginator = Paginator(objects, count)
@@ -89,3 +100,10 @@ def paginate(objects, page=1, count=10):
         pages = paginator.page(paginator.num_pages)
 
     return pages
+
+
+def sha256(str):
+    import hashlib
+    m = hashlib.sha256()
+    m.update(str)
+    return m.digest()

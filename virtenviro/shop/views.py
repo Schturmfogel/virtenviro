@@ -1,14 +1,16 @@
 #~*~ coding: utf-8 ~*~
 import urllib2
-
 from django.template import RequestContext
 from django.shortcuts import render_to_response, render
 from django.http import Http404
+from django.conf import settings
 from lxml import etree
-
-from virtenviro.shop.models import *
+from forms import SimpleXmlImportForm
+from models import *
 from virtenviro.shop.navigation import Navigation
-from virtenviro.utils import id_generator
+from virtenviro.utils import id_generator, handle_uploads, sha256
+
+MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
 
 
 def navigation(request, slug=None):
@@ -36,85 +38,105 @@ def navigation(request, slug=None):
     return render_to_response('base.html', context, context_instance = RequestContext(request))
 
 
-def import_xml(request):
-    from virtenviro.shop.forms import XmlImportForm
+def import_simple_xml(request):
     if request.method == 'POST':
-        form = XmlImportForm(request.POST, request.FILES)
+        form = SimpleXmlImportForm(request.POST, request.FILES)
         if form.is_valid():
-            from virtenviro.utils import handle_uploads
             saved_file = handle_uploads(request, ['xml_file',])['xml_file']
             xml_import(
-                os.path.join(settings.MEDIA_ROOT, saved_file),
-                default_category=form.cleaned_data['category'],
-                default_image_type=form.cleaned_data['image_type'],
-                images_path=form.cleaned_data['images_path'],
-                parsed_from=form.cleaned_data['parsed_path'],
-                parent=form.cleaned_data['parent'])
+                init_tree(os.path.join(MEDIA_ROOT, saved_file)))
     else:
-        form = XmlImportForm()
+        form = SimpleXmlImportForm()
 
-    return render(request, 'market/xml_import.html', {'form': form,})
+    return render(request, 'virtenviro/shop/xml_import.html', {'form': form,})
 
 
-def xml_import(xml_file, default_category, default_image_type, images_path=None, parsed_from=None, parent=None):
+def init_tree(xml_file):
     parser = etree.XMLParser(remove_blank_text=True)
-    tree = etree.parse(xml_file, parser)
-    
-    parse_shop(tree=tree, default_category=default_category, default_image_type=default_image_type,
-        root_item='.//PRODUCT', is_group=True, images_path=images_path, parsed_from=parsed_from)
+    return etree.parse(xml_file, parser)
 
 
-def parse_shop(tree, default_category, default_image_type, root_item='.//PRODUCT', is_group=False, images_path=None, parsed_from=None):
-    for xml_product in tree.findall(root_item):
-        has_main_image = False
-        # create category
-        product = create_product(name=xml_product.find('NAME').text, parent=parent, articul=xml_product.find('ARTICUL').text, description=xml_product.find('DESCRIPTION').text, default_category=default_category)
-        for xml_image in xml_product.findall('IMAGE'):
-            try:
-                image_link = xml_image.find('img')
-                image_url = image_link.attrib['src']
-                image_title = image_link.attrib['title']
-                if image_url.starts_with('http'):
-                    image_download = True
-                else:
-                    image_download = False
-                create_image(url=image_url, title=image_title, product=product, image_type_name=u'DKC', download=image_download)
-            except:
-                pass
+def xml_import(tree):
+    for xml_product in tree.findall('.//product'):
+        xml_name = xml_product.find('name').text
+        try:
+            xml_category = xml_product.find('category').text
+        except:
+            xml_category = ''
+        try:
+            xml_description = xml_product.find('description').text
+        except:
+            xml_description = ''
+        try:
+            xml_manufacturer = xml_product.find('manufacturer').text
+        except:
+            xml_manufacturer = ''
+        try:
+            xml_articul = xml_product.find('articul').text
+        except:
+            xml_articul = id_generator(15)
 
+        unique_code_string = '{}{}{}'.format(xml_name, xml_manufacturer, xml_articul)
+        unique_code = sha256(unique_code_string)
 
-def create_product(name, parent, articul, description=None, default_category = None):
-    """
-
-    :param name:
-    :param parent:
-    :param articul:
-    :param description:
-    :param default_category:
-    :return:
-    """
-    try:
-        product = Product.objects.get(name=name)
-    except Product.DoesNotExist:
-        product = Product()
-        product.name = name
-    product.articul = articul
-    product.description = description
-    product.parent = parent
-
-    product.save()
-    return product
-
-
-def create_parents(parents, default_category):
-    for i in range(len(parents)):
-        if i == 0:
-            product = create_product(name=parents[i], parent=None, is_group=True, default_category=default_category)
+        if not xml_manufacturer == '':
+            manufacturer = Manufacturer.objects.get_or_create(name=xml_manufacturer)
         else:
-            product = create_product(name=parents[i], parent=parents[i-1], is_group=True, default_category=default_category)
-    return product
+            manufacturer = None
 
+        if not xml_category == '':
+            category = Category.objects.get_or_create(name=xml_category, defaults={
+                'parent': None
+            })
+        else:
+            category = None
+        product = Product.objects.get_or_create(unique_code=unique_code, defaults={
+            'name': xml_name,
+            'description': xml_description,
+            'category': category,
+            'manufacturer': manufacturer,
+            'articul': xml_articul,
+        })
+        for xml_image in xml_product.findall('photo'):
+            xml_image_attribs = xml_image.attrib
+            if xml_image_attribs.get('type', False):
+                image_type = ImageType.objects.get_or_create(name=xml_image_attribs['type'])
+            else:
+                image_type = None
+            if not category is None:
+                image_type_category = ImageTypeCategoryRelation.objects.get_or_create(image_type=image_type,
+                                                                                      category=category,
+                                                                                      defaults={'max_count': 4})
+            image = Image()
+            image.name = product.name
+            image.image = xml_image.text
+            image.image_type = image_type
+            image.product = product
+            image.is_main = False if product.has_main_image() else True
+            image.save()
+        #todo: import properties
+        for xml_property in xml_product.findall('property'):
+            if xml_property.text:
+                xml_property_attribs = xml_property.attrib
+                property_type = PropertyType.objects.get_or_create(name=xml_property_attribs['name'], defults={
+                    'data_type': xml_property_attribs.get('type', -3)
+                })
+                if category:
+                    property_type_category_relation = PropertyTypeCategoryRelation.objects.get_or_create(
+                        property_type=property_type,
+                        category=category,
+                        defaults={
+                            'max_count': 1,
+                        }
+                    )
 
+                property = Property.objects.get_or_create(
+                    property_type=property_type,
+                    value=xml_property.text,
+                    product=product
+                )
+
+'''
 def create_image(url, title, product, image_type_name = None, download=False):
     try:
         image_type = ImageType.objects.get(name=image_type_name)
@@ -142,3 +164,4 @@ def create_image(url, title, product, image_type_name = None, download=False):
     image.image = certificate_file
     image.product = product
     image.save()
+'''
