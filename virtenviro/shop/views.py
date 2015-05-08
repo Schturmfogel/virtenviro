@@ -79,17 +79,17 @@ def xml_import(tree):
         unique_code = sha256(unique_code_string)
 
         if not xml_manufacturer == '':
-            manufacturer = Manufacturer.objects.get_or_create(name=xml_manufacturer)
+            manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer)
         else:
             manufacturer = None
 
         if not xml_category == '':
-            category = Category.objects.get_or_create(name=xml_category, defaults={
+            category, created = Category.objects.get_or_create(name=xml_category, defaults={
                 'parent': None
             })
         else:
             category = None
-        product = Product.objects.get_or_create(unique_code=unique_code, defaults={
+        product, created = Product.objects.get_or_create(unique_code=unique_code, defaults={
             'name': xml_name,
             'description': xml_description,
             'category': category,
@@ -99,11 +99,11 @@ def xml_import(tree):
         for xml_image in xml_product.findall('photo'):
             xml_image_attribs = xml_image.attrib
             if xml_image_attribs.get('type', False):
-                image_type = ImageType.objects.get_or_create(name=xml_image_attribs['type'])
+                image_type, created = ImageType.objects.get_or_create(name=xml_image_attribs['type'])
             else:
                 image_type = None
             if not category is None:
-                image_type_category = ImageTypeCategoryRelation.objects.get_or_create(image_type=image_type,
+                image_type_category, created = ImageTypeCategoryRelation.objects.get_or_create(image_type=image_type,
                                                                                       category=category,
                                                                                       defaults={'max_count': 4})
             image = Image()
@@ -117,7 +117,7 @@ def xml_import(tree):
         for xml_property in xml_product.findall('property'):
             if xml_property.text:
                 xml_property_attribs = xml_property.attrib
-                property_type = PropertyType.objects.get_or_create(name=xml_property_attribs['name'], defults={
+                property_type, created = PropertyType.objects.get_or_create(name=xml_property_attribs['name'], defults={
                     'data_type': xml_property_attribs.get('type', -3)
                 })
                 if category:
@@ -129,7 +129,7 @@ def xml_import(tree):
                         }
                     )
 
-                property = Property.objects.get_or_create(
+                property, created = Property.objects.get_or_create(
                     property_type=property_type,
                     value=xml_property.text,
                     product=product
