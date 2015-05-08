@@ -89,7 +89,7 @@ def xml_import(tree):
             })
         else:
             category = None
-        '''
+
         product, created = Product.objects.get_or_create(unique_code=unique_code, defaults={
             'name': xml_name,
             'description': xml_description,
@@ -139,7 +139,7 @@ def xml_import(tree):
                     value=xml_property.text,
                     product=product
                 )
-        '''
+
 
 '''
 def create_image(url, title, product, image_type_name = None, download=False):
