@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0004_product_unique_code'),
+        ('shop', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='product',
             name='unique_code',
-            field=models.CharField(unique=True, max_length=250, verbose_name='Unique code', blank=True),
+            field=models.CharField(unique=True, max_length=250, verbose_name='Unique code', blank=True, unique=True),
         ),
     ]
