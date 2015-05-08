@@ -90,11 +90,11 @@ def xml_import(tree):
         else:
             category = None
         product = Product.objects.get_or_create(unique_code=unique_code, defaults={
-            'name': xml_name,
-            'description': xml_description,
+            'name': unicode(xml_name),
+            'description': unicode(xml_description),
             'category': category,
             'manufacturer': manufacturer,
-            'articul': xml_articul,
+            'articul': unicode(xml_articul),
         })
         for xml_image in xml_product.findall('photo'):
             xml_image_attribs = xml_image.attrib
