@@ -76,7 +76,7 @@ def xml_import(tree):
             xml_articul = id_generator(15)
 
         unique_code_string = '%s%s%s' % (xml_name, xml_manufacturer, xml_articul)
-        unique_code = sha256(unique_code_string)
+        unique_code = sha256(unique_code_string.replace(' ','').replace('"', ''))
 
         if not xml_manufacturer == '':
             manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer)
