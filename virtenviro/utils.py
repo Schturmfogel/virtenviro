@@ -104,3 +104,5 @@ def sha256(str):
     m = hashlib.sha256()
     m.update(str)
     return m.digest()
+
+#end
