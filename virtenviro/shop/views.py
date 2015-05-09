@@ -106,6 +106,8 @@ def xml_import(tree):
             articul=xml_articul,
             unique_code=unique_code
         )
+        product.save()
+        
         for xml_image in xml_product.findall('photo'):
             xml_image_attribs = xml_image.attrib
             if xml_image_attribs.get('type', False):
