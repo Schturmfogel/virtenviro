@@ -60,6 +60,10 @@ def set_any_image():
     print 'I\'ve set %s images' % i
 
 
+def ucode(str, encoding="utf-8", errors="ignore"):
+    return unicode(str, encoding=encoding, errors=errors)
+
+
 def handle_uploads(request, keys):
     saved = {}
     upload_full_path = os.path.join(settings.STATIC_ROOT, 'upload')

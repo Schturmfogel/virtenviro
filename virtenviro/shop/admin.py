@@ -97,22 +97,8 @@ class ProductAdmin(admin.ModelAdmin):
         return ('<a href="/admin/shop/product/add/?category=%s&parent=%s" class="addlink" onclick="return showAddAnotherPopup(this);">%s</a>' % (obj.category.id, obj.id, u'Добавить продукт'))
     add_product_link.allow_tags = True
     
-    def get_form(self, request, obj = None, **kwargs):
+    def get_form(self, request, obj=None, **kwargs):
         form = super(ProductAdmin, self).get_form(request, obj, **kwargs)
-        if request.GET.has_key('category'):
-            category_id = request.GET['category']
-        elif request.POST.has_key('category'):
-            category_id = request.POST['category']
-        #elif obj.category.id:
-        #    category_id = obj.category.id
-        else:
-            category_id = None
-        if category_id:
-            form.base_fields['category'].queryset = form.base_fields['category'].queryset.filter(id = category_id)
-            if request.GET.has_key('parent'):
-                form.base_fields['category'].queryset = form.base_fields['category'].queryset.filter(id = request.GET['parent'])
-            else:
-                form.base_fields['category'].queryset = form.base_fields['category'].queryset.filter(category = category_id, is_group = True)
         return form
 
     def lookup_allowed(self, lookup, value):

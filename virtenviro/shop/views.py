@@ -8,7 +8,7 @@ from lxml import etree
 from forms import SimpleXmlImportForm
 from models import *
 from virtenviro.shop.navigation import Navigation
-from virtenviro.utils import id_generator, handle_uploads, sha256
+from virtenviro.utils import id_generator, handle_uploads, sha256, ucode
 
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
 
@@ -76,7 +76,7 @@ def xml_import(tree):
             xml_articul = id_generator(15)
 
         unique_code_string = '%s%s%s' % (xml_name, xml_manufacturer, xml_articul)
-        unique_code = sha256(unique_code_string)
+        unique_code = sha256(ucode(unique_code_string))
 
         if not xml_manufacturer == '':
             manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer)
