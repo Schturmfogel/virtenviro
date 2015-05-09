@@ -86,7 +86,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'childs_link', 'add_product_link', 'price', 'ordering')
     list_filter = ('category', )
     list_editable = ('price', 'ordering')
-    def childs_link(self,obj):
+    def childs_link(self, obj):
         if (obj.is_group):
             return ('<a href="?parent__id__exact=%s">%s</a>' % (obj.id, u'Следующий уровень'))
         else:

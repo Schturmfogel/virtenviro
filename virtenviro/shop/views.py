@@ -9,6 +9,7 @@ from forms import SimpleXmlImportForm
 from models import *
 from virtenviro.shop.navigation import Navigation
 from virtenviro.utils import id_generator, handle_uploads, sha256, ucode
+from pytils.translit import slugify
 
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
 
@@ -76,7 +77,7 @@ def xml_import(tree):
             xml_articul = id_generator(15)
 
         unique_code_string = '%s%s%s' % (xml_name, xml_manufacturer, xml_articul)
-        unique_code = sha256(unique_code_string)
+        unique_code = sha256(unique_code_string.replace(' ', '').replace('\'', '').replace('"', ''))
 
         if not xml_manufacturer == '':
             manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer)
@@ -89,15 +90,17 @@ def xml_import(tree):
             })
         else:
             category = None
-        '''
+
         product, created = Product.objects.get_or_create(unique_code=unique_code, defaults={
             'name': xml_name,
+            'slug': slugify(xml_name),
             'description': xml_description,
             'category': category,
             'manufacturer': manufacturer,
             'articul': xml_articul
         })
         '''
+
         product = Product(
             name=xml_name,
             description=xml_description,
@@ -107,7 +110,8 @@ def xml_import(tree):
             unique_code=unique_code
         )
         product.save()
-        
+        '''
+
         for xml_image in xml_product.findall('photo'):
             xml_image_attribs = xml_image.attrib
             if xml_image_attribs.get('type', False):
