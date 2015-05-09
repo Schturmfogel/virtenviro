@@ -57,26 +57,26 @@ def init_tree(xml_file):
 
 def xml_import(tree):
     for xml_product in tree.findall('.//product'):
-        xml_name = xml_product.find('name').text
+        xml_name = ucode(xml_product.find('name').text)
         try:
-            xml_category = xml_product.find('category').text
+            xml_category = ucode(xml_product.find('category').text)
         except:
             xml_category = ''
         try:
-            xml_description = xml_product.find('description').text
+            xml_description = ucode(xml_product.find('description').text)
         except:
             xml_description = ''
         try:
-            xml_manufacturer = xml_product.find('manufacturer').text
+            xml_manufacturer = ucode(xml_product.find('manufacturer').text)
         except:
             xml_manufacturer = ''
         try:
-            xml_articul = xml_product.find('articul').text
+            xml_articul = ucode(xml_product.find('articul').text)
         except:
             xml_articul = id_generator(15)
 
         unique_code_string = '%s%s%s' % (xml_name, xml_manufacturer, xml_articul)
-        unique_code = sha256(ucode(unique_code_string))
+        unique_code = sha256(unique_code_string)
 
         if not xml_manufacturer == '':
             manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer)
