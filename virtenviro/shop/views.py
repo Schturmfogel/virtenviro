@@ -89,7 +89,7 @@ def xml_import(tree):
             })
         else:
             category = None
-
+        '''
         product, created = Product.objects.get_or_create(unique_code=unique_code, defaults={
             'name': xml_name,
             'description': xml_description,
@@ -97,6 +97,15 @@ def xml_import(tree):
             'manufacturer': manufacturer,
             'articul': xml_articul
         })
+        '''
+        product = Product(
+            name=xml_name,
+            description=xml_description,
+            category=category,
+            manufacturer=manufacturer,
+            articul=xml_articul,
+            unique_code=unique_code
+        )
         for xml_image in xml_product.findall('photo'):
             xml_image_attribs = xml_image.attrib
             if xml_image_attribs.get('type', False):
