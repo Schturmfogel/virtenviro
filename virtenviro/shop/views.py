@@ -77,9 +77,10 @@ def xml_import(tree):
                 xml_articul = xml_product.find('articul').text
             except:
                 xml_articul = id_generator(15)
-
+            '''
             unique_code_string = unicode.join(u'', [xml_name, xml_manufacturer, xml_articul])
             unique_code = sha256(unique_code_string)
+            '''
 
             if not xml_manufacturer == '':
                 manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer)
@@ -93,14 +94,16 @@ def xml_import(tree):
             else:
                 category = None
 
-            product, created = Product.objects.get_or_create(unique_code=unique_code, defaults={
-                'name': xml_name,
-                'slug': slugify(xml_name),
-                'description': xml_description,
-                'category': category,
-                'manufacturer': manufacturer,
-                'articul': xml_articul
-            })
+            product, created = Product.objects.get_or_create(
+                name=xml_name,
+                manufacturer=manufacturer,
+                category=category,
+                defaults={
+                    'slug': slugify(xml_name),
+                    'description': xml_description,
+                    'articul': xml_articul
+                }
+            )
             '''
 
             product = Product(

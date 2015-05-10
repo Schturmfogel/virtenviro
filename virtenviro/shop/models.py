@@ -59,7 +59,11 @@ class Product(models.Model):
     category = models.ForeignKey(Category, verbose_name=_('Category'), related_name='children', null=True, blank=True)
     subcategory = models.ManyToManyField(Category, verbose_name=_('Subcategory'), related_name='products', blank=True)
     articul = models.CharField(max_length=200, verbose_name=_('Articul'), null=True, blank=True)
-    unique_code = models.CharField(max_length=250, verbose_name=_('Unique code'), unique=True, blank=True)
+    '''
+    Так как не удалось при импорте сгенерировать корректные unique_code, и данные могут быть не полные или не совпадать,
+    то решено временно или навсегда удалить это поле
+    #unique_code = models.CharField(max_length=250, verbose_name=_('Unique code'), unique=True, blank=True)
+    '''
     description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
     price = models.FloatField(verbose_name=_('Price'), default=0.0)
     manufacturer = models.ForeignKey('Manufacturer', verbose_name=_('Manufacturer'), null=True, blank=True)
@@ -84,6 +88,7 @@ class Product(models.Model):
 
         if not self.articul:
             self.articul = id_generator(size=15)
+        '''
         if not self.unique_code:
             if self.manufacturer:
                 manufacturer = self.manufacturer.name
@@ -91,6 +96,7 @@ class Product(models.Model):
                 manufacturer = ''
             unique_code_string = '{}{}{}'.format(self.name, manufacturer, self.articul)
             self.unique_code = sha256(unique_code_string)
+        '''
 
     def get_main_images(self):
         return self.image_set.all().filter(is_main=True)
