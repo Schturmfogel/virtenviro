@@ -58,7 +58,6 @@ def init_tree(xml_file):
 
 
 def xml_import(tree):
-    logger = Logger('import_xml.txt')
     for xml_product in tree.findall('.//product'):
         xml_name = ucode(xml_product.find('name').text)
         try:
@@ -158,9 +157,8 @@ def xml_import(tree):
                         product=product
                     )
         except:
-            logger.write('%s\t|\t can not import' % xml_name)
+            logger = Logger('import_xml.txt', '%s\t|\t can not import' % xml_name)
 
-        logger.close()
 
 
 '''
