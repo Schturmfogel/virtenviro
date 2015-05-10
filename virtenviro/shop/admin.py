@@ -83,19 +83,10 @@ class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
     valid_lookups = ('parent')
     
-    list_display = ('name', 'childs_link', 'add_product_link', 'price', 'ordering')
+    list_display = ('name', 'price', 'ordering')
     list_filter = ('category', )
     list_editable = ('price', 'ordering')
-    def childs_link(self, obj):
-        if (obj.is_group):
-            return ('<a href="?parent__id__exact=%s">%s</a>' % (obj.id, u'Следующий уровень'))
-        else:
-            return ''
-    childs_link.allow_tags = True
-    
-    def add_product_link(self, obj):
-        return ('<a href="/admin/shop/product/add/?category=%s&parent=%s" class="addlink" onclick="return showAddAnotherPopup(this);">%s</a>' % (obj.category.id, obj.id, u'Добавить продукт'))
-    add_product_link.allow_tags = True
+
     
     def get_form(self, request, obj=None, **kwargs):
         form = super(ProductAdmin, self).get_form(request, obj, **kwargs)
@@ -112,7 +103,7 @@ class ProductAdmin(admin.ModelAdmin):
             '/media/js/ckeditor/ckeditor.js',
             '/static/filebrowser/js/FB_CKEditor.js',
         )
-        css = { 'all': ('/media/css/ckeditor.css',),}
+        css = {'all': ('/media/css/ckeditor.css',),}
     
 class CategoryAdmin(admin.ModelAdmin):
     search_fields = ['name']
