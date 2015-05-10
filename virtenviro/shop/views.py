@@ -142,9 +142,12 @@ def xml_import(tree):
             for xml_property in xml_product.findall('property'):
                 if xml_property.text:
                     xml_property_attribs = xml_property.attrib
-                    property_type, created = PropertyType.objects.get_or_create(name=xml_property_attribs['name'], defults={
-                        'data_type': xml_property_attribs.get('type', -3)
-                    })
+                    property_type, created = PropertyType.objects.get_or_create(
+                        name=xml_property_attribs['name'],
+                        defaults={
+                            'data_type': xml_property_attribs.get('type', -3)
+                        }
+                    )
                     if category:
                         property_type_category_relation = PropertyTypeCategoryRelation.objects.get_or_create(
                             property_type=property_type,
