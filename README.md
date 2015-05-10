@@ -37,4 +37,13 @@ pip install git+git://github.com/Haikson/virtenviro.git#virtenviro
 * Add User registration and authorisation
 * Blogging functionality
 * E-commerce application
-* Create portfolio functionality as standalone app 
+* Create portfolio functionality as standalone app
+
+## SHOP
+
+### importing goods
+
+ * simple xml format for virtenviro.shop . [Link]
+ * do not forget set uwsgi_read_timeout longer. Improting is a long process/
+ 
+ 
