@@ -158,7 +158,7 @@ def xml_import(tree):
                     )
         except Exception as inst:
             src = 'import_xml.txt', '%s\t|\t can not import' % xml_name
-            src += '\t|\t%s\t|\t%s' % (type(inst), inst.args)
+            src = '%s\t|\t%s\t|\t%s' % (src, type(inst), inst.args)
             logger = Logger(src)
 
 
