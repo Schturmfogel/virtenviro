@@ -1,15 +1,16 @@
 #~*~ coding: utf-8 ~*~
-import urllib2
 from django.template import RequestContext
 from django.shortcuts import render_to_response, render
 from django.http import Http404
-from django.conf import settings
 from lxml import etree
+from pytils.translit import slugify
+
 from forms import SimpleXmlImportForm
 from models import *
+from virtenviro.logger import Logger
 from virtenviro.shop.navigation import Navigation
 from virtenviro.utils import id_generator, handle_uploads, sha256, ucode
-from pytils.translit import slugify
+
 
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
 
@@ -57,103 +58,109 @@ def init_tree(xml_file):
 
 
 def xml_import(tree):
+    logger = Logger('import_xml.txt')
     for xml_product in tree.findall('.//product'):
         xml_name = ucode(xml_product.find('name').text)
         try:
-            xml_category = ucode(xml_product.find('category').text)
-        except:
-            xml_category = ''
-        try:
-            xml_description = ucode(xml_product.find('description').text)
-        except:
-            xml_description = ''
-        try:
-            xml_manufacturer = ucode(xml_product.find('manufacturer').text)
-        except:
-            xml_manufacturer = ''
-        try:
-            xml_articul = ucode(xml_product.find('articul').text)
-        except:
-            xml_articul = id_generator(15)
+            try:
+                xml_category = ucode(xml_product.find('category').text)
+            except:
+                xml_category = ''
+            try:
+                xml_description = ucode(xml_product.find('description').text)
+            except:
+                xml_description = ''
+            try:
+                xml_manufacturer = ucode(xml_product.find('manufacturer').text)
+            except:
+                xml_manufacturer = ''
+            try:
+                xml_articul = ucode(xml_product.find('articul').text)
+            except:
+                xml_articul = id_generator(15)
 
-        unique_code_string = '%s%s%s' % (xml_name, xml_manufacturer, xml_articul)
-        unique_code = sha256(ucode(unique_code_string).decode('utf-8'))
+            unique_code_string = '%s%s%s' % (xml_name, xml_manufacturer, xml_articul)
+            unique_code = sha256(ucode(unique_code_string).decode('utf-8'))
 
-        if not xml_manufacturer == '':
-            manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer)
-        else:
-            manufacturer = None
-
-        if not xml_category == '':
-            category, created = Category.objects.get_or_create(name=xml_category, defaults={
-                'parent': None
-            })
-        else:
-            category = None
-
-        product, created = Product.objects.get_or_create(unique_code=unique_code, defaults={
-            'name': xml_name,
-            'slug': slugify(xml_name),
-            'description': xml_description,
-            'category': category,
-            'manufacturer': manufacturer,
-            'articul': xml_articul
-        })
-        '''
-
-        product = Product(
-            name=xml_name,
-            description=xml_description,
-            category=category,
-            manufacturer=manufacturer,
-            articul=xml_articul,
-            unique_code=unique_code
-        )
-        product.save()
-        '''
-
-        for xml_image in xml_product.findall('photo'):
-            xml_image_attribs = xml_image.attrib
-            if xml_image_attribs.get('type', False):
-                image_type, created = ImageType.objects.get_or_create(name=xml_image_attribs['type'])
+            if not xml_manufacturer == '':
+                manufacturer, created = Manufacturer.objects.get_or_create(name=xml_manufacturer)
             else:
-                image_type = None
-            if not category is None:
-                image_type_category, created = ImageTypeCategoryRelation.objects.get_or_create(
-                    image_type=image_type,
-                    category=category,
-                    defaults={
-                        'max_count': 4
-                    }
-                )
-            image = Image()
-            image.name = product.name
-            image.image = xml_image.text
-            image.image_type = image_type
-            image.product = product
-            image.is_main = False if product.has_main_image() else True
-            image.save()
-        #todo: import properties
-        for xml_property in xml_product.findall('property'):
-            if xml_property.text:
-                xml_property_attribs = xml_property.attrib
-                property_type, created = PropertyType.objects.get_or_create(name=xml_property_attribs['name'], defults={
-                    'data_type': xml_property_attribs.get('type', -3)
+                manufacturer = None
+
+            if not xml_category == '':
+                category, created = Category.objects.get_or_create(name=xml_category, defaults={
+                    'parent': None
                 })
-                if category:
-                    property_type_category_relation = PropertyTypeCategoryRelation.objects.get_or_create(
-                        property_type=property_type,
+            else:
+                category = None
+
+            product, created = Product.objects.get_or_create(unique_code=unique_code, defaults={
+                'name': xml_name,
+                'slug': slugify(xml_name),
+                'description': xml_description,
+                'category': category,
+                'manufacturer': manufacturer,
+                'articul': xml_articul
+            })
+            '''
+
+            product = Product(
+                name=xml_name,
+                description=xml_description,
+                category=category,
+                manufacturer=manufacturer,
+                articul=xml_articul,
+                unique_code=unique_code
+            )
+            product.save()
+            '''
+
+            for xml_image in xml_product.findall('photo'):
+                xml_image_attribs = xml_image.attrib
+                if xml_image_attribs.get('type', False):
+                    image_type, created = ImageType.objects.get_or_create(name=xml_image_attribs['type'])
+                else:
+                    image_type = None
+                if not category is None:
+                    image_type_category, created = ImageTypeCategoryRelation.objects.get_or_create(
+                        image_type=image_type,
                         category=category,
                         defaults={
-                            'max_count': 1,
+                            'max_count': 4
                         }
                     )
+                image = Image()
+                image.name = product.name
+                image.image = xml_image.text
+                image.image_type = image_type
+                image.product = product
+                image.is_main = False if product.has_main_image() else True
+                image.save()
+            #todo: import properties
+            for xml_property in xml_product.findall('property'):
+                if xml_property.text:
+                    xml_property_attribs = xml_property.attrib
+                    property_type, created = PropertyType.objects.get_or_create(name=xml_property_attribs['name'], defults={
+                        'data_type': xml_property_attribs.get('type', -3)
+                    })
+                    if category:
+                        property_type_category_relation = PropertyTypeCategoryRelation.objects.get_or_create(
+                            property_type=property_type,
+                            category=category,
+                            defaults={
+                                'max_count': 1,
+                            }
+                        )
 
-                property, created = Property.objects.get_or_create(
-                    property_type=property_type,
-                    value=xml_property.text,
-                    product=product
-                )
+                    property, created = Property.objects.get_or_create(
+                        property_type=property_type,
+                        value=xml_property.text,
+                        product=product
+                    )
+        except:
+            logger.write('%s\t|\t can not import' % xml_name)
+
+        logger.close()
 
 
 '''
