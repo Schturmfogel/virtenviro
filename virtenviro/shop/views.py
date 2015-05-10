@@ -133,7 +133,7 @@ def xml_import(tree):
                     )
                 image = Image()
                 image.name = product.name
-                image.image = xml_image.text
+                image.image = '/img/shop/'+xml_image.text
                 image.image_type = image_type
                 image.product = product
                 image.is_main = False if product.has_main_image() else True
