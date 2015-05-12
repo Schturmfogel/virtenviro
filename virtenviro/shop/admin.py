@@ -131,7 +131,7 @@ class PropertySlugInline(admin.StackedInline):
 
     def __init__(self, *args, **kwargs):
         super(PropertySlugInline, self).__init__(*args, **kwargs)
-        value_choices = Property.objects.grouped(property_type=self.instance.property_type)
+        value_choices = Property.objects.grouped(property_type=self.property_type)
         self.fields['value'].widget = forms.Select(choices=value_choices)
 
 
