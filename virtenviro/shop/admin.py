@@ -146,14 +146,6 @@ class PropertyTypeAdmin(admin.ModelAdmin):
         PropertySlugInline,
     ]
 
-    def get_inline_instances(self, request, obj=None, *args, **kwargs):
-        inlines = []
-        property_slug_inline = PropertySlugInline(self.model, self.admin_site)
-        property_slug_inline._parent_instance = obj
-        property_slug_inline.set_value(request, obj)
-        inlines.append(property_slug_inline)
-        return inlines
-
 
 class PropertyTypeCategoryRelationAdmin(admin.ModelAdmin):
     list_display = ('property_type', 'category', 'slug', 'max_count')
