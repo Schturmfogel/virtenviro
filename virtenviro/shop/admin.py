@@ -11,6 +11,7 @@ from virtenviro.shop.models import Product,\
 class APInline(admin.TabularInline):
     model = Property
     extra = 4
+
     def formfield_for_foreignkey(self, db_field, request = None, **kwargs):
         field = super(APInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
         category_id = None
@@ -28,7 +29,7 @@ class APInline(admin.TabularInline):
                     pass
         if category_id:
             if db_field.name == 'additional_property_type':
-                field.queryset = field.queryset.filter(category = category_id)
+                field.queryset = field.queryset.filter(category=category_id)
         return field
     
 class APTInline(admin.TabularInline):
@@ -125,6 +126,23 @@ class PropertyTypeAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 
+class PropertySlugInline(admin.StackedInline):
+    model = PropertySlug
+
+    def __init__(self, *args, **kwargs):
+        super(PropertySlugInline, self).__init__(*args, **kwargs)
+        value_choices = Property.objects.grouped(property_type=self.instance.property_type)
+        self.fields['value'].widget = forms.Select(choices=value_choices)
+
+
+class PropertyTypeCategoryRelationAdmin(admin.ModelAdmin):
+    list_display = ('property_type__title', 'category__title', 'slug', 'count')
+    list_editable = ('slug', 'count')
+    inlines = [
+        PropertySlugInline,
+    ]
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Property)
@@ -133,7 +151,7 @@ admin.site.register(Image)
 admin.site.register(ImageType)
 admin.site.register(Manufacturer)
 admin.site.register(PropertySlug)
-admin.site.register(PropertyTypeCategoryRelation)
+admin.site.register(PropertyTypeCategoryRelation, PropertyTypeCategoryRelationAdmin)
 admin.site.register(ImageTypeCategoryRelation)
 admin.site.register(Currency)
 admin.site.register(File)

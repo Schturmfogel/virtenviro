@@ -138,7 +138,7 @@ def xml_import(tree):
                 image.product = product
                 image.is_main = False if product.has_main_image() else True
                 image.save()
-            #todo: import properties
+
             for xml_property in xml_product.findall('property'):
                 if xml_property.text:
                     xml_property_attribs = xml_property.attrib

@@ -1,5 +1,6 @@
 # ~*~ coding: utf-8 ~*~
 import os
+from Tools.pynche.Main import docstring
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
@@ -160,10 +161,12 @@ class PropertyType(models.Model):
 class PropertyTypeCategoryRelation(models.Model):
     property_type = models.ForeignKey(PropertyType, verbose_name=_('Property Type'))
     category = models.ForeignKey(Category, verbose_name=_('Category'))
+    # Set maximum number of Property types for category to economy space
     max_count = models.IntegerField(
         default=1,
         verbose_name=_('Count'),
         help_text=_('Maximum number of properties by this property type in category'))
+    # slug to create groups of filters as pages
     slug = models.CharField(max_length=60, verbose_name=_('Slug'), null=True, blank=True)
 
     def __unicode__(self):
@@ -186,6 +189,14 @@ class Property(models.Model):
 
 
 class PropertySlug(models.Model):
+    """
+    This class created to make available create pages categories of goods with filtration by
+    property type and property value.
+    For example:
+        You have shorts.
+        You can group them by property_type "Color". There will be all properties by "color", grouped by "value"
+        You can then get all shorts with color "Red"
+    """
     property_type = models.ForeignKey(PropertyType)
     value = models.TextField(verbose_name=_('Value'))
     slug = models.CharField(max_length=60, verbose_name=_('Slug'))
