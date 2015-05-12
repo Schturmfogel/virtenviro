@@ -126,12 +126,11 @@ class PropertySlugInline(admin.StackedInline):
     model = PropertySlug
     _parent_instance = None
 
-    def set_value(self, *args, **kwargs):
-        if not self._parent_instance is None:
-            value_choices = Property.objects.grouped(property_type=self._parent_instance)
-            self.formfield_overrides = {
-                'value': forms.Select(choices=value_choices)
-            }
+    if not _parent_instance is None:
+        value_choices = Property.objects.grouped(property_type=self._parent_instance)
+        formfield_overrides = {
+            'value': {'widget': forms.Select(choices=value_choices)}
+        }
 
 
 class PropertyTypeAdmin(admin.ModelAdmin):
