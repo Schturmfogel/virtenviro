@@ -124,7 +124,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class PropertySlugInlineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(PropertySlugInline, self).__init__(*args, **kwargs)
+        super(PropertySlugInlineForm, self).__init__(*args, **kwargs)
         value_choices = Property.objects.grouped(property_type=self.instance.property_type)
         self.fields['value'].widget = forms.Select(choices=value_choices)
 
