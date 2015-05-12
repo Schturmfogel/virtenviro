@@ -126,7 +126,7 @@ class PropertySlugInline(admin.StackedInline):
     model = PropertySlug
     _parent_instance = None
 
-    def get_formset(self, *args, **kwargs):
+    def set_value(self, *args, **kwargs):
         if not self._parent_instance is None:
             value_choices = Property.objects.grouped(property_type=self._parent_instance)
             self.formfield_overrides = {
@@ -144,7 +144,7 @@ class PropertyTypeAdmin(admin.ModelAdmin):
         inlines = []
         property_slug_inline = PropertySlugInline(self.model, self.admin_site)
         property_slug_inline._parent_instance = obj
-        property_slug_inline.get_formset(request, obj)
+        property_slug_inline.set_value(request, obj)
         inlines.append(property_slug_inline)
         return inlines
 
