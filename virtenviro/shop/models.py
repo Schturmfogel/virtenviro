@@ -185,6 +185,20 @@ class Property(models.Model):
         verbose_name_plural = _('Properties')
 
 
+class PropertySlug(models.Model):
+    property_type = models.ForeignKey(PropertyType)
+    value = models.TextField(verbose_name=_('Value'))
+    slug = models.CharField(max_length=60, verbose_name=_('Slug'))
+
+    def __unicode__(self):
+        return '%s: %s' % (self.property_type.name, self.value)
+
+    class Meta:
+        ordering = ['value']
+        verbose_name = _('Property slug')
+        verbose_name_plural = _('Property slugs')
+
+
 class File(models.Model):
     file = FileBrowseField("File", max_length=200, directory="files/", blank=True, null=True)
     name = models.CharField(max_length=255, verbose_name=_('Name'), blank=True, null=True)
