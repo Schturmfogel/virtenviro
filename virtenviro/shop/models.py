@@ -196,7 +196,7 @@ class PropertySlug(models.Model):
         You can group them by property_type "Color". There will be all properties by "color", grouped by "value"
         You can then get all shorts with color "Red"
     """
-    property_type = models.ForeignKey(PropertyType)
+    property_type = models.ForeignKey(PropertyType, verbose_name=_('Propert type'))
     value = models.TextField(verbose_name=_('Value'))
     slug = models.CharField(max_length=60, verbose_name=_('Slug'))
 

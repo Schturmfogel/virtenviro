@@ -155,7 +155,7 @@ class PropertyTypeAdmin(admin.ModelAdmin):
     ]
 
     def get_formsets(self, request, obj=None, *args, **kwargs):
-        for inline in self.inline_instances:
+        for inline in self.inlines:
             inline._parent_instance = obj
             yield inline.get_formset(request, obj)
 
