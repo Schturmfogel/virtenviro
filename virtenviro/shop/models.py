@@ -160,8 +160,11 @@ class PropertyType(models.Model):
 class PropertyTypeCategoryRelation(models.Model):
     property_type = models.ForeignKey(PropertyType, verbose_name=_('Property Type'))
     category = models.ForeignKey(Category, verbose_name=_('Category'))
-    max_count = models.IntegerField(default=1, verbose_name=_('Count'),
-                                    help_text=_('Maximum number of properties by this property type in category'))
+    max_count = models.IntegerField(
+        default=1,
+        verbose_name=_('Count'),
+        help_text=_('Maximum number of properties by this property type in category'))
+    slug = models.CharField(max_length=60, verbose_name=_('Slug'), null=True, blank=True)
 
     def __unicode__(self):
         return '%s for %s' % (self.property_type.name, self.category.name)
