@@ -126,13 +126,19 @@ class PropertyTypeAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 
-class PropertySlugInline(admin.StackedInline):
-    model = PropertySlug
-
+class PropertySlugInlineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PropertySlugInline, self).__init__(*args, **kwargs)
-        value_choices = Property.objects.grouped(property_type=self.property_type)
+        value_choices = Property.objects.grouped(property_type=self.instance.property_type)
         self.fields['value'].widget = forms.Select(choices=value_choices)
+
+    class Meta:
+        model = PropertySlug
+
+
+class PropertySlugInline(admin.StackedInline):
+    model = PropertySlug
+    form = PropertySlugInlineForm
 
 
 class PropertyTypeCategoryRelationAdmin(admin.ModelAdmin):
