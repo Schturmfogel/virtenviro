@@ -4,7 +4,8 @@ from django import forms
 
 from virtenviro.shop.models import Product,\
     Category, Property, PropertyType,\
-    Image, ImageType, Manufacturer
+    Image, ImageType, Manufacturer, PropertySlug, PropertyTypeCategoryRelation,\
+    ImageTypeCategoryRelation, Currency, File
 
 
 class APInline(admin.TabularInline):
@@ -42,7 +43,8 @@ class ITInline(admin.TabularInline):
 class ImageInline(admin.TabularInline):
     model = Image
     extra = 5
-    def formfield_for_foreignkey(self, db_field, request = None, **kwargs):
+
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         field = super(ImageInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
         category_id = None
         if request.GET.has_key('category'):
@@ -87,7 +89,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category', )
     list_editable = ('price', 'ordering')
 
-    
     def get_form(self, request, obj=None, **kwargs):
         form = super(ProductAdmin, self).get_form(request, obj, **kwargs)
         return form
@@ -104,6 +105,7 @@ class ProductAdmin(admin.ModelAdmin):
             '/static/filebrowser/js/FB_CKEditor.js',
         )
         css = {'all': ('/media/css/ckeditor.css',),}
+
     
 class CategoryAdmin(admin.ModelAdmin):
     search_fields = ['name']
@@ -118,8 +120,10 @@ class CategoryAdmin(admin.ModelAdmin):
         return ('<a href="/admin/shop/product/?category__id__exact=%s&parent__isnull=True">%s</a>' % (obj.id, u'Продукция'))
     production_link.allow_tags = True
 
+
 class PropertyTypeAdmin(admin.ModelAdmin):
     search_fields = ['title']
+
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
@@ -128,3 +132,8 @@ admin.site.register(PropertyType, PropertyTypeAdmin)
 admin.site.register(Image)
 admin.site.register(ImageType)
 admin.site.register(Manufacturer)
+admin.site.register(PropertySlug)
+admin.site.register(PropertyTypeCategoryRelation)
+admin.site.register(ImageTypeCategoryRelation)
+admin.site.register(Currency)
+admin.site.register(File)

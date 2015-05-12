@@ -6,3 +6,5 @@ from virtenviro.shop.models import *
 class SimpleXmlImportForm(forms.Form):
     # file to parse
     xml_file = forms.FileField()
+
+
