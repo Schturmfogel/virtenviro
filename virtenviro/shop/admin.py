@@ -132,6 +132,7 @@ class PropertySlugInline(admin.StackedInline):
             self.formfield_overrides = {
                 'value': {'widget': forms.Select(choices=value_choices)}
             }
+            self.fields['value'] = 'Hello'
 
 
 class PropertyTypeAdmin(admin.ModelAdmin):
