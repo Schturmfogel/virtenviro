@@ -123,10 +123,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class PropertySlugInlineForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(PropertySlugInlineForm, self).__init__(*args, **kwargs)
-        value_choices = Property.objects.grouped(property_type=self.instance.property_type)
-        self.fields['value'].widget = forms.Select(choices=value_choices)
+    _parent_instance = None
+
+    def get_formset(self, *args, **kwargs):
+        def formfield_callback(field, **kwargs):
+            formfield = field.formfield(**kwargs)
+            if not self._parent_instance is None:
+                value_choices = Property.objects.grouped(property_type=self._parent_instance)
+                formfield.widget = forms.Select(choices=value_choices)
 
     class Meta:
         model = PropertySlug
@@ -134,7 +138,14 @@ class PropertySlugInlineForm(forms.ModelForm):
 
 class PropertySlugInline(admin.StackedInline):
     model = PropertySlug
-    form = PropertySlugInlineForm
+    _parent_instance = None
+
+    def get_formset(self, *args, **kwargs):
+        if not self._parent_instance is None:
+            value_choices = Property.objects.grouped(property_type=self._parent_instance)
+            self.formfield_overrides = {
+                'value': forms.Select(choices=value_choices)
+            }
 
 
 class PropertyTypeAdmin(admin.ModelAdmin):
@@ -142,6 +153,11 @@ class PropertyTypeAdmin(admin.ModelAdmin):
     inlines = [
         PropertySlugInline,
     ]
+
+    def get_formsets(self, request, obj=None, *args, **kwargs):
+        for inline in self.inline_instances:
+            inline._parent_instance = obj
+            yield inline.get_formset(request, obj)
 
 
 class PropertyTypeCategoryRelationAdmin(admin.ModelAdmin):
