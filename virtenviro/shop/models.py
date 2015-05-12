@@ -1,6 +1,5 @@
 # ~*~ coding: utf-8 ~*~
 import os
-from Tools.pynche.Main import docstring
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey

@@ -3,9 +3,18 @@ from setuptools import find_packages, setup
 
 EXCLUDE_FROM_PACKAGES = []
 
+def get_version(major=0, minor=0, build=0, release_type='b', release_build=0):
+    return '%s.%s.%s.%s.%s' % (major, minor, build, release_type, release_build)
+
 setup(
     name='virtenviro',
-    version='0.5.6b5',
+    version=get_version(
+        major=0,
+        minor=5,
+        build=6,
+        release_type='b',
+        release_build=6
+    ),
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     include_package_data=True,
     url='https://github.com/Haikson/virtenviro',
