@@ -136,8 +136,8 @@ class PropertySlugInline(admin.StackedInline):
 
 
 class PropertyTypeCategoryRelationAdmin(admin.ModelAdmin):
-    list_display = ('property_type__name', 'category__name', 'slug', 'max_count')
-    list_display = ('property_type__name', 'category__name', 'slug', 'max_count')
+    list_display = ('property_type', 'category', 'slug', 'max_count')
+    list_display = ('property_type', 'category', 'slug', 'max_count')
     list_editable = ('slug', 'max_count')
     inlines = [
         PropertySlugInline,
