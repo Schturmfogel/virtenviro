@@ -122,20 +122,6 @@ class CategoryAdmin(admin.ModelAdmin):
     production_link.allow_tags = True
 
 
-class PropertySlugInlineForm(forms.ModelForm):
-    _parent_instance = None
-
-    def get_formset(self, *args, **kwargs):
-        def formfield_callback(field, **kwargs):
-            formfield = field.formfield(**kwargs)
-            if not self._parent_instance is None:
-                value_choices = Property.objects.grouped(property_type=self._parent_instance)
-                formfield.widget = forms.Select(choices=value_choices)
-
-    class Meta:
-        model = PropertySlug
-
-
 class PropertySlugInline(admin.StackedInline):
     model = PropertySlug
     _parent_instance = None
@@ -154,10 +140,13 @@ class PropertyTypeAdmin(admin.ModelAdmin):
         PropertySlugInline,
     ]
 
-    def get_formsets(self, request, obj=None, *args, **kwargs):
-        for inline in self.inlines:
-            inline._parent_instance = obj
-            yield inline.get_formset(request, obj)
+    def get_inline_instances(self, request, obj=None, *args, **kwargs):
+        inlines = []
+        property_slug_inline = PropertySlugInline()
+        property_slug_inline._parent_instance = obj
+        property_slug_inline.get_formset(request, obj)
+        inlines.append(property_slug_inline)
+        return inlines
 
 
 class PropertyTypeCategoryRelationAdmin(admin.ModelAdmin):
