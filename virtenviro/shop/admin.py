@@ -122,10 +122,6 @@ class CategoryAdmin(admin.ModelAdmin):
     production_link.allow_tags = True
 
 
-class PropertyTypeAdmin(admin.ModelAdmin):
-    search_fields = ['name']
-
-
 class PropertySlugInlineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PropertySlugInline, self).__init__(*args, **kwargs)
@@ -141,13 +137,17 @@ class PropertySlugInline(admin.StackedInline):
     form = PropertySlugInlineForm
 
 
+class PropertyTypeAdmin(admin.ModelAdmin):
+    search_fields = ['name']
+    inlines = [
+        PropertySlugInline,
+    ]
+
+
 class PropertyTypeCategoryRelationAdmin(admin.ModelAdmin):
     list_display = ('property_type', 'category', 'slug', 'max_count')
     list_display = ('property_type', 'category', 'slug', 'max_count')
     list_editable = ('slug', 'max_count')
-    inlines = [
-        PropertySlugInline,
-    ]
 
 
 admin.site.register(Product, ProductAdmin)
