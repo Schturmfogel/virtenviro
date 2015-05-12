@@ -124,9 +124,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class PropertySlugInline(admin.StackedInline):
     model = PropertySlug
-    _parent_instance = None
-    value_choices = None
 
+'''
     if not value_choices is None:
         formfield_overrides = {
             'value': {
@@ -137,7 +136,8 @@ class PropertySlugInline(admin.StackedInline):
     def set_value(self, args, kwargs):
         if not self._parent_instance is None:
             self.value_choices = Property.objects.grouped(property_type=self._parent_instance)
-
+'''
+#todo: create action to generate slugs for selected property_types properties
 
 
 class PropertyTypeAdmin(admin.ModelAdmin):
