@@ -8,22 +8,12 @@ from django.contrib.auth.models import User
 import datetime
 from django.utils import timezone
 from django.conf import settings
+from virtenviro.abstract_models import AbstractSeo, AbstractContent,\
+    AbstractContentMultilingual
+from virtenviro.content.managers import PageManager
 
 LANGUAGE_CODE = getattr(settings, 'LANGUAGE_CODE', 'ru')
 LANGUAGES = getattr(settings, 'LANGUAGES', ('ru',))
-
-class PageManager(models.Manager):
-    def get_pages(self, parent=None, order=['ordering', '-pub_datetime', 'title'], author=None):
-        pages = self.filter(published=True, pub_datetime__lte=datetime.datetime.now())
-        if not parent is None:
-            pages = pages.filter(
-                level__lte=parent.level,
-                tree_id=parent.tree_id,
-                lft__gte=parent.lft,
-                rght__lte=parent.rght)
-        if not author is None:
-            pages = pages.filter(author=author)
-        return pages.order_by(*order)
 
 
 class Page(MPTTModel):
@@ -35,15 +25,15 @@ class Page(MPTTModel):
     parent = TreeForeignKey('self', blank=True, null=True, related_name='child_set', verbose_name=_('Parent'))
 
     # SERVICE FIELDS
+    ordering = models.IntegerField(default=999999, verbose_name=_('Ordering'))
+    login_required = models.BooleanField(default=False, verbose_name=_('Login required'))
     published = models.BooleanField(default=False, verbose_name=_('Published'))
     pub_datetime = models.DateTimeField(default=timezone.now, verbose_name=_('Created datetime'))
     last_modified = models.DateTimeField(auto_now=True, verbose_name=_('Last modified datetime'))
-    ordering = models.IntegerField(default=999999, verbose_name=_('Ordering'))
 
-    author = models.ForeignKey(User, verbose_name=_('Author'), related_name='pages', blank=True, null=True)
+    author = models.ForeignKey(User, verbose_name=_('Author'), related_name='created_pages', blank=True, null=True)
     last_modified_by = models.ForeignKey(User, verbose_name=_('Corrector'), blank=True, null=True,
                                          related_name='modified_pages')
-    login_required = models.BooleanField(default=False, verbose_name=_('Login required'))
 
     def get_content(self, language=LANGUAGE_CODE):
         contents = self.contents.filter(language=language)
@@ -109,19 +99,8 @@ class Page(MPTTModel):
         unique_together = ('parent', 'slug', )
 
 
-class Content(models.Model):
-    title = models.CharField(max_length=250, verbose_name=_('Title'))
-    h1 = models.CharField(max_length=250, verbose_name=_('H1 tag'), null=True, blank=True)
-    intro = models.TextField(verbose_name=_('Intro'), null=True, blank=True)
-    content = models.TextField(verbose_name=_('Content'), null=True, blank=True)
-    template = models.ForeignKey('Template', verbose_name=_('Template'), null=True, blank=True)
+class Content(AbstractSeo, AbstractContent, AbstractContentMultilingual):
     parent = models.ForeignKey(Page, blank=True, null=True, related_name='contents', verbose_name=_('Parent'))
-    language = models.CharField(max_length=10, verbose_name=_('Language'), choices=LANGUAGES, default=LANGUAGE_CODE)
-
-    # META FIELDS
-    meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
-    meta_keywords = models.TextField(verbose_name=_('Meta Keywords'), null=True, blank=True)
-    meta_description = models.TextField(verbose_name=_('Meta Description'), null=True, blank=True)
 
     # SERVICE FIELDS
     published = models.BooleanField(default=False, verbose_name=_('Published'))
@@ -134,12 +113,6 @@ class Content(models.Model):
 
     def __unicode__(self):
         return self.title
-
-    def get_template(self):
-        if not self.template is None:
-            return self.template
-        else:
-            return self.parent.template
 
     def get_absolute_url(self):
         return self.parent.get_absolute_url()

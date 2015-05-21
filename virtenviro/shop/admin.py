@@ -124,6 +124,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class PropertySlugInline(admin.StackedInline):
     model = PropertySlug
+    extra = 0
 
 '''
     if not value_choices is None:

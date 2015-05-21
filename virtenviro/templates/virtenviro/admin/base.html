@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load staticfiles %}
-
+<!DOCTYPE html>{% load staticfiles %}
+<html>
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,11 +29,9 @@
     <![endif]-->
 
 </head>
-
 <body>
-
-    <div id="wrapper">
-        {% include 'virtenviro/admin/navbar.html' %}
+        <div id="wrapper">
+            {% include 'admin/navigation.html' %}
 
         <div id="page-wrapper">
 
@@ -326,10 +321,8 @@
     <script src="{% static 'vadmin/js/bootstrap.min.js' %}"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="{% static 'vadmin/js/plugins/morris/raphael.min.js' %}"></script>
+    <script src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
     <script src="{% static 'vadmin/js/plugins/morris/morris.min.js' %}"></script>
     <script src="{% static 'vadmin/js/plugins/morris/morris-data.js' %}"></script>
-
 </body>
-
 </html>

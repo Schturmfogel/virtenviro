@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: virtenviro.content\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-13 08:51+0400\n"
+"POT-Creation-Date: 2015-05-15 23:38+0600\n"
 "PO-Revision-Date: 2015-01-11 03:33+0600\n"
 "Last-Translator: \n"
 "Language-Team: http://www.haikson.com <kamo@haikson.com>\n"
@@ -17,178 +17,179 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: H:\\GITHUB\\virtenviro\\virtenviro\\content\n"
 
-#: content/models.py:27 content/models.py:102
+#: .\virtenviro\content\models.py:20 .\virtenviro\content\models.py:124
 msgid "Title"
 msgstr "Заголовок"
 
-#: content/models.py:28
-msgid "H1 tag"
-msgstr "Тэг H1"
-
-#: content/models.py:29
+#: .\virtenviro\content\models.py:21
 msgid "Slug"
 msgstr "Псевдостатический адрес"
 
-#: content/models.py:30
+#: .\virtenviro\content\models.py:22
 msgid "Is home page"
 msgstr "Является домашней страницей"
 
-#: content/models.py:31
-msgid "Intro"
-msgstr "Анонс"
+#: .\virtenviro\content\models.py:23
+msgid "Is category"
+msgstr ""
 
-#: content/models.py:32
-msgid "Content"
-msgstr "Контент"
-
-#: content/models.py:33 content/models.py:111 content/models.py:119
+#: .\virtenviro\content\models.py:24 .\virtenviro\content\models.py:133
+#: .\virtenviro\content\models.py:141
 msgid "Template"
 msgstr "Шаблон"
 
-#: content/models.py:34 content/models.py:104
+#: .\virtenviro\content\models.py:25 .\virtenviro\content\models.py:103
+#: .\virtenviro\content\models.py:126
 msgid "Parent"
 msgstr "Родитель"
 
-#: content/models.py:37
-msgid "Meta Title"
-msgstr "Мета Заголовок"
-
-#: content/models.py:38
-msgid "Meta Keywords"
-msgstr "Мета \"Ключевые слова\""
-
-#: content/models.py:39
-msgid "Meta Description"
-msgstr "Мета \"Описание\""
-
-#: content/models.py:42
-msgid "Published"
-msgstr "Опубликовано"
-
-#: content/models.py:43
-msgid "Created datetime"
-msgstr "Дата и время создания"
-
-#: content/models.py:44
-msgid "Last modified datetime"
-msgstr "Дата и время последних изменений"
-
-#: content/models.py:45
+#: .\virtenviro\content\models.py:28
 msgid "Ordering"
 msgstr "Сортировка"
 
-#: content/models.py:47
-msgid "Author"
-msgstr "Автор"
-
-#: content/models.py:48
-msgid "Corrector"
-msgstr ""
-
-#: content/models.py:50
+#: .\virtenviro\content\models.py:29
 msgid "Login required"
 msgstr "Требуется авторизация"
 
-#: content/models.py:63
+#: .\virtenviro\content\models.py:30 .\virtenviro\content\models.py:106
+msgid "Published"
+msgstr "Опубликовано"
+
+#: .\virtenviro\content\models.py:31 .\virtenviro\content\models.py:107
+msgid "Created datetime"
+msgstr "Дата и время создания"
+
+#: .\virtenviro\content\models.py:32 .\virtenviro\content\models.py:108
+msgid "Last modified datetime"
+msgstr "Дата и время последних изменений"
+
+#: .\virtenviro\content\models.py:34 .\virtenviro\content\models.py:110
+msgid "Author"
+msgstr "Автор"
+
+#: .\virtenviro\content\models.py:35 .\virtenviro\content\models.py:111
+msgid "Corrector"
+msgstr ""
+
+#: .\virtenviro\content\models.py:64 .\virtenviro\content\models.py:120
 msgid "URL"
 msgstr "URL"
 
-#: content/models.py:81
+#: .\virtenviro\content\models.py:82
 msgid "Record with this slug already exists"
 msgstr "Запись с таким Псевдостатическим адресом уже существует"
 
-#: content/models.py:96 content/models.py:154
+#: .\virtenviro\content\models.py:97
 msgid "Page"
 msgstr "Страница"
 
-#: content/models.py:97
+#: .\virtenviro\content\models.py:98
 msgid "Pages"
 msgstr "Страница"
 
-#: content/models.py:103
+#: .\virtenviro\content\models.py:125
 msgid "Filename"
 msgstr "Имя файла"
 
-#: content/models.py:112 content/models.py:141
+#: .\virtenviro\content\models.py:134 .\virtenviro\content\models.py:163
 msgid "Templates"
 msgstr "Шаблоны"
 
-#: content/models.py:116 content/models.py:139
+#: .\virtenviro\content\models.py:138 .\virtenviro\content\models.py:161
 msgid "Name"
 msgstr "Имя"
 
-#: content/models.py:117
+#: .\virtenviro\content\models.py:139
 msgid "Code"
 msgstr "Код"
 
-#: content/models.py:118
+#: .\virtenviro\content\models.py:140
 msgid "Render"
 msgstr "Обработать"
 
-#: content/models.py:126
+#: .\virtenviro\content\models.py:148
 msgid "Snippet"
 msgstr "Сниппет"
 
-#: content/models.py:127
+#: .\virtenviro\content\models.py:149
 msgid "Snippets"
 msgstr "Сниппеты"
 
-#: content/models.py:132
+#: .\virtenviro\content\models.py:154
 msgid "Char field"
 msgstr "Поле строки"
 
-#: content/models.py:133
+#: .\virtenviro\content\models.py:155
 msgid "Text field"
 msgstr "Текстовое поле"
 
-#: content/models.py:134
+#: .\virtenviro\content\models.py:156
 msgid "Integer field"
 msgstr "Целочисленное поле"
 
-#: content/models.py:135
+#: .\virtenviro\content\models.py:157
 msgid "Float field"
 msgstr "Поле числа с плавающей точкой"
 
-#: content/models.py:136
+#: .\virtenviro\content\models.py:158
 msgid "Image field"
 msgstr "Поле изображения"
 
-#: content/models.py:140
+#: .\virtenviro\content\models.py:162
 msgid "Field's data type"
 msgstr "Тип данных поля"
 
-#: content/models.py:142
+#: .\virtenviro\content\models.py:164
 msgid "Render field's value"
 msgstr "Обработать значения поля"
 
-#: content/models.py:149 content/models.py:155
+#: .\virtenviro\content\models.py:171 .\virtenviro\content\models.py:177
 msgid "Additional field"
 msgstr "Дополнительное поле"
 
-#: content/models.py:150
+#: .\virtenviro\content\models.py:172
 msgid "Additional fields"
 msgstr "Дополнительные поля"
 
-#: content/models.py:156
+#: .\virtenviro\content\models.py:176 .\virtenviro\content\models.py:190
+msgid "Content"
+msgstr "Контент"
+
+#: .\virtenviro\content\models.py:178
 msgid "Value"
 msgstr "Значение"
 
-#: content/models.py:159
+#: .\virtenviro\content\models.py:181
 msgid "for"
 msgstr "для"
 
-#: content/models.py:162
+#: .\virtenviro\content\models.py:184
 msgid "Additional field's value"
 msgstr "Значение дополнительного поля"
 
-#: content/models.py:163
+#: .\virtenviro\content\models.py:185
 msgid "Additional field's values"
 msgstr "Значения дополнительных полей"
 
-#: content/models.py:167 content/models.py:175
+#: .\virtenviro\content\models.py:189 .\virtenviro\content\models.py:197
 msgid "Tag"
 msgstr "Тег"
 
-#: content/models.py:176
+#: .\virtenviro\content\models.py:198
 msgid "Tags"
 msgstr "Теги"
+
+#~ msgid "H1 tag"
+#~ msgstr "Тэг H1"
+
+#~ msgid "Intro"
+#~ msgstr "Анонс"
+
+#~ msgid "Meta Title"
+#~ msgstr "Мета Заголовок"
+
+#~ msgid "Meta Keywords"
+#~ msgstr "Мета \"Ключевые слова\""
+
+#~ msgid "Meta Description"
+#~ msgstr "Мета \"Описание\""

@@ -1,3 +1,5 @@
+# ~*~ coding: utf-8 ~*~
+__author__ = 'Kamo Petrosyan'
 from django import template
 from virtenviro.content.models import Snippet, Page, AdditionalField
 from django.template import loader, Context

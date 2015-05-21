@@ -14,40 +14,19 @@ class ImageManager(TreeManager):
 
 
 class ProductManager(models.Manager):
-    def no_blank_parent(self, category = None):
-        if category:
-            production = self.filter( category = category, parent__isnull = True )
-        else:
-            production = self.filter( parent__isnull = True )
-        product = []
-        for p in production:
-            childs = p.children.all().count()
-            if childs > 0:
-                product.append(p)
-        return product
-
     def get_product(self, slug):
         try:
-            product = self.get(slug = slug)
-        except:
-            product = None
-        return product
-
-    def filter_group(self):
-        return self.all().filter(is_group=True)
-
-    def filter_parent_group(self):
-        return self.all().filter(is_group=True, parent__isnull=True)
+            return self.get(slug=slug)
+        except Product.DoesNotExist:
+            return None
+        except Product.MultipleObjectsReturned:
+            return None
 
     def get_product_by_id(self, id):
         try:
-            product = self.get(id=id)
+            return self.get(id=id)
         except Product.DoesNotExist:
-            product = None
-        return product
-
-    def get_all_childs(self, id):
-        return self.filter(parent=id)
+            return None
 
 
 class PropertyManager(models.Manager):
@@ -61,3 +40,21 @@ class PropertyManager(models.Manager):
         additional_properties = self.filter(property_type=property_type, product=product)
 
         return additional_properties
+
+
+class PropertySlugManager(models.Manager):
+    def generate(self, property_type):
+        # get all properties grouped where property_type = property_type
+        properties_grouped = Property.objects.grouped(
+            property_type=property_type).extra(
+            select={'intval': 'CAST(substring(value FROM \'^[0-9]+\') AS INTEGER)'},
+            order_by=['intval', 'value'])
+
+        for property_grouped in properties_grouped:
+            # get PropertySlug or create
+            property_slug = self.get_or_create(
+                value=property_grouped.value,
+                property_type=property_type,
+                defaults={
+                    'slug': set_slug(PropertySlug, property_grouped.value, 60)
+                })

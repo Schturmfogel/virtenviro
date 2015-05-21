@@ -7,21 +7,18 @@ from filebrowser.fields import FileBrowseField
 from django.conf import settings
 from virtenviro.shop.managers import *
 from virtenviro.utils import set_slug, sha256, id_generator
+from virtenviro.abstract_models import AbstractSeo
+from pytils.translit import slugify
 
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
 
 
-class Category(MPTTModel):
+class Category(MPTTModel, AbstractSeo):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     slug = models.CharField(max_length=60, verbose_name=_('Slug'), null=True, blank=True)
     parent = TreeForeignKey('self', verbose_name=_('Parent'), related_name='subcategories', null=True, blank=True)
     description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
     image = models.ImageField(upload_to=_(os.path.join(MEDIA_ROOT, 'img', 'shop', 'category')), verbose_name=_('Image'), null=True, blank=True)
-
-    # META FIELDS
-    meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
-    meta_keywords = models.TextField(verbose_name=_('Meta Keywords'), null=True, blank=True)
-    meta_description = models.TextField(verbose_name=_('Meta Description'), null=True, blank=True)
 
     # SERVICE FIELDS
     ordering = models.IntegerField(default=0, verbose_name=_('Ordering'), blank=True, null=True)
@@ -53,7 +50,7 @@ class Category(MPTTModel):
         verbose_name_plural = _('Categories')
 
 
-class Product(models.Model):
+class Product(AbstractSeo):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     slug = models.CharField(max_length=60, verbose_name=_('Slug'), null=True, blank=True)
     category = models.ForeignKey(Category, verbose_name=_('Category'), related_name='children', null=True, blank=True)
@@ -66,12 +63,8 @@ class Product(models.Model):
     '''
     description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
     price = models.FloatField(verbose_name=_('Price'), default=0.0)
+    discount = models.FloatField(verbose_name=_('Discount'), default=0)
     manufacturer = models.ForeignKey('Manufacturer', verbose_name=_('Manufacturer'), null=True, blank=True)
-
-    # META FIELDS
-    meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
-    meta_keywords = models.TextField(verbose_name=_('Meta Keywords'), null=True, blank=True)
-    meta_description = models.TextField(verbose_name=_('Meta Description'), null=True, blank=True)
 
     # SERVICE FIELDS
     ordering = models.IntegerField(default=0, verbose_name=_('Ordering'), blank=True, null=True)
@@ -81,6 +74,11 @@ class Product(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def new_price(self):
+        discount = self.discount/100
+        price = self.price - self.price * discount
+        return price
 
     def clean(self, *args, **kwargs):
         if not self.slug:
@@ -120,6 +118,26 @@ class Product(models.Model):
 
     def filter_parent_group(self):
         return self.filter(is_group=True, parent__isnull=True)
+
+    def create_subcategories_from_property(self, property_type):
+        _properties = self.property_set.filter(property_type=property_type)
+        if _properties:
+            for _property in _properties:
+                category_parent, created = Category.objects.get_or_create(
+                    name=_property.property_type.name,
+                    defaults={
+                        'slug': slugify(_property.property_type.name),
+                    }
+                )
+                category, created = Category.objects.get_or_create(
+                    name=_property.value,
+                    parent=category_parent,
+                    defaults={
+                        'slug': slugify(_property.value),
+                    }
+                )
+                if not category in self.subcategory:
+                    self.subcategory.add(category)
 
     def get_absolute_url(self):
         return '%s%s' % (self.category.get_absolute_url(), self.slug)
@@ -199,6 +217,7 @@ class PropertySlug(models.Model):
     property_type = models.ForeignKey(PropertyType, verbose_name=_('Propert type'))
     value = models.TextField(verbose_name=_('Value'))
     slug = models.CharField(max_length=60, verbose_name=_('Slug'))
+    objects = PropertySlugManager
 
     def __unicode__(self):
         return '%s: %s' % (self.property_type.name, self.value)
@@ -267,6 +286,7 @@ class Image(models.Model):
 class Manufacturer(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Manufacturer'), unique=True)
     description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
+    slug = models.CharField(max_length=60, verbose_name=_('Slug'), null=True, blank=True)
     logo = models.ImageField(upload_to=os.path.join(MEDIA_ROOT, 'img', 'shop', 'manufacturers'), verbose_name=_('Logo'),
                              null=True, blank=True)
 

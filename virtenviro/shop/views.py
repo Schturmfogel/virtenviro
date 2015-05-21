@@ -8,36 +8,10 @@ from pytils.translit import slugify
 from forms import SimpleXmlImportForm
 from models import *
 from virtenviro.logger import Logger
-from virtenviro.shop.navigation import Navigation
 from virtenviro.utils import id_generator, handle_uploads, sha256, ucode
 
 
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
-
-
-def navigation(request, slug=None):
-    production_type_pk = 21
-    if slug:
-        try:
-            product = Product.objects.get(slug=slug)
-        except Product.DoesNotExist:
-            raise Http404
-    else:
-        product = None
-
-    nav = Navigation(
-        product=product,
-        production_type_pk=production_type_pk
-    )
-    navigation = nav.navigation(
-        nav_active_product_class='active',
-        nav_top_level_class=''
-    )
-    context = {
-        'navigation': navigation,
-    }
-
-    return render_to_response('base.html', context, context_instance = RequestContext(request))
 
 
 def import_simple_xml(request):
