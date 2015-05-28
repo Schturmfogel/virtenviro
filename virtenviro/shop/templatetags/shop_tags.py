@@ -56,6 +56,13 @@ def get_property_image(property_value, property_type):
         return None
 
 @register.assignment_tag
+def get_property(product, property_type):
+    try:
+        return Property.objects.get(product=product, property_type=property_type)
+    except Property.DoesNotExist:
+        return None
+
+@register.assignment_tag
 def most_viewed(count=None):
     if count is None:
         count = getattr(settings, 'SHOP_MOST_VIEWED_COUNT', 10)
@@ -69,3 +76,8 @@ def discounted(count=None):
     if not count is None:
         production = production[0: count]
     return production
+
+
+@register.assignment_tag
+def get_sellers():
+    return Seller.objects.all().order_by('ordering')

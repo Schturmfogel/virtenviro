@@ -7,12 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0002_product_unique_code'),
+        ('shop', '0001_initial'),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='product',
-            name='unique_code',
+        migrations.AddField(
+            model_name='seller',
+            name='map_code',
+            field=models.TextField(null=True, verbose_name="Map's code", blank=True),
         ),
     ]

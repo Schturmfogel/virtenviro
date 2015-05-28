@@ -13,9 +13,9 @@ setup(
     version=get_version(
         major=0,
         minor=5,
-        build=7,
+        build=8,
         release_type='b',
-        release_build=1
+        release_build=0
     ),
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     include_package_data=True,
@@ -40,4 +40,5 @@ setup(
         'Topic :: Software Development :: Libraries :: CMS',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
+    requires=['django']
 )

@@ -326,6 +326,36 @@ class Currency(models.Model):
         verbose_name = _('Currency')
         verbose_name_plural = _('Currencies')
 
+
+class Seller(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
+    description = models.TextField(verbose_name=_('Description'), null=True, blank=True)
+    slug = models.CharField(max_length=60, verbose_name=_('Slug'))
+    image = models.ImageField(upload_to=os.path.join(MEDIA_ROOT, 'img', 'shop', 'sellers'), verbose_name=_('Image'),
+                              null=True, blank=True)
+
+    # Contacts
+    address = models.CharField(max_length=255, verbose_name=_('Address'), null=True, blank=True)
+    city = models.CharField(max_length=255, verbose_name=_('City'), null=True, blank=True)
+    country = models.CharField(max_length=255, verbose_name=_('Country'), null=True, blank=True)
+    postal_zip = models.CharField(max_length=255, verbose_name=_('ZIP'), null=True, blank=True)
+    site = models.URLField(verbose_name=_('Site'), null=True, blank=True)
+    email = models.EmailField(verbose_name=_('Email'), null=True, blank=True)
+    phones = models.TextField(verbose_name=_('Phones'), null=True, blank=True)
+    itn = models.CharField(max_length=255, verbose_name=_('Individual Taxpayer Number'), null=True, blank=True)
+
+    # Service
+    ordering = models.IntegerField(verbose_name=_('Ordering'), default=999)
+    map_code = models.TextField(verbose_name=_('Map\'s code'), null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['ordering', 'name']
+        verbose_name = _('Seller')
+        verbose_name_plural = _('Sellers')
+
 # todo: Warehouse
 # todo: Add statistics
 # todo: Orders

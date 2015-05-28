@@ -1,5 +1,8 @@
-﻿from django import forms
+﻿# ~*~ coding: utf-8 ~*~
+__author__ = 'Kamo Petrosyan'
+from django import forms
 from virtenviro.pages.models import *
+
 
 class PagesAdminForm(forms.ModelForm):
     

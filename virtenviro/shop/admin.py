@@ -5,7 +5,7 @@ from django import forms
 from virtenviro.shop.models import Product,\
     Category, Property, PropertyType,\
     Image, ImageType, Manufacturer, PropertySlug, PropertyTypeCategoryRelation,\
-    ImageTypeCategoryRelation, Currency, File
+    ImageTypeCategoryRelation, Currency, File, Seller
 
 
 class APInline(admin.TabularInline):
@@ -150,9 +150,12 @@ class PropertyTypeAdmin(admin.ModelAdmin):
 
 class PropertyTypeCategoryRelationAdmin(admin.ModelAdmin):
     list_display = ('property_type', 'category', 'slug', 'max_count')
-    list_display = ('property_type', 'category', 'slug', 'max_count')
     list_editable = ('slug', 'max_count')
 
+
+class SellerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'ordering')
+    list_editable = ('ordering',)
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
@@ -166,3 +169,4 @@ admin.site.register(PropertyTypeCategoryRelation, PropertyTypeCategoryRelationAd
 admin.site.register(ImageTypeCategoryRelation)
 admin.site.register(Currency)
 admin.site.register(File)
+admin.site.register(Seller, SellerAdmin)
