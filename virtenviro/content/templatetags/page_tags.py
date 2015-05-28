@@ -111,3 +111,22 @@ def leaf_pages(root=None, root_id=None, count=0):
         if count == 0:
             break
     return nodes
+
+@register.assignment_tag
+def page_breadcrumb(page, lang=settings.LANGUAGE_CODE):
+    breadcrumb = []
+    content = page.get_content(lang)
+    if content is None:
+        content = page.get_content(settings.LANGUAGE_CODE)
+
+    breadcrumb.append(content)
+
+    while page.parent:
+        page = page.parent
+        content = page.get_content(lang)
+        if content is None:
+            content = page.get_content(settings.LANGUAGE_CODE)
+
+        breadcrumb.append(content)
+
+    return breadcrumb.reverse()
