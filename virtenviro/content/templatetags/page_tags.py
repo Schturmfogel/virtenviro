@@ -128,5 +128,5 @@ def page_breadcrumb(page, lang=settings.LANGUAGE_CODE):
             content = page.get_content(settings.LANGUAGE_CODE)
 
         breadcrumb.append(content)
-
-    return breadcrumb.reverse()
+    breadcrumb.reverse()
+    return breadcrumb
