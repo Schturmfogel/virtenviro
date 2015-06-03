@@ -5,7 +5,8 @@ from django import forms
 from virtenviro.shop.models import Product,\
     Category, Property, PropertyType,\
     Image, ImageType, Manufacturer, PropertySlug, PropertyTypeCategoryRelation,\
-    ImageTypeCategoryRelation, Currency, File, Seller
+    ImageTypeCategoryRelation, Currency, File, Seller,\
+    OrderStatus, Order, ProductOrderRelation
 
 
 class APInline(admin.TabularInline):
@@ -77,7 +78,7 @@ class ProductAdminForm(forms.ModelForm):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'category__title', 'slug']
+    search_fields = ['name', 'category__name', 'slug']
     inlines = [
         APInline,
         ImageInline,
@@ -170,3 +171,6 @@ admin.site.register(ImageTypeCategoryRelation)
 admin.site.register(Currency)
 admin.site.register(File)
 admin.site.register(Seller, SellerAdmin)
+admin.site.register(Order)
+admin.site.register(OrderStatus)
+admin.site.register(ProductOrderRelation)

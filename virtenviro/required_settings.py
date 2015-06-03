@@ -14,6 +14,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 # Application definition
 
+SITE_ID = 1
+
 INSTALLED_APPS = (
     'mptt',
     'django.contrib.admin',
@@ -22,6 +24,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'virtenviro',
     'virtenviro.content',
     'virtenviro.news',
@@ -61,3 +64,5 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+DEFAULT_ORDER_STATUS = u'Не подтвержденная'

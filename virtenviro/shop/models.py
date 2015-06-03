@@ -7,8 +7,9 @@ from filebrowser.fields import FileBrowseField
 from django.conf import settings
 from virtenviro.shop.managers import *
 from virtenviro.utils import set_slug, sha256, id_generator
-from virtenviro.abstract_models import AbstractSeo
+from virtenviro.abstract_models import AbstractSeo, AbstractContentMultilingual
 from pytils.translit import slugify
+from django.contrib.auth.models import User
 
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
 
@@ -359,3 +360,38 @@ class Seller(models.Model):
 # todo: Warehouse
 # todo: Add statistics
 # todo: Orders
+
+
+class OrderStatus(models.Model):
+    name = models.CharField(max_length=60, verbose_name=_('Name'))
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = _('Order status')
+        verbose_name_plural = _('Order statuses')
+
+
+class Order(models.Model):
+    product = models.ManyToManyField(Product, verbose_name=_('Product'), through='ProductOrderRelation')
+    user = models.ForeignKey(User, verbose_name=_('User'))
+    created_time = models.DateTimeField(auto_now_add=True)
+    modified_time = models.DateTimeField(auto_now=True)
+    status = models.ForeignKey(OrderStatus, verbose_name=_('Status'),)
+
+    def __unicode__(self):
+        return self.id
+
+    class Meta:
+        ordering = ['-created_time']
+
+
+class ProductOrderRelation(models.Model):
+    order = models.ForeignKey(Order, verbose_name=_('Order'))
+    product = models.ForeignKey(Product, verbose_name=_('Product'))
+    count = models.IntegerField(default=1, verbose_name=_('Count'))
+
+    def __unicode__(self):
+        return '%s %s %s %s %s' % (self.product.name, _('in order'), self.order.pk, _('for user'), self.order.user.pk)
