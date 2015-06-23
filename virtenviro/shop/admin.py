@@ -1,7 +1,7 @@
 #~*~ coding: utf-8 ~*~
 from django.contrib import admin
 from django import forms
-
+from django.utils.translation import ugettext_lazy as _
 from virtenviro.shop.models import Product,\
     Category, Property, PropertyType,\
     Image, ImageType, Manufacturer, PropertySlug, PropertyTypeCategoryRelation,\
@@ -78,6 +78,9 @@ class ProductAdminForm(forms.ModelForm):
 
 
 class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'ordering', 'view_count')
+    list_filter = ('category', )
+    list_editable = ('price', 'ordering')
     search_fields = ['name', 'category__name', 'slug']
     inlines = [
         APInline,
@@ -86,10 +89,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     form = ProductAdminForm
     valid_lookups = ('parent')
-    
-    list_display = ('name', 'price', 'ordering')
-    list_filter = ('category', )
-    list_editable = ('price', 'ordering')
+
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(ProductAdmin, self).get_form(request, obj, **kwargs)
@@ -158,6 +158,31 @@ class SellerAdmin(admin.ModelAdmin):
     list_display = ('name', 'ordering')
     list_editable = ('ordering',)
 
+
+class ProductOrderRelationInline(admin.TabularInline):
+    model = ProductOrderRelation
+    extra = 0
+
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user_field', 'created_time', 'modified_time', 'status', 'summary_count', 'summary_products')
+    list_filter = ('status', 'created_time', 'modified_time',)
+
+    def summary_count(self, obj):
+        return obj.summary_count()
+    summary_count.short_description = _('All products count')
+
+    def summary_products(self, obj):
+        return obj.summary_products()
+    summary_products.short_description = _('Products count')
+
+    def user_field(self, obj):
+        return obj.user.email
+    user_field.short_description = _('User')
+
+    inlines = [
+        ProductOrderRelationInline]
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Property)
@@ -171,6 +196,6 @@ admin.site.register(ImageTypeCategoryRelation)
 admin.site.register(Currency)
 admin.site.register(File)
 admin.site.register(Seller, SellerAdmin)
-admin.site.register(Order)
+admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderStatus)
 admin.site.register(ProductOrderRelation)

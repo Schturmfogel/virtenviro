@@ -1,6 +1,7 @@
 # ~*~ coding: utf-8 ~*~
 __author__ = 'Kamo Petrosyan'
 from django import template
+from django.db.models import Q
 from virtenviro.content.models import Snippet, Page, AdditionalField
 from django.template import loader, Context
 from virtenviro.utils import *
@@ -55,14 +56,20 @@ def render_field(context, page, field_name):
 
 @register.assignment_tag(takes_context=True)
 def get_pages(context, *args, **kwargs):
-    parent_id = kwargs['parent']
+    parent_id = kwargs.get('parent', 0)
     if parent_id == 0:
         queryset = Page.objects.filter(parent__isnull=True)
     else:
-        try:
-            parent_node = Page.objects.get(id=parent_id)
-        except Page.DoesNotExist:
-            return None
+        if isinstance(parent_id, int):
+            try:
+                parent_node = Page.objects.get(id=parent_id)
+            except Page.DoesNotExist:
+                return None
+        elif isinstance(parent_id, str) or isinstance(parent_id, unicode):
+            try:
+                parent_node = Page.objects.get(slug=parent_id)
+            except Page.DoesNotExist:
+                return None
         level = kwargs.get('level', 1) + 1
 
         queryset = Page.objects.filter(

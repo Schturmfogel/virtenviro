@@ -46,4 +46,7 @@ pip install git+git://github.com/Haikson/virtenviro.git#virtenviro
  * simple xml format for virtenviro.shop . [Link]
  * do not forget set uwsgi_read_timeout longer. Improting is a long process/
  
+## USES
+[django-picklefield](https://github.com/shrubberysoft/django-picklefield) in project
+ 
  

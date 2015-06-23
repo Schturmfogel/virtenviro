@@ -1,0 +1,7 @@
+{% load mptt_tags %}
+<ul>
+{% recursetree pages %}
+    <li><a href="">{{ node.title }}</a></li>
+    {{ children }}
+{% endrecursetree %}
+</ul>

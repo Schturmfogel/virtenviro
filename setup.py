@@ -12,10 +12,10 @@ setup(
     name='virtenviro',
     version=get_version(
         major=0,
-        minor=5,
-        build=9,
+        minor=6,
+        build=0,
         release_type='b',
-        release_build=1
+        release_build=0
     ),
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     include_package_data=True,

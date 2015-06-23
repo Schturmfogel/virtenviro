@@ -195,6 +195,7 @@ class Property(models.Model):
     property_type = models.ForeignKey(PropertyType)
     value = models.TextField(verbose_name=_('Value'))
     product = models.ForeignKey(Product, verbose_name=_('Product'))
+
     objects = PropertyManager()
 
     def __unicode__(self):
@@ -375,17 +376,39 @@ class OrderStatus(models.Model):
 
 
 class Order(models.Model):
-    product = models.ManyToManyField(Product, verbose_name=_('Product'), through='ProductOrderRelation')
+    product = models.ManyToManyField(Product,
+                                     verbose_name=_('Product'),
+                                     through='ProductOrderRelation',
+                                     related_name='production')
     user = models.ForeignKey(User, verbose_name=_('User'))
     created_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now=True)
     status = models.ForeignKey(OrderStatus, verbose_name=_('Status'),)
 
     def __unicode__(self):
-        return self.id
+        return '%s' % self.id
+
+    def summary(self):
+        pors = self.productorderrelation_set.all()
+        sum = 0
+        for p in pors:
+            sum += (p.product.new_price() * p.count)
+        return sum
+
+    def summary_count(self):
+        pors = self.productorderrelation_set.all()
+        sum = 0
+        for p in pors:
+            sum += p.count
+        return sum
+
+    def summary_products(self):
+        return self.productorderrelation_set.all().count()
 
     class Meta:
         ordering = ['-created_time']
+        verbose_name = _('Order')
+        verbose_name_plural = _('Orders')
 
 
 class ProductOrderRelation(models.Model):
@@ -394,4 +417,5 @@ class ProductOrderRelation(models.Model):
     count = models.IntegerField(default=1, verbose_name=_('Count'))
 
     def __unicode__(self):
-        return '%s %s %s %s %s' % (self.product.name, _('in order'), self.order.pk, _('for user'), self.order.user.pk)
+        return '%s' % self.id
+

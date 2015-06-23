@@ -1,7 +1,8 @@
 #~*~ coding: utf-8 ~*~
 from django.template import RequestContext
-from django.shortcuts import render_to_response, render
-from django.http import Http404
+from django.shortcuts import render_to_response, render, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import Http404, JsonResponse
 from lxml import etree
 from pytils.translit import slugify
 
@@ -12,6 +13,40 @@ from virtenviro.utils import id_generator, handle_uploads, sha256, ucode
 
 
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
+
+@login_required
+def set_order_status(request, order_id, status_id):
+    context = {'res': False, 'errors': []}
+    try:
+        order = Order.objects.get(pk=order_id, user=request.user)
+        try:
+            status = OrderStatus.objects.get(pk=status_id)
+            order.status = status
+            order.save()
+            context['res'] = True
+        except OrderStatus.DoesNotExist:
+            context['errors'].append('Status does not exist')
+    except Order.DoesNotExist:
+        context['errors'].append('Order does not exist')
+
+    return JsonResponse(context)
+
+
+def import_yml(request):
+    from yml_import import YmlParser, YML, Offer
+    from yml2product import YML2Product
+    if request.method == 'POST':
+        form = SimpleXmlImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            saved_file = handle_uploads(request, ['xml_file',])['xml_file']
+            yml_parser = YmlParser(saved_file)
+            yml = yml_parser.parse()
+            y2p = YML2Product(yml=yml)
+            y2p.run()
+    else:
+        form = SimpleXmlImportForm()
+
+    return render(request, 'virtenviro/admin/shop/import_yml.html', {'form': form, 'appname': 'shop'})
 
 
 def import_simple_xml(request):

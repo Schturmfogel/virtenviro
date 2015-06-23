@@ -17,6 +17,21 @@ def get_content_ml(context, page, lang):
 
 
 @register.assignment_tag
+def get_product(product_pk):
+    try:
+        return Product.objects.get(pk=product_pk)
+    except Product.DoesNotExist:
+        return None
+
+@register.assignment_tag
+def get_order(order_pk):
+    try:
+        return Order.objects.get(pk=order_pk)
+    except Order.DoesNotExist:
+        return None
+
+
+@register.assignment_tag
 def all_manufacturers():
     return Manufacturer.objects.all()
 

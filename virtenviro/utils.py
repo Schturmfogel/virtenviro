@@ -109,4 +109,10 @@ def sha256(str):
     m.update(str)
     return m.digest()
 
-#end
+
+'''
+from importlib import import_module
+module_ = import_module('path.to.module')
+module_.call_some_method()
+module_.variable
+'''

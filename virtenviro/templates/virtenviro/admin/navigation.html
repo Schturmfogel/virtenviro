@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n %}{% load admin_tags %}
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -120,6 +120,16 @@
         <ul class="nav navbar-nav side-nav">
             <li class="active">
                 <a href="/admin/"><i class="fa fa-fw fa-dashboard"></i> {% trans 'Dashboard' %}</a>
+            </li>
+            <li> <a href="{% url 'content' %}"><i class="fa fa-list"></i> {% trans 'Content' %}</a>
+                {% if appname == 'content' %}{% if current_page %}{% page_navigation current_page %}{% else %}{% page_navigation %}{% endif %}{% endif %}
+            </li>
+            <li> <a href="{% url 'vadmin_shop' %}"><i class="fa fa-list"></i> {% trans 'Shop' %}</a>
+                {% if appname == 'shop' %}
+                    <ul>
+                    <li><a href="{% url 'vadmin_import_yml' %}">{% trans 'Import' %} YML</a></li>
+                    </ul>
+                {% endif %}
             </li>
             {% for app in app_list %}
             <li>
