@@ -32,6 +32,7 @@ def set_order_status(request, order_id, status_id):
     return JsonResponse(context)
 
 
+@login_required
 def import_yml(request):
     from yml_import import YmlParser, YML, Offer
     from yml2product import YML2Product
