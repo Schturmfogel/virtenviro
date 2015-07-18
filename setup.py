@@ -15,7 +15,7 @@ setup(
         minor=6,
         build=0,
         release_type='b',
-        release_build=0
+        release_build=2
     ),
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     include_package_data=True,
@@ -25,11 +25,11 @@ setup(
     author_email='kamo@haikson.com',
     description='Open source content management system (CMS) based on the django framework.',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
@@ -37,8 +37,8 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Internet :: WWW/HTTP :: WSGI',
-        'Topic :: Software Development :: Libraries :: CMS',
+        'Topic :: Software Development',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    requires=['django']
+    install_requires=['django', 'django-mptt', 'django-filebrowser-no-grappelli']
 )

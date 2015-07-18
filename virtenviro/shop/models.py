@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
 
 
-class Category(MPTTModel, AbstractSeo):
+class Category(MPTTModel):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     slug = models.CharField(max_length=60, verbose_name=_('Slug'), null=True, blank=True)
     parent = TreeForeignKey('self', verbose_name=_('Parent'), related_name='subcategories', null=True, blank=True)
@@ -24,6 +24,11 @@ class Category(MPTTModel, AbstractSeo):
     # SERVICE FIELDS
     ordering = models.IntegerField(default=0, verbose_name=_('Ordering'), blank=True, null=True)
     view_count = models.IntegerField(default=0, verbose_name=_('Count of views'), blank=True, null=True)
+
+    # META FIELDS
+    meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
+    meta_keywords = models.TextField(verbose_name=_('Meta Keywords'), null=True, blank=True)
+    meta_description = models.TextField(verbose_name=_('Meta Description'), null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -51,7 +56,7 @@ class Category(MPTTModel, AbstractSeo):
         verbose_name_plural = _('Categories')
 
 
-class Product(AbstractSeo):
+class Product(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     slug = models.CharField(max_length=60, verbose_name=_('Slug'), null=True, blank=True)
     category = models.ForeignKey(Category, verbose_name=_('Category'), related_name='children', null=True, blank=True)
@@ -70,6 +75,11 @@ class Product(AbstractSeo):
     # SERVICE FIELDS
     ordering = models.IntegerField(default=0, verbose_name=_('Ordering'), blank=True, null=True)
     view_count = models.IntegerField(default=0, verbose_name=_('Count of views'), blank=True, null=True)
+
+    # META FIELDS
+    meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
+    meta_keywords = models.TextField(verbose_name=_('Meta Keywords'), null=True, blank=True)
+    meta_description = models.TextField(verbose_name=_('Meta Description'), null=True, blank=True)
 
     objects = ProductManager()
 

@@ -8,12 +8,13 @@ from views import *
 urlpatterns = patterns('virtenviro.views',
     url(r'^$', index, name='home'),
 )
+
 if 'virtenviro.content' in settings.INSTALLED_APPS:
     urlpatterns += patterns(
-        'virtenviro.admin.views',
+        'virtenviro.content.admin_vews',
         url(r'^content/$', 'content_page', name='content'),
-        url(r'^content/(?P<action>\w+)/$', 'content_page', name='content_page_add'),
-        url(r'^content/(?P<action>\w+)/(?P<page_id>\d+)/$', 'content_page', name='content_page_action'),
+        url(r'^content/(?P<page_id>\d+)/$', 'content_page_edit', name='content_page_edit'),
+        # url(r'^content/(?P<action>\w+)/(?P<page_id>\d+)/$', 'content_page', name='content_page_action'),
     )
 
 if 'virtenviro.shop' in settings.INSTALLED_APPS:

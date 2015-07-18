@@ -1,0 +1,11 @@
+{% extends 'virtenviro/admin/base.html' %}
+
+{% block content %}
+<div class="row">
+    {{ page_form.as_p }}
+{% for content_form in content_formset %}
+<table class="table">{{ content_form.as_table }}</table>
+{% endfor %}
+</div>
+<!-- /.row -->
+{% endblock content %}
