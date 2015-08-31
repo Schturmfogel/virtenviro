@@ -1,6 +1,7 @@
 #~*~ coding: utf-8 ~*~
 from django.contrib import admin
 from django import forms
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from virtenviro.shop.models import Product,\
     Category, Property, PropertyType,\
@@ -102,11 +103,16 @@ class ProductAdmin(admin.ModelAdmin):
         return super(ProductAdmin, self).lookup_allowed(lookup, value)
         
     class Media:
-        js = (
-            '/media/js/ckeditor/ckeditor.js',
-            '/static/filebrowser/js/FB_CKEditor.js',
-        )
-        css = {'all': ('/media/css/ckeditor.css',),}
+        try:
+            if settings.CKEDITOR:
+                js = (
+                    '/static/ckeditor/ckeditor.js',
+                    '/static/filebrowser/js/FB_CKEditor.js',
+                    '/static/js/ckeditor.js',
+                )
+                css = {'all': ('/static/css/ckeditor.css',), }
+        except AttributeError:
+            pass
 
     
 class CategoryAdmin(admin.ModelAdmin):

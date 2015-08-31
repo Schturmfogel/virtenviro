@@ -33,12 +33,15 @@ class Category(MPTTModel):
     def __unicode__(self):
         return self.name
 
+    def clean(self):
+        if not self.slug:
+            self.slug = set_slug(Category, self.name, length=60)
+
     def get_absolute_url(self):
         if self.parent is None:
             return '/%s/' % self.slug
-        if self.is_home:
-            return '/'
-        url = self.get_all_ancestors(self.parent, self.slug)
+        else:
+            url = self.get_all_ancestors(self.parent, self.slug)
         return '%s' % url
 
     get_absolute_url.short_description = _('URL')
@@ -151,7 +154,7 @@ class Product(models.Model):
                     self.subcategory.add(category)
 
     def get_absolute_url(self):
-        return '%s%s' % (self.category.get_absolute_url(), self.slug)
+        return '%s%s/' % (self.category.get_absolute_url(), self.slug)
 
     get_absolute_url.short_description = _('URL')
 
@@ -229,7 +232,7 @@ class PropertySlug(models.Model):
     property_type = models.ForeignKey(PropertyType, verbose_name=_('Propert type'))
     value = models.TextField(verbose_name=_('Value'))
     slug = models.CharField(max_length=60, verbose_name=_('Slug'))
-    objects = PropertySlugManager
+    objects = PropertySlugManager()
 
     def __unicode__(self):
         return '%s: %s' % (self.property_type.name, self.value)

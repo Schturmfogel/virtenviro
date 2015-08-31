@@ -18,7 +18,7 @@ LANGUAGES = getattr(settings, 'LANGUAGES', ('ru',))
 
 class Page(MPTTModel):
     title = models.CharField(max_length=250, verbose_name=_('Title'))
-    slug = models.CharField(max_length=60, blank=True, verbose_name=_('Slug'), unique=True)
+    slug = models.CharField(max_length=250, blank=True, verbose_name=_('Slug'), unique=True)
     is_home = models.BooleanField(default=False, verbose_name=_('Is home page'))
     is_category = models.BooleanField(default=False, verbose_name=_('Is category'))
     template = models.ForeignKey('Template', verbose_name=_('Template'))
@@ -99,8 +99,20 @@ class Page(MPTTModel):
         unique_together = ('parent', 'slug', )
 
 
-class Content(AbstractSeo, AbstractContent, AbstractContentMultilingual):
+class Content(models.Model):
+    title = models.CharField(max_length=250, verbose_name=_('Title'))
+    h1 = models.CharField(max_length=250, verbose_name=_('H1 tag'), null=True, blank=True)
+    intro = models.TextField(verbose_name=_('Intro'), null=True, blank=True)
+    content = models.TextField(verbose_name=_('Content'), null=True, blank=True)
+    template = models.ForeignKey('content.Template', verbose_name=_('Template'), null=True, blank=True)
+    language = models.CharField(max_length=10, verbose_name=_('Language'), choices=LANGUAGES, default=LANGUAGE_CODE)
+
     parent = models.ForeignKey(Page, blank=True, null=True, related_name='contents', verbose_name=_('Parent'))
+
+    # META FIELDS
+    meta_title = models.CharField(max_length=250, verbose_name=_('Meta Title'), null=True, blank=True)
+    meta_keywords = models.TextField(verbose_name=_('Meta Keywords'), null=True, blank=True)
+    meta_description = models.TextField(verbose_name=_('Meta Description'), null=True, blank=True)
 
     # SERVICE FIELDS
     published = models.BooleanField(default=False, verbose_name=_('Published'))
@@ -110,6 +122,12 @@ class Content(AbstractSeo, AbstractContent, AbstractContentMultilingual):
     author = models.ForeignKey(User, verbose_name=_('Author'), related_name='created_contents', blank=True, null=True)
     last_modified_by = models.ForeignKey(User, verbose_name=_('Corrector'), blank=True, null=True,
                                          related_name='modified_contents')
+
+    def get_template(self):
+        if not self.template is None:
+            return self.template
+        else:
+            return self.parent.template
 
     def __unicode__(self):
         return self.title

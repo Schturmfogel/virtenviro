@@ -76,6 +76,7 @@ class ContentTabularInline(admin.StackedInline):
 
 
 class PageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'parent')
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
@@ -119,6 +120,7 @@ class PageAdmin(admin.ModelAdmin):
 
 class ContentAdmin(admin.ModelAdmin):
     list_display = ('title', 'parent', 'language')
+    #list_editable = ('parent',)
     list_filter = ('language',)
     formfield_overrides = {
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
