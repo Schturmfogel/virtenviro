@@ -214,3 +214,32 @@ class Tag(models.Model):
         ordering = ['tag', ]
         verbose_name = _('Tag')
         verbose_name_plural = _('Tags')
+
+class Menu(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
+    sys_name = models.CharField(max_length=255, verbose_name=_('System name'))
+    page = models.ManyToManyField(Page, verbose_name=_('Page'), null=True, blank=True, through='PageMenuRelationship')
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = _('Menu')
+        verbose_name_plural = _('Menus')
+
+
+class PageMenuRelationship(models.Model):
+    page = models.ForeignKey(Page)
+    menu = models.ForeignKey(Menu, null=True, blank=True)
+    title = models.CharField(max_length=255, verbose_name=_('Title'), null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
+    ordering = models.IntegerField(default=9999, verbose_name=_('Ordering'))
+
+    def __unicode__(self):
+        return '%s %s' % (self.menu.name, self.page.title)
+
+    class Meta:
+        ordering = ['ordering']
+        verbose_name = _('Page Menu Relationship')
+        verbose_name_plural = _('Page Menu Relationships')

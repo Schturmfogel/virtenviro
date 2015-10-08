@@ -75,6 +75,12 @@ class ContentTabularInline(admin.StackedInline):
     extra = 0
 
 
+class MenuTabularInline(admin.StackedInline):
+    model = PageMenuRelationship
+    #form = MenuAdminForm
+    extra = 1
+
+
 class PageAdmin(admin.ModelAdmin):
     list_display = ('title', 'parent')
     formfield_overrides = {
@@ -85,6 +91,7 @@ class PageAdmin(admin.ModelAdmin):
     form = PageAdminForm
     inlines = [
         ContentTabularInline,
+        MenuTabularInline,
     ]
 
     def save_model(self, request, obj, form, change):
@@ -158,9 +165,16 @@ class ContentAdmin(admin.ModelAdmin):
             pass
 
 
+class MenuAdmin(admin.ModelAdmin):
+    inlines = [
+        MenuTabularInline,
+    ]
+
 admin.site.register(Page, PageAdmin)
 admin.site.register(Content, ContentAdmin)
 admin.site.register(Template, TemplateAdmin)
 admin.site.register(AdditionalField)
 admin.site.register(FieldValue)
 admin.site.register(Snippet)
+admin.site.register(Tag)
+admin.site.register(Menu, MenuAdmin)

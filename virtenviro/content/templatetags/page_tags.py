@@ -2,7 +2,7 @@
 __author__ = 'Kamo Petrosyan'
 from django import template
 from django.db.models import Q
-from virtenviro.content.models import Snippet, Page, AdditionalField
+from virtenviro.content.models import Snippet, Page, AdditionalField, Menu
 from django.template import loader, Context
 from virtenviro.utils import *
 
@@ -137,3 +137,19 @@ def page_breadcrumb(page, lang=settings.LANGUAGE_CODE):
         breadcrumb.append(content)
     breadcrumb.reverse()
     return breadcrumb
+
+
+@register.assignment_tag
+def get_page_by_id(page_id):
+    try:
+        return Page.objects.get(pk=page_id)
+    except Page.DoesNotExist:
+        return None
+
+
+@register.assignment_tag
+def get_menu(sys_name):
+    try:
+        return Menu.objects.get(sys_name=sys_name)
+    except Menu.DoesNotExist:
+        return None
