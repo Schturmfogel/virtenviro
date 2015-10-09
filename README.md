@@ -11,7 +11,7 @@ Open source content management system (CMS) based on the django framework.
 
 ## Packages required
 
-* 'Django 1.7.*',
+* 'Django 1.7+',
 * 'django-mptt',
 * 'pytils',
 * 'lxml',
