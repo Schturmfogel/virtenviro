@@ -1,7 +1,13 @@
 {% load mptt_tags %}
 <ul>
-{% recursetree pages %}
-    <li><a href="">{{ node.title }}</a></li>
-    {{ children }}
+{% recursetree nodes %}
+    <li{% if node == current_page %} class="active"{% endif %}>
+        <a {% if node == current_page %}href="javascript:;"  {% else %}href="/vadmin/content/{{ node.pk }}/"{% endif %}>{{ node.title }}</a>
+        {% if not node.is_leaf_node and current_page in node.get_family %}
+        <ul class="children">
+            {{ children }}
+        </ul>
+        {% endif %}
+    </li>
 {% endrecursetree %}
 </ul>

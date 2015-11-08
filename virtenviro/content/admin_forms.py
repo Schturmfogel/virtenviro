@@ -7,6 +7,10 @@ from virtenviro.content.models import *
 
 
 class PagesAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PagesAdminForm, self).__init__(*args, **kwargs)
+        self.fields['parent'].queryset = Page.objects.filter(is_category=True)
+
     class Meta:
         model = Page
         exclude = ['last_modified']

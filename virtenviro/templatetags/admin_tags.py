@@ -8,6 +8,6 @@ register = Library()
 @register.simple_tag
 def page_navigation(current_page=None):
     t = loader.get_template('virtenviro/admin/content/navigation.html')
-    pages = Page.objects.filter(parent__isnull=True)
-    content = t.render(Context({'pages': pages, 'current_page': current_page}))
+    pages = Page.objects.filter(parent__isnull=True).order_by('title')
+    content = t.render(Context({'nodes': pages, 'current_page': current_page}))
     return content

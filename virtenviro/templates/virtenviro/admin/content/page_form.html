@@ -1,11 +1,92 @@
-{% extends 'virtenviro/admin/base.html' %}
+{% extends 'virtenviro/admin/base.html' %}{% load i18n %}
 
 {% block content %}
 <div class="row">
-    {{ page_form.as_p }}
-{% for content_form in content_formset %}
-<table class="table">{{ content_form.as_table }}</table>
-{% endfor %}
+    <div class="form-group">
+        <label for="id_title">Название страницы:</label>
+        <input type="text" class="form-control" id="id_title" placeholder="Название страницы" name="title" value="{{ page_form.title.value }}">
+    </div>
+    <div class="form-group">
+        <label for="id_slug">Псевдостатический адрес:</label>
+        <input type="text" class="form-control" id="id_slug" placeholder="Псевдостатический адрес" name="slug" value="{{ page_form.slug.value }}">
+    </div>
+    <div class="form-group">
+        <label for="id_is_home">Является домашней страницей:</label>
+        {{ page_form.is_home }}
+    </div>
+    <div class="form-group">
+        <label for="id_is_category">Является категорией:</label>
+        {{ page_form.is_category }}
+    </div>
+    <div class="form-group">
+        <label for="id_template">Шаблон:</label>
+        <select class="form-control" id="id_template" placeholder="Шаблон" name="template">
+            {% for pk, title in page_form.fields.template.choices %}
+                <option value="{{ pk }}"{% if page_form.initial.template == pk %} selected {% endif %}>{{ title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_parent">Родитель:</label>
+        <select class="form-control" id="id_parent">
+            {% for pk, title in page_form.fields.parent.choices %}
+                <option value="{{ pk }}"{% if page_form.initial.parent == pk %} selected {% endif %}>{{ title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_ordering">Сортировка:</label>
+        <input type="number" class="form-control" id="id_ordering" placeholder="99999" name="ordering" value="{{ page_form.ordering.value }}">
+    </div>
+    <div class="form-group">
+        <label for="id_login_required">Требуется авторизация: </label>
+        {{ page_form.login_required }}
+    </div>
+    <div class="form-group">
+        <label for="id_published">Опубликовано:</label>
+        {{ page_form.published }}
+    </div>
+    <div class="form-group">
+        <label for="id_pub_datetime">Дата и время создания:</label>
+        <input type="text" class="form-control" id="id_pub_datetime" name="title" value="{{ page_form.pub_datetime.value }}">
+    </div>
+    <div class="form-group">
+        <label for="id_author">Автор:</label>
+        <select id="id_author" class="form-control">
+            {% for pk, name in page_form.fields.author.choices %}
+                <option value="{{ pk }}"{% if page_form.initial.author == pk %} selected {% endif %}>{{ name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_last_modified_by">Последний раз редактировал:</label>
+        <select id="id_last_modified_by" class="form-control">
+            {% for pk, name in page_form.fields.last_modified_by.choices %}
+                <option value="{{ pk }}"{% if page_form.initial.last_modified_by == pk %} selected {% endif %}>{{ name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+<div>
+  <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        {% for content_form in content_formset %}
+        <li role="presentation"{% if forloop.counter == 1 %} class="active"{% endif %}>
+            <a href="#form-{{ content_form.language.value }}" aria-controls="form-{{ content_form.language.value }}" role="tab" data-toggle="tab">
+            {% for key, val in content_form.fields.language.choices %}{% if content_form.initial.language == key %}{% trans val %}{% endif %}{% endfor %}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+    {% for content_form in content_formset %}
+        <div role="tabpanel" class="tab-pane active" id="form-{{ content_form.language.value }}">{{ content_form.as_p }}</div>
+    {% endfor %}
+    </div>
+
+</div>
 </div>
 <!-- /.row -->
 {% endblock content %}
+{% block extrascripts %}{% endblock %}

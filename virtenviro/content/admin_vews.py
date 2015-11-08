@@ -32,6 +32,7 @@ def content_page_edit(request, page_id):
 
     try:
         page = Page.objects.get(pk=page_id)
+        context['current_page'] = page
     except Page.DoesNotExist:
         raise Http404
 
@@ -40,10 +41,11 @@ def content_page_edit(request, page_id):
         content_formset = ContentAdminFormset(request.POST)
     else:
         page_form = PagesAdminForm(instance=page)
-        content_formset = ContentAdminFormset(instance=page, initial=[
-            {'language': 'ru'},
-            {'language': 'en'},
-            {'language': 'fr'}])
+        initials = []
+        for lang in settings.LANGUAGES:
+            initials.append({'language': lang[0]})
+        content_formset = ContentAdminFormset(instance=page, initial=initials)
+        content_formset.extra = 0
 
     context['page'] = page
     context['pages'] = paginate(Page.objects.all(), request.GET.get('page', 1), 100)

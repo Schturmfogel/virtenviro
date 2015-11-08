@@ -120,21 +120,12 @@ def leaf_pages(root=None, root_id=None, count=0):
     return nodes
 
 @register.assignment_tag
-def page_breadcrumb(page, lang=settings.LANGUAGE_CODE):
-    breadcrumb = []
-    content = page.get_content(lang)
-    if content is None:
-        content = page.get_content(settings.LANGUAGE_CODE)
-
-    breadcrumb.append(content)
+def page_breadcrumb(page):
+    breadcrumb = [page]
 
     while page.parent:
         page = page.parent
-        content = page.get_content(lang)
-        if content is None:
-            content = page.get_content(settings.LANGUAGE_CODE)
-
-        breadcrumb.append(content)
+        breadcrumb.append(page)
     breadcrumb.reverse()
     return breadcrumb
 
