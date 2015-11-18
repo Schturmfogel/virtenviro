@@ -170,6 +170,12 @@ class MenuAdmin(admin.ModelAdmin):
         MenuTabularInline,
     ]
 
+
+class PageMenuRelationshipAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'page', 'title', 'url', 'target', 'menu', 'ordering')
+    list_editable = ('title', 'url', 'target', 'menu', 'ordering')
+    list_filter = ('menu',)
+
 admin.site.register(Page, PageAdmin)
 admin.site.register(Content, ContentAdmin)
 admin.site.register(Template, TemplateAdmin)
@@ -178,3 +184,4 @@ admin.site.register(FieldValue)
 admin.site.register(Snippet)
 admin.site.register(Tag)
 admin.site.register(Menu, MenuAdmin)
+admin.site.register(PageMenuRelationship, PageMenuRelationshipAdmin)

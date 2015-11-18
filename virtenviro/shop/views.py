@@ -1,16 +1,13 @@
 #~*~ coding: utf-8 ~*~
-from django.template import RequestContext
-from django.shortcuts import render_to_response, render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, JsonResponse
+from django.http import JsonResponse
+from django.shortcuts import render
 from lxml import etree
-from pytils.translit import slugify
 
 from forms import SimpleXmlImportForm
 from models import *
 from virtenviro.logger import Logger
-from virtenviro.utils import id_generator, handle_uploads, sha256, ucode
-
+from virtenviro.utils import id_generator, handle_uploads
 
 MEDIA_ROOT = getattr(settings, 'MEDIA_ROOT', getattr(settings, 'STATIC_ROOT'))
 
@@ -34,8 +31,8 @@ def set_order_status(request, order_id, status_id):
 
 @login_required
 def import_yml(request):
-    from yml_import import YmlParser, YML, Offer
-    from yml2product import YML2Product
+    from yml_import import YmlParser
+    from virtenviro.shop.yml_import.yml2product import YML2Product
     if request.method == 'POST':
         form = SimpleXmlImportForm(request.POST, request.FILES)
         if form.is_valid():

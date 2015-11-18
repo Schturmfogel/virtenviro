@@ -141,6 +141,7 @@ def get_page_by_id(page_id):
 @register.assignment_tag
 def get_menu(sys_name):
     try:
-        return Menu.objects.get(sys_name=sys_name)
+        menu = Menu.objects.get(sys_name=sys_name)
     except Menu.DoesNotExist:
         return None
+    return menu.pagemenurelationship_set.all().order_by('ordering')

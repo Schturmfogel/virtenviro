@@ -85,7 +85,7 @@ class YML2Product:
         for param in offer.params:
             self.add_property(
                 value=param['value'],
-                property_type=self.add_property_type(param['name'],category=category),
+                property_type=self.add_property_type(name=param['name'], category=category),
                 product=product
             )
 

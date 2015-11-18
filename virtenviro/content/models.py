@@ -230,16 +230,29 @@ class Menu(models.Model):
 
 
 class PageMenuRelationship(models.Model):
-    page = models.ForeignKey(Page)
-    menu = models.ForeignKey(Menu, null=True, blank=True)
+    TARGETS = (
+            ('_blank', '_blank'),
+            ('_self', '_self'),
+            ('_parent', '_parent'),
+            ('_top', '_top'),
+        )
+
+    page = models.ForeignKey(Page, null=True, blank=True)
+    menu = models.ForeignKey(Menu)
     title = models.CharField(max_length=255, verbose_name=_('Title'), null=True, blank=True)
     url = models.URLField(null=True, blank=True)
+    target = models.CharField(max_length=15, verbose_name=u'Target', choices=TARGETS, null=True, blank=True)
     ordering = models.IntegerField(default=9999, verbose_name=_('Ordering'))
 
     def __unicode__(self):
-        return '%s %s' % (self.menu.name, self.page.title)
+        if self.menu and self.page:
+            return '[%s] %s' % (self.menu.name, self.page.title)
+        elif self.menu:
+            return '[%s] %s' % (self.menu.name, self.pk)
+        else:
+            return '%s' % self.pk
 
     class Meta:
-        ordering = ['ordering']
+        ordering = ['menu', 'ordering']
         verbose_name = _('Page Menu Relationship')
         verbose_name_plural = _('Page Menu Relationships')
