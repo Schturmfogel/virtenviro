@@ -1,6 +1,5 @@
 #~*~ coding: utf-8 ~*~
 from mptt.managers import TreeManager
-
 from virtenviro.shop.models import *
 
 
@@ -13,7 +12,7 @@ class ImageManager(TreeManager):
         return image
 
 
-class ProductManager(models.Manager):
+class ModelManager(models.Manager):
     def get_product(self, slug):
         try:
             return self.get(slug=slug)
@@ -40,6 +39,28 @@ class PropertyManager(models.Manager):
         additional_properties = self.filter(property_type=property_type, product=product)
 
         return additional_properties
+
+    def make_filter(self, property_type, **fkwargs):
+        objs = self.grouped(property_type=property_type).\
+            filter(**fkwargs).extra(
+            select={
+                'intval': 'CAST(substring(value FROM \'^[0-9]+\') AS INTEGER)'},
+            order_by=['intval', 'value'])
+
+        objs_grouped = []
+        for obj in objs:
+            objs_grouped.append({
+                'value': obj['value'],
+                'image': self.get_image(obj['value'], property_type)})
+        return objs_grouped
+
+    def get_image(self, property_value, property_type):
+        try:
+            pr = self.filter(value=property_value, property_type=property_type)[0]
+            ps = Product.objects.filter(property__value=pr.value, property__property_type=pr.property_type)
+            return Image.objects.filter(is_main=True, product__in=ps)[0]
+        except:
+            return None
 
 
 class PropertySlugManager(models.Manager):

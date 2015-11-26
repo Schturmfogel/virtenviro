@@ -237,11 +237,19 @@ class PageMenuRelationship(models.Model):
             ('_top', '_top'),
         )
 
+    MENI_ITEM_TYPES = (
+            ('page', u'Страница'),
+            ('url', u'URL'),
+            ('code', u'Код ссылки'),
+        )
+
     page = models.ForeignKey(Page, null=True, blank=True)
     menu = models.ForeignKey(Menu)
     title = models.CharField(max_length=255, verbose_name=_('Title'), null=True, blank=True)
     url = models.URLField(null=True, blank=True)
     target = models.CharField(max_length=15, verbose_name=u'Target', choices=TARGETS, null=True, blank=True)
+    code = models.TextField(verbose_name=u'Код ссылки', null=True, blank=True)
+    menu_item_type = models.CharField(max_length=25, default=u'page', verbose_name=u'Тип элемента меню', choices=MENI_ITEM_TYPES)
     ordering = models.IntegerField(default=9999, verbose_name=_('Ordering'))
 
     def __unicode__(self):

@@ -121,9 +121,11 @@
             <li class="active">
                 <a href="/admin/"><i class="fa fa-fw fa-dashboard"></i> {% trans 'Dashboard' %}</a>
             </li>
-            <li> <a href="{% url 'content' %}"><i class="fa fa-list"></i> {% trans 'Content' %}</a>
+            <li>
+                <a href="{% url 'content' %}"><i class="fa fa-list"></i> {% trans 'Content' %}</a>
                 {% if appname == 'content' %}{% if current_page %}{% page_navigation current_page %}{% else %}{% page_navigation %}{% endif %}{% endif %}
             </li>
+
             <li> <a href="{% url 'vadmin_shop' %}"><i class="fa fa-list"></i> {% trans 'Shop' %}</a>
                 {% if appname == 'shop' %}
                     <ul>

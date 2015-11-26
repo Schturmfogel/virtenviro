@@ -172,8 +172,8 @@ class MenuAdmin(admin.ModelAdmin):
 
 
 class PageMenuRelationshipAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'page', 'title', 'url', 'target', 'menu', 'ordering')
-    list_editable = ('title', 'url', 'target', 'menu', 'ordering')
+    list_display = ('pk', 'page', 'title', 'url', 'target', 'code', 'menu_item_type', 'menu', 'ordering')
+    list_editable = ('title', 'url', 'target', 'code', 'menu_item_type', 'menu', 'ordering')
     list_filter = ('menu',)
 
 admin.site.register(Page, PageAdmin)
