@@ -72,7 +72,7 @@ class PageAdminForm(forms.ModelForm):
 class ContentTabularInline(admin.StackedInline):
     model = Content
     form = ContentAdminForm
-    extra = 0
+    extra = 1
 
 
 class MenuTabularInline(admin.StackedInline):
@@ -125,6 +125,11 @@ class PageAdmin(admin.ModelAdmin):
             pass
 
 
+class TagInline(admin.StackedInline):
+    model = Tag.content.through
+    extra = 3
+
+
 class ContentAdmin(admin.ModelAdmin):
     list_display = ('title', 'parent', 'language')
     #list_editable = ('parent',)
@@ -133,6 +138,7 @@ class ContentAdmin(admin.ModelAdmin):
         models.ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
     search_fields = ['title', ]
+    inlines = [TagInline,]
 
     form = ContentAdminForm
 
