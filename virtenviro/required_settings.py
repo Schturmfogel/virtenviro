@@ -25,6 +25,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+
+    'datetimewidget',
+
     'virtenviro',
     'virtenviro.content',
     'virtenviro.news',

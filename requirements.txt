@@ -1,0 +1,11 @@
+Django
+django-filebrowser-no-grappelli
+django-mptt
+django-plugins
+lxml
+MySQL-python
+Pillow
+psycopg2
+pytils
+sorl-thumbnail
+django-datetime-widget

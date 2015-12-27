@@ -10,7 +10,6 @@ from virtenviro.content.admin_forms import *
 from virtenviro.utils import paginate
 
 template_str = 'virtenviro/admin/content/{}'
-appname = 'content'
 
 
 @staff_member_required
@@ -18,8 +17,7 @@ def content_page(request):
     template = template_str.format('change_list.html')
 
     context = {
-        'appname': appname,
-        'pages': paginate(Page.objects.all(), request.GET.get('page', 1), 100),
+        'pages': Page.objects.filter(parent__isnull=True),
     }
 
     return render(request, template, context)
@@ -28,7 +26,7 @@ def content_page(request):
 @staff_member_required
 def content_page_edit(request, page_id):
     template = template_str.format('page_form.html')
-    context = {'appname': appname}
+    context = {}
 
     try:
         page = Page.objects.get(pk=page_id)

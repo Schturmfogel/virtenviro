@@ -1,5 +1,5 @@
-{% load mptt_tags %}
-<ul>
+{% load mptt_tags i18n %}
+    <li><h4>{% trans 'Pages' %}</h4></li>
 {% recursetree nodes %}
     <li{% if node == current_page %} class="active"{% endif %}>
         <a {% if node == current_page %}href="javascript:;"  {% else %}href="/vadmin/content/{{ node.pk }}/"{% endif %}>{{ node.title }}</a>
@@ -10,4 +10,3 @@
         {% endif %}
     </li>
 {% endrecursetree %}
-</ul>

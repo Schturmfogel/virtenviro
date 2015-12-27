@@ -6,15 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin - Bootstrap Admin Template</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="{% static 'vadmin/css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="{% static 'vadmin/css/sb-admin.css' %}" rel="stylesheet">
-    <!-- Morris Charts CSS -->
-    <link href="{% static 'vadmin/css/plugins/morris.css' %}" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="{% static 'vadmin/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <title>{% block meta_title %}{% endblock meta_title %}Virtenviro Admin</title>
+    <link href="{% static 'vadmin/css/styles.css' %}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -22,42 +15,14 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-</head>
-<body>
-        <div id="wrapper">
-            {% include 'virtenviro/admin/navigation.html' %}
-
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            {% block page_header %}{% endblock %} <small>{% block page_header_small %}{% endblock %}</small>
-                        </h1>
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-dashboard"></i> Dashboard
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                {% block content %}{% endblock content %}
-
-            </div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- /#page-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
     {% include 'virtenviro/admin/elements/scripts.html' %}
     {% block extrascripts %}{% endblock %}
+</head>
+<body>
+{% include 'virtenviro/admin/navbar.html' %}
+<div class="container">
+{% block navigation %}{% include 'virtenviro/admin/navigation.html' %}{% endblock %}
+{% block content %}{% endblock %}
+</div>
 </body>
 </html>

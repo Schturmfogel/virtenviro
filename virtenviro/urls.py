@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^filebrowser/', include(site.urls)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('virtenviro.registration.urls')),
+    url(r'^vadmin/', include('virtenviro.admin.urls'))
 )
 
 if settings.DEBUG:
@@ -23,5 +24,5 @@ if settings.DEBUG:
             {'document_root': settings.MEDIA_ROOT}),)
 
 urlpatterns += patterns('',
-    url(r'^$', include('virtenviro.content.urls')),
+    url(r'^', include('virtenviro.content.urls')),
 )

@@ -218,7 +218,7 @@ class Tag(models.Model):
 class Menu(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     sys_name = models.CharField(max_length=255, verbose_name=_('System name'))
-    page = models.ManyToManyField(Page, verbose_name=_('Page'), null=True, blank=True, through='PageMenuRelationship')
+    page = models.ManyToManyField(Page, verbose_name=_('Page'), through='PageMenuRelationship')
 
     def __unicode__(self):
         return self.name

@@ -1,8 +1,24 @@
 // Import Bootstrap Compass integration
 @import "bootstrap-compass";
 
-// Import custom Bootstrap variables
-@import "bootstrap-variables";
-
 // Import Bootstrap for Sass
 @import "bootstrap";
+
+body {
+  padding-top: 70px;
+}
+
+label {
+  font-weight: 400;
+
+  &.required {
+    font-weight: bold;
+
+    &:after {
+      content: "*";
+    }
+  }
+  &.excepted {
+    color: red;
+  }
+}
