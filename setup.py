@@ -4,22 +4,20 @@ from setuptools import find_packages, setup
 EXCLUDE_FROM_PACKAGES = []
 
 
-def get_version(major=0, minor=0, build=0, release_type='b', release_build=0):
-    return '%s.%s.%s.%s.%s' % (major, minor, build, release_type, release_build)
+def get_version(major=0, minor=0, build=0):
+    return '%s.%s.%s' % (major, minor, build)
 
 
 setup(
     name='virtenviro',
     version=get_version(
         major=0,
-        minor=6,
-        build=0,
-        release_type='b',
-        release_build=2
+        minor=7,
+        build=2
     ),
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     include_package_data=True,
-    url='https://github.com/Haikson/virtenviro',
+    url='http://www.virtenviro.org/',
     license='GPL3',
     author='Kamo Petrosyan',
     author_email='kamo@haikson.com',
@@ -40,5 +38,12 @@ setup(
         'Topic :: Software Development',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    install_requires=['django', 'django-mptt', 'django-filebrowser-no-grappelli']
+    install_requires=[
+        'django',
+        'django-mptt',
+        'django-filebrowser-no-grappelli',
+        'lxml',
+        'Pillow',
+        'pytils',
+        'sorl-thumbnail']
 )

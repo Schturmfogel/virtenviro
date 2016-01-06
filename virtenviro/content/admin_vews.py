@@ -34,16 +34,22 @@ def content_page_edit(request, page_id):
     except Page.DoesNotExist:
         raise Http404
 
+    initials = []
+    for lang in settings.LANGUAGES:
+        if page.get_content(language=lang) is None:
+            initials.append({'language': lang[0], 'author': request.user})
+
     if request.method == 'POST':
-        page_form = PagesAdminForm(request.POST)
-        content_formset = ContentAdminFormset(request.POST)
+        page_form = PagesAdminForm(request.POST, instance=page)
+        content_formset = ContentAdminFormset(request.POST, request.FILES, instance=page, initial=initials)
+        if page_form.is_valid() and content_formset.is_valid():
+            page = page_form.save()
+            content_formset.save()
     else:
         page_form = PagesAdminForm(instance=page)
-        initials = []
-        for lang in settings.LANGUAGES:
-            initials.append({'language': lang[0]})
         content_formset = ContentAdminFormset(instance=page, initial=initials)
-        content_formset.extra = 0
+
+    content_formset.extra = len(initials)
 
     context['page'] = page
     context['pages'] = paginate(Page.objects.all(), request.GET.get('page', 1), 100)
@@ -51,3 +57,4 @@ def content_page_edit(request, page_id):
     context['content_formset'] = content_formset
 
     return render(request, template, context)
+

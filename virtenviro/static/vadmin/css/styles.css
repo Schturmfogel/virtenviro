@@ -7338,7 +7338,7 @@ button.close {
   }
 }
 body {
-  padding-top: 70px;
+  padding: 70px 0;
 }
 
 label {
@@ -7352,4 +7352,13 @@ label.required:after {
 }
 label.excepted {
   color: red;
+}
+
+.buttons-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 15px 0;
+  width: 100%;
+  background-color: #1b6d85;
 }

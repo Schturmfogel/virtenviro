@@ -41,9 +41,37 @@ class ContentAdminForm(forms.ModelForm):
     class Meta:
         model = Content
         widgets = {
-            'pub_datetime': forms.TextInput(attrs={'class': 'form-control', 'required': ''}),
+            'title': forms.TextInput(attrs={'placeholder': _('Title'), 'class': "form-control"}),
+            'h1': forms.TextInput(attrs={'placeholder': _('H1'), 'class': "form-control"}),
+            'intro': forms.Textarea(attrs={'placeholder': _('Intro text'), 'class': 'form-control', 'rows': 4}),
+            'content': forms.Textarea(attrs={'placeholder': _('Intro text'), 'class': 'ckeditor'}),
+            'template': forms.Select(attrs={'class': "form-control"}),
+            'language': forms.Select(attrs={'class': "form-control disabled"}),
+            'meta_title': forms.TextInput(attrs={'placeholder': _('Meta title'), 'class': "form-control"}),
+            'meta_keywords': forms.Textarea(attrs={'placeholder': _('Meta keywords'), 'class': 'form-control', 'rows': 2}),
+            'meta_description': forms.Textarea(attrs={'placeholder': _('Meta description'), 'class': 'form-control', 'rows': 2}),
+            'author': forms.Select(attrs={'class': 'form-control'}),
+            'pub_datetime': DateTimeWidget(attrs={'class': 'form-control'}, usel10n=True, bootstrap_version=3),
+            'last_modified_by': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control disabled'})
         }
-        exclude = ['last_modified']
+        exclude = []
+
+    class Media:
+        try:
+            if settings.CKEDITOR:
+                js = (
+                    '/static/ckeditor/ckeditor.js',
+                    '/static/filebrowser/js/FB_CKEditor.js',
+                    '/static/js/ckeditor.js',
+                )
+                css = {'all': ('/static/css/ckeditor.css',), }
+        except AttributeError:
+            pass
 
 
-ContentAdminFormset = inlineformset_factory(Page, Content, exclude=['last_modified'])
+ContentAdminFormset = inlineformset_factory(
+        Page,
+        Content,
+        form=ContentAdminForm,
+        extra=len(settings.LANGUAGES),
+        exclude=['last_modified'])

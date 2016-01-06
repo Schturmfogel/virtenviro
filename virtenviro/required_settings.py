@@ -50,6 +50,17 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.cache.CacheMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = [
+    "django.contrib.auth.context_processors.auth",
+    "django.template.context_processors.debug",
+    "django.template.context_processors.i18n",
+    "django.template.context_processors.media",
+    "django.template.context_processors.static",
+    "django.template.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "virtenviro.virtenviro_context_processors.virtenviro_context_processor",
+]
+
 #CACHE_BACKEND = 'file:///tmp/django_cache'
 
 # Internationalization

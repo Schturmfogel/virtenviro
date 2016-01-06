@@ -23,10 +23,8 @@ WSGI_APPLICATION = 'virtenviro.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'virtenviro_cms',
-        'USER': 'postgres',
-        'PASSWORD': 'yt7Dthjznyj'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

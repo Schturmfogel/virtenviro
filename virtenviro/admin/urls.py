@@ -1,23 +1,45 @@
 # ~*~ coding: utf-8 ~*~
-__author__ = 'Kamo Petrosyan'
 from django.conf.urls import url, include
 from django.conf import settings
+from django import __version__
 
-app_name='vadmin'
+if __version__.startswith('1.9'):
+    app_name = 'vadmin'
 
-urlpatterns = [
-    url(r'^$', 'virtenviro.admin.views.index', name='home'),
-]
-
-if 'virtenviro.content' in settings.INSTALLED_APPS:
-    urlpatterns += [
-        url(r'^content/$', 'virtenviro.content.admin_vews.content_page', name='content'),
-        url(r'^content/(?P<page_id>\d+)/$', 'virtenviro.content.admin_vews.content_page_edit', name='content_page_edit'),
-        # url(r'^content/(?P<action>\w+)/(?P<page_id>\d+)/$', 'content_page', name='content_page_action'),
+    urlpatterns = [
+        url(r'^$', 'virtenviro.admin.views.index', name='home'),
     ]
 
-if 'virtenviro.shop' in settings.INSTALLED_APPS:
-    urlpatterns += [
-        url(r'^shop/$', 'virtenviro.admin.views.shop', name='vadmin_shop'),
-        url(r'^shop/import_yml/$', 'virtenviro.shop.views.import_yml', name='vadmin_import_yml'),
-    ]
+    if 'virtenviro.content' in settings.INSTALLED_APPS:
+        urlpatterns += [
+            url(r'^content/$', 'virtenviro.content.admin_vews.content_page', name='content'),
+            url(r'^content/(?P<page_id>\d+)/$', 'virtenviro.content.admin_vews.content_page_edit',
+                name='content_page_edit'),
+            # url(r'^content/(?P<action>\w+)/(?P<page_id>\d+)/$', 'content_page', name='content_page_action'),
+        ]
+
+    if 'virtenviro.shop' in settings.INSTALLED_APPS:
+        urlpatterns += [
+            url(r'^shop/$', 'virtenviro.admin.views.shop', name='vadmin_shop'),
+            url(r'^shop/import_yml/$', 'virtenviro.shop.views.import_yml', name='vadmin_import_yml'),
+        ]
+else:
+    from django.conf.urls import patterns
+
+    urlpatterns = patterns('',
+                           url(r'^$', 'virtenviro.admin.views.index', name='home'), )
+
+    if 'virtenviro.content' in settings.INSTALLED_APPS:
+        urlpatterns += patterns('',
+                                url(r'^content/$', 'virtenviro.content.admin_vews.content_page', name='content'),
+                                url(r'^content/(?P<page_id>\d+)/$', 'virtenviro.content.admin_vews.content_page_edit',
+                                    name='content_page_edit'),
+                                # url(r'^content/(?P<action>\w+)/(?P<page_id>\d+)/$', 'content_page', name='content_page_action'),
+                                )
+
+    if 'virtenviro.shop' in settings.INSTALLED_APPS:
+        urlpatterns += patterns('',
+                                url(r'^shop/$', 'virtenviro.admin.views.shop', name='vadmin_shop'),
+                                url(r'^shop/import_yml/$', 'virtenviro.shop.views.import_yml',
+                                    name='vadmin_import_yml'),
+                                )

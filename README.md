@@ -48,5 +48,3 @@ pip install git+git://github.com/Haikson/virtenviro.git#virtenviro
  
 ## USES
 [django-picklefield](https://github.com/shrubberysoft/django-picklefield) in project
- 
- 
