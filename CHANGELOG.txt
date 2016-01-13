@@ -1,12 +1,18 @@
 ==== 0.5.0 (2014-12-31) ====
 
+Added miniatures for pages
 
 ==== 0.5.1 (2014-12-31) ====
 
 - Some changes
 
+
 ==== 0.5.1b (2015-04-08) ====
 
 - registratin module (beta)
 - content module has bin modified to multilingual support
+
+
+==== 0.5.0 (2014-12-31) ====
+
 

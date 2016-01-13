@@ -1,4 +1,5 @@
 #~*~ coding: utf-8 ~*~
+import os
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -23,6 +24,9 @@ class Page(MPTTModel):
     is_category = models.BooleanField(default=False, verbose_name=_('Is category'))
     template = models.ForeignKey('Template', verbose_name=_('Template'))
     parent = TreeForeignKey('self', blank=True, null=True, related_name='child_set', verbose_name=_('Parent'))
+
+    miniature = models.ImageField(upload_to=os.path.join(settings.MEDIA_ROOT, 'img', 'miniature'),
+                                  verbose_name=_('Miniature'), null=True, blank=True)
 
     # SERVICE FIELDS
     ordering = models.IntegerField(default=999999, verbose_name=_('Ordering'))

@@ -13,7 +13,7 @@ setup(
     version=get_version(
         major=0,
         minor=7,
-        build=2
+        build=4
     ),
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     include_package_data=True,
@@ -39,11 +39,13 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     install_requires=[
-        'django',
+        'django==1.8.8',
         'django-mptt',
         'django-filebrowser-no-grappelli',
         'lxml',
         'Pillow',
         'pytils',
-        'sorl-thumbnail']
+        'sorl-thumbnail',
+        'django-datetime-widget',
+    ]
 )
