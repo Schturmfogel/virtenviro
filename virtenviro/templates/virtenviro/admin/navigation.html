@@ -1,6 +1,4 @@
 {% load i18n %}{% load admin_tags %}
-<div class="col-md-3">
-    <ul class="nav nav-pills nav-stacked">
-        {% if pages %}{% with pages as nodes %}{% include 'virtenviro/admin/content/navigation.html' %}{% endwith %}{% endif %}
-    </ul>
-</div>
+<ul id="navigation">
+    {% if pages %}{% with pages as nodes %}{% include 'virtenviro/admin/content/navigation.html' %}{% endwith %}{% endif %}
+</ul>

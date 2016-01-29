@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 # Application definition
 
+# Change SITE_ID in your settings.py
 SITE_ID = 1
 
 INSTALLED_APPS = (
@@ -25,6 +26,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'filebrowser',
 
     'datetimewidget',
 
@@ -33,7 +35,6 @@ INSTALLED_APPS = (
     'virtenviro.news',
     'virtenviro.shop',
     'virtenviro.registration',
-    'filebrowser',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -31,8 +31,8 @@ class PagesAdminForm(forms.ModelForm):
     def clean_parent(self):
         parent = self.cleaned_data.get('parent')
 
-        if parent:
-            parent = 0
+        if not parent:
+            parent = None
 
         return parent
 
@@ -54,7 +54,7 @@ class ContentAdminForm(forms.ModelForm):
             'pub_datetime': DateTimeWidget(attrs={'class': 'form-control'}, usel10n=True, bootstrap_version=3),
             'last_modified_by': forms.Select(attrs={'disabled': 'disabled', 'class': 'form-control disabled'})
         }
-        exclude = []
+        exclude = ['parent']
 
     class Media:
         try:

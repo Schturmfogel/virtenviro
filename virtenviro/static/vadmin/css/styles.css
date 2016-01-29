@@ -310,8 +310,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?1450795538);
-  src: url(/fonts/bootstrap/glyphicons-halflings-regular.eot?&1450795538#iefix) format("embedded-opentype"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff2?1450795538) format("woff2"), url(/fonts/bootstrap/glyphicons-halflings-regular.woff?1450795538) format("woff"), url(/fonts/bootstrap/glyphicons-halflings-regular.ttf?1450795538) format("truetype"), url(/fonts/bootstrap/glyphicons-halflings-regular.svg?1450795538#glyphicons_halflingsregular) format("svg");
+  src: url(url(/static/vadmin/fonts/bootstrap/glyphicons-halflings-regular.eot));
+  src: url(url(/static/vadmin/fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix)) format("embedded-opentype"), url(url(/static/vadmin/fonts/bootstrap/glyphicons-halflings-regular.woff2)) format("woff2"), url(url(/static/vadmin/fonts/bootstrap/glyphicons-halflings-regular.woff)) format("woff"), url(url(/static/vadmin/fonts/bootstrap/glyphicons-halflings-regular.ttf)) format("truetype"), url(url(/static/vadmin/fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular)) format("svg");
 }
 .glyphicon {
   position: relative;
@@ -1950,7 +1950,7 @@ pre code {
 }
 @media (min-width: 992px) {
   .container {
-    width: 970px;
+    width: 1054px;
   }
 }
 @media (min-width: 1200px) {
@@ -4496,7 +4496,7 @@ tbody.collapse.in {
 }
 
 .nav {
-  margin-bottom: 0;
+  margin-bottom: 15px;
   padding-left: 0;
   list-style: none;
 }
@@ -7361,4 +7361,10 @@ label.excepted {
   padding: 15px 0;
   width: 100%;
   background-color: #1b6d85;
+}
+
+#navigation {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }

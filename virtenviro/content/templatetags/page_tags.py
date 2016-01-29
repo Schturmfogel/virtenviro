@@ -98,7 +98,7 @@ def get_content_ml(context, page, lang):
 
 
 @register.assignment_tag
-def leaf_pages(root=None, root_id=None, count=0):
+def leaf_pages(root=None, root_id=None, count=0, rnd=False):
     if root is None:
         if root_id is None:
             return []
@@ -109,6 +109,9 @@ def leaf_pages(root=None, root_id=None, count=0):
                 return []
     nodes = []
     m_nodes = root.get_descendants(include_self=False).order_by('-pub_datetime', '-pk')
+
+    if rnd:
+        m_nodes = m_nodes.order_by('?')
     if count == 0:
         count = m_nodes.count()
     for m_node in m_nodes:

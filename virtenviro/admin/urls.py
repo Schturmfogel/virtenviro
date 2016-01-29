@@ -12,10 +12,10 @@ if __version__.startswith('1.9'):
 
     if 'virtenviro.content' in settings.INSTALLED_APPS:
         urlpatterns += [
-            url(r'^content/$', 'virtenviro.content.admin_vews.content_page', name='content'),
-            url(r'^content/(?P<page_id>\d+)/$', 'virtenviro.content.admin_vews.content_page_edit',
+            url(r'^content/$', 'virtenviro.content.admin_views.content_page', name='content'),
+            url(r'^content/(?P<page_id>\d+)/$', 'virtenviro.content.admin_views.content_page_edit',
                 name='content_page_edit'),
-            # url(r'^content/(?P<action>\w+)/(?P<page_id>\d+)/$', 'content_page', name='content_page_action'),
+            url(r'^content/add/$', 'virtenviro.content.admin_views.content_page_add', name='content_page_add'),
         ]
 
     if 'virtenviro.shop' in settings.INSTALLED_APPS:
@@ -31,10 +31,11 @@ else:
 
     if 'virtenviro.content' in settings.INSTALLED_APPS:
         urlpatterns += patterns('',
-                                url(r'^content/$', 'virtenviro.content.admin_vews.content_page', name='content'),
-                                url(r'^content/(?P<page_id>\d+)/$', 'virtenviro.content.admin_vews.content_page_edit',
+                                url(r'^content/$', 'virtenviro.content.admin_views.content_page', name='content'),
+                                url(r'^content/(?P<page_id>\d+)/$', 'virtenviro.content.admin_views.content_page_edit',
                                     name='content_page_edit'),
-                                # url(r'^content/(?P<action>\w+)/(?P<page_id>\d+)/$', 'content_page', name='content_page_action'),
+                                url(r'^content/add/$', 'virtenviro.content.admin_views.content_page_add',
+                                    name='content_page_add'),
                                 )
 
     if 'virtenviro.shop' in settings.INSTALLED_APPS:
