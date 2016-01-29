@@ -12,3 +12,4 @@ urlpatterns = patterns('',
     url(r'^$', 'virtenviro.content.views.home', name='home'),
     url(r'^[a-z0-9-_/]+$', 'virtenviro.content.views.view', name='page'),
 )
+
