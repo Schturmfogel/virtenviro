@@ -14,8 +14,23 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 # Application definition
 
-# Change SITE_ID in your settings.py
+# Change SITE_ID in your sample_settings.py
 SITE_ID = 1
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 INSTALLED_APPS = (
     'mptt',
@@ -50,17 +65,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     #'django.middleware.cache.CacheMiddleware',
 )
-
-TEMPLATE_CONTEXT_PROCESSORS = [
-    "django.contrib.auth.context_processors.auth",
-    "django.template.context_processors.debug",
-    "django.template.context_processors.i18n",
-    "django.template.context_processors.media",
-    "django.template.context_processors.static",
-    "django.template.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    "virtenviro.virtenviro_context_processors.virtenviro_context_processor",
-]
 
 #CACHE_BACKEND = 'file:///tmp/django_cache'
 

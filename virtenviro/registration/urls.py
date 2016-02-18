@@ -1,11 +1,9 @@
-#~*~ coding: utf-8 ~*~
-from django.conf.urls import *
+# ~*~ coding: utf-8 ~*~
+from django import __version__
 
-from virtenviro.registration.views import signup
-
-
-urlpatterns = patterns('',
-    url( r'^signup/$', signup ),
-    url( r'^login/$', 'django.contrib.auth.views.login', { "template_name": "virtenviro/accounts/login.html"} ),
-    url( r'^logout/$', 'django.contrib.auth.views.logout_then_login', name='logout' ),
-)
+if float(__version__[:3]) >= 1.9:
+    import urls_new
+    urlpatterns = urls_new.urlpatterns
+else:
+    import urls_old
+    urlpatterns = urls_old.urlpatterns

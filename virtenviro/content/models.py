@@ -1,4 +1,4 @@
-#~*~ coding: utf-8 ~*~
+# ~*~ coding: utf-8 ~*~
 import os
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 import datetime
 from django.utils import timezone
 from django.conf import settings
-from virtenviro.abstract_models import AbstractSeo, AbstractContent,\
+from virtenviro.abstract_models import AbstractSeo, AbstractContent, \
     AbstractContentMultilingual
 from virtenviro.content.managers import PageManager
 
@@ -100,7 +100,7 @@ class Page(MPTTModel):
         ordering = ['ordering', '-pub_datetime', 'title']
         verbose_name = _('Page')
         verbose_name_plural = _('Pages')
-        unique_together = ('parent', 'slug', )
+        unique_together = ('parent', 'slug',)
 
 
 class Content(models.Model):
@@ -146,16 +146,16 @@ class Template(MPTTModel):
     title = models.CharField(max_length=255, verbose_name=_('Title'), null=False, blank=False)
     filename = models.CharField(max_length=255, verbose_name=_('Filename'))
     parent = TreeForeignKey('self', verbose_name=_('Parent'), null=True, blank=True)
-    
+
     def __unicode__(self):
-        return self.title
-    
+        return '%s [%s]' % (self.title, self.filename)
+
     class Meta:
         ordering = ['title']
         verbose_name = _('Template')
         verbose_name_plural = _('Templates')
 
-        
+
 class Snippet(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'), unique=True)
     code = models.TextField(verbose_name=_('Code'), null=True, blank=True)
@@ -219,6 +219,7 @@ class Tag(models.Model):
         verbose_name = _('Tag')
         verbose_name_plural = _('Tags')
 
+
 class Menu(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     sys_name = models.CharField(max_length=255, verbose_name=_('System name'))
@@ -235,17 +236,17 @@ class Menu(models.Model):
 
 class PageMenuRelationship(models.Model):
     TARGETS = (
-            ('_blank', '_blank'),
-            ('_self', '_self'),
-            ('_parent', '_parent'),
-            ('_top', '_top'),
-        )
+        ('_blank', '_blank'),
+        ('_self', '_self'),
+        ('_parent', '_parent'),
+        ('_top', '_top'),
+    )
 
     MENI_ITEM_TYPES = (
-            ('page', u'Страница'),
-            ('url', u'URL'),
-            ('code', u'Код ссылки'),
-        )
+        ('page', u'Страница'),
+        ('url', u'URL'),
+        ('code', u'Код ссылки'),
+    )
 
     page = models.ForeignKey(Page, null=True, blank=True)
     menu = models.ForeignKey(Menu)
@@ -253,7 +254,8 @@ class PageMenuRelationship(models.Model):
     url = models.URLField(null=True, blank=True)
     target = models.CharField(max_length=15, verbose_name=u'Target', choices=TARGETS, null=True, blank=True)
     code = models.TextField(verbose_name=u'Код ссылки', null=True, blank=True)
-    menu_item_type = models.CharField(max_length=25, default=u'page', verbose_name=u'Тип элемента меню', choices=MENI_ITEM_TYPES)
+    menu_item_type = models.CharField(max_length=25, default=u'page', verbose_name=u'Тип элемента меню',
+                                      choices=MENI_ITEM_TYPES)
     ordering = models.IntegerField(default=9999, verbose_name=_('Ordering'))
 
     def __unicode__(self):

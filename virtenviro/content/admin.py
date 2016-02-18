@@ -60,7 +60,8 @@ class PageAdminForm(forms.ModelForm):
             'pub_datetime',
             'author',
             # 'last_modified_by',
-            'login_required'
+            'login_required',
+            'miniature',
         ]
 
         def clean_author(self):

@@ -1,15 +1,11 @@
-from django.conf.urls import *
-from django.conf import settings
+# ~*~ coding: utf-8 ~*~
+from django import __version__
 
+app_name = 'vadmin'
 
-SLUG_REGEXP = '[0-9A-Za-z-_.//]+'
-if settings.APPEND_SLASH:
-    regexp = r'^(?P<slug>%s)/$' % SLUG_REGEXP
+if float(__version__[:3]) >= 1.9:
+    import urls_new
+    urlpatterns = urls_new.urlpatterns
 else:
-    regexp = r'^(?P<slug>%s)/$' % SLUG_REGEXP
-
-urlpatterns = patterns('',
-    url(r'^$', 'virtenviro.content.views.home', name='home'),
-    url(r'^[a-z0-9-_/]+$', 'virtenviro.content.views.view', name='page'),
-)
-
+    import urls_old
+    urlpatterns = urls_old.urlpatterns

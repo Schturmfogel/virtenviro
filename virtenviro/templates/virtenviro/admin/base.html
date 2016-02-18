@@ -17,7 +17,6 @@
     <![endif]-->
 
     {% include 'virtenviro/admin/elements/scripts.html' %}
-    {% block extrascripts %}{% endblock %}
 </head>
 <body>
 {% include 'virtenviro/admin/navbar.html' %}
@@ -26,5 +25,6 @@
     <div class="col-md-8">{% block content %}{% endblock %}</div>
 </div>
 <footer class="container"></footer>
+    {% block extrascripts %}{% endblock %}
 </body>
 </html>

@@ -1,6 +1,6 @@
 # ~*~ coding: utf-8 ~*~
 __author__ = 'Kamo Petrosyan'
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import Http404
 from django.utils.http import urlquote
@@ -14,10 +14,11 @@ template_str = 'virtenviro/admin/content/{}'
 
 @staff_member_required
 def content_page(request):
-    template = template_str.format('change_list.html')
+    template = template_str.format('page/change_list.html')
 
     context = {
-        'pages': Page.objects.filter(parent__isnull=True),
+        'nav_pages': Page.objects.filter(parent__isnull=True),
+        'pages': paginate(Page.objects.all(), page=request.GET.get('page', 1), count=50)
     }
 
     return render(request, template, context)
@@ -25,7 +26,7 @@ def content_page(request):
 
 @staff_member_required
 def content_page_edit(request, page_id):
-    template = template_str.format('page_form.html')
+    template = template_str.format('page/page_form.html')
     context = {}
 
     try:
@@ -80,7 +81,7 @@ def content_page_edit(request, page_id):
 
 @staff_member_required
 def content_page_add(request):
-    template = template_str.format('page_form.html')
+    template = template_str.format('page/page_form.html')
     context = {}
 
     initials = []
@@ -115,3 +116,38 @@ def content_page_add(request):
 
     return render(request, template, context)
 
+@staff_member_required
+def content_template(request):
+    template = template_str.format('template/change_list.html')
+
+    context = {
+        'nav_templates': Template.objects.filter(parent__isnull=True),
+        'templates': paginate(Template.objects.all(), page=request.GET.get('page', 1), count=50)
+    }
+
+    return render(request, template, context)
+
+
+@staff_member_required
+def content_template_form(request, template_id=None):
+    template = template_str.format('template/change_form.html')
+
+    if template_id is not None:
+        template_inastance = get_object_or_404(Template, pk=template_id)
+    else:
+        template_inastance = None
+
+    if request.method == 'POST':
+        template_form = TemplateAdminForm(request.POST, instance=template_inastance)
+        if template_form.is_valid():
+            template_form.save()
+    else:
+        template_form = TemplateAdminForm(instance=template_inastance)
+
+    context = {
+        'template_form': template_form,
+        'nav_templates': Template.objects.filter(parent__isnull=True),
+        'templates': paginate(Template.objects.all(), page=request.GET.get('page', 1), count=50)
+    }
+
+    return render(request, template, context)
