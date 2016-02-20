@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-12-26 21:42+0600\n"
-"PO-Revision-Date: 2015-05-27 11:29+0600\n"
+"PO-Revision-Date: 2016-02-19 01:38+0600\n"
 "Last-Translator: Kamo Petrosyan <kamo@haikson.com>\n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8\n"
-"X-Poedit-Basepath: ..\\..\\..\\\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: _\n"
-"X-Poedit-SearchPath-0: shop\\models.py\n"
-"X-Poedit-SearchPath-1: content\\models.py\n"
+"X-Poedit-SearchPath-0: shop/models.py\n"
+"X-Poedit-SearchPath-1: content/models.py\n"
 "X-Poedit-SearchPathExcluded-0: locale\n"
 
 #: .\virtenviro\abstract_models.py:15 .\virtenviro\auto_adv\models.py:25
@@ -48,7 +48,7 @@ msgstr "Заголовок"
 
 #: .\virtenviro\abstract_models.py:25
 msgid "H1 tag"
-msgstr ""
+msgstr "Тэг H1"
 
 #: .\virtenviro\abstract_models.py:26 .\virtenviro\news\models.py:66
 msgid "Intro"
@@ -61,11 +61,11 @@ msgstr "Контент"
 
 #: .\virtenviro\abstract_models.py:28
 msgid "Template"
-msgstr ""
+msgstr "Шаблон"
 
 #: .\virtenviro\abstract_models.py:41
 msgid "Language"
-msgstr ""
+msgstr "Язык"
 
 #: .\virtenviro\auto_adv\models.py:15 .\virtenviro\auto_adv\models.py:59
 #: .\virtenviro\auto_adv\models.py:160 .\virtenviro\auto_adv\models.py:191
@@ -145,10 +145,8 @@ msgid "Price"
 msgstr "Цена"
 
 #: .\virtenviro\auto_adv\models.py:128
-#, fuzzy
-#| msgid "Content"
 msgid "Contacts"
-msgstr "Контент"
+msgstr "Контакты"
 
 #: .\virtenviro\auto_adv\models.py:129
 #, fuzzy
@@ -165,10 +163,8 @@ msgid "Sold"
 msgstr ""
 
 #: .\virtenviro\auto_adv\models.py:133
-#, fuzzy
-#| msgid "Created datetime"
 msgid "Changing datetime"
-msgstr "Дата и время создания"
+msgstr "Дата и время изменения"
 
 #: .\virtenviro\auto_adv\models.py:134 .\virtenviro\shop\admin.py:187
 #: .\virtenviro\shop\models.py:396
@@ -325,10 +321,8 @@ msgid "Image input alignment"
 msgstr ""
 
 #: .\virtenviro\form_constructor\models.py:85
-#, fuzzy
-#| msgid "Image type"
 msgid "Image alt text"
-msgstr "Тип изображения"
+msgstr "Альтернативный текст изображения"
 
 #: .\virtenviro\form_constructor\models.py:86
 msgid "Auto focus"
@@ -364,7 +358,7 @@ msgstr ""
 
 #: .\virtenviro\form_constructor\models.py:104
 msgid "Step"
-msgstr ""
+msgstr "Шаг"
 
 #: .\virtenviro\form_constructor\models.py:106
 msgid "Multiple file upload"
@@ -436,10 +430,8 @@ msgid "News posts"
 msgstr "Новостные посты"
 
 #: .\virtenviro\registration\models.py:16
-#, fuzzy
-#| msgid "Created datetime"
 msgid "Created at"
-msgstr "Дата и время создания"
+msgstr "Создано"
 
 #: .\virtenviro\registration\models.py:17
 msgid "Updated at"
@@ -454,26 +446,20 @@ msgid "All products count"
 msgstr ""
 
 #: .\virtenviro\shop\admin.py:183
-#, fuzzy
-#| msgid "Products"
 msgid "Products count"
-msgstr "Продукция"
+msgstr "Количество продуктов"
 
 #: .\virtenviro\shop\models.py:66
-#, fuzzy
-#| msgid "Category"
 msgid "Subcategory"
-msgstr "Категория"
+msgstr "Подкатегория"
 
 #: .\virtenviro\shop\models.py:67
 msgid "Articul"
 msgstr "Артикул"
 
 #: .\virtenviro\shop\models.py:75
-#, fuzzy
-#| msgid "Count"
 msgid "Discount"
-msgstr "Количество"
+msgstr "Скидка"
 
 #: .\virtenviro\shop\models.py:76 .\virtenviro\shop\models.py:302
 #: .\virtenviro\shop\models.py:319
@@ -510,16 +496,12 @@ msgid "Propert type"
 msgstr "Тип свойств"
 
 #: .\virtenviro\shop\models.py:242
-#, fuzzy
-#| msgid "Property"
 msgid "Property slug"
-msgstr "Свойство"
+msgstr "Идентификатор свойства"
 
 #: .\virtenviro\shop\models.py:243
-#, fuzzy
-#| msgid "Property"
 msgid "Property slugs"
-msgstr "Свойство"
+msgstr "Идентификаторы свойства"
 
 #: .\virtenviro\shop\models.py:257
 msgid "Production Type"
@@ -638,26 +620,20 @@ msgid "Status"
 msgstr ""
 
 #: .\virtenviro\shop\models.py:423 .\virtenviro\shop\models.py:428
-#, fuzzy
-#| msgid "Ordering"
 msgid "Order"
-msgstr "Сортировка"
+msgstr "Заказ"
 
 #: .\virtenviro\shop\models.py:424
-#, fuzzy
-#| msgid "Ordering"
 msgid "Orders"
-msgstr "Сортировка"
+msgstr "Заказы"
 
 #: .\virtenviro\templates\virtenviro\admin\navbar.html:19
 msgid "Page"
 msgstr ""
 
 #: .\virtenviro\templates\virtenviro\admin\navbar.html:21
-#, fuzzy
-#| msgid "Images"
 msgid "Pages"
-msgstr "Изображения"
+msgstr "Страницы"
 
 #: .\virtenviro\templates\virtenviro\admin\navbar.html:22
 msgid "Templates"
@@ -685,10 +661,8 @@ msgid "Profile"
 msgstr ""
 
 #: .\virtenviro\templates\virtenviro\admin\navbar.html:42
-#, fuzzy
-#| msgid "Logo"
 msgid "Logout"
-msgstr "Логотип"
+msgstr "Выход"
 
 #: .\virtenviro\templates\virtenviro\admin\navigation.html:122
 msgid "Dashboard"

@@ -1,8 +1,10 @@
 # ~*~ coding: utf-8 ~*~
 __author__ = 'Kamo Petrosyan'
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import Http404
+from django.http import Http404, HttpResponse
+from django.utils.html import escape
+from django import forms
 from django.utils.http import urlquote
 from django.conf import settings
 from virtenviro.content.models import *
@@ -26,14 +28,16 @@ def content_page(request):
 
 @staff_member_required
 def content_page_edit(request, page_id):
-    template = template_str.format('page/page_form.html')
+    template = template_str.format('page/change_form.html')
     context = {}
 
-    try:
-        page = Page.objects.get(pk=page_id)
-        context['current_page'] = page
-    except Page.DoesNotExist:
-        raise Http404
+    if page_id is not None:
+        try:
+            page = Page.objects.get(pk=page_id)
+        except Page.DoesNotExist:
+            raise Http404
+    else:
+        page = None
 
     initials = []
     content_forms = {}
@@ -75,13 +79,14 @@ def content_page_edit(request, page_id):
     context['pages'] = Page.objects.all()
     context['page_form'] = page_form
     context['content_forms'] = content_forms
+    context['current_page'] = page
 
     return render(request, template, context)
 
 
 @staff_member_required
 def content_page_add(request):
-    template = template_str.format('page/page_form.html')
+    template = template_str.format('page/change_form.html')
     context = {}
 
     initials = []
@@ -116,6 +121,7 @@ def content_page_add(request):
 
     return render(request, template, context)
 
+
 @staff_member_required
 def content_template(request):
     template = template_str.format('template/change_list.html')
@@ -140,7 +146,16 @@ def content_template_form(request, template_id=None):
     if request.method == 'POST':
         template_form = TemplateAdminForm(request.POST, instance=template_inastance)
         if template_form.is_valid():
-            template_form.save()
+            try:
+                new_template = template_form.save()
+            except forms.ValidationError, error:
+                new_template = None
+            if new_template:
+                if int(request.GET.get('_popup', 0)) == 1:
+                    return handle_pop_add(new_template, request.GET.get('_to_field', 'id'))
+                else:
+                    return redirect('vadmin:content_template_edit', template_id=new_template.pk)
+
     else:
         template_form = TemplateAdminForm(instance=template_inastance)
 
@@ -149,5 +164,10 @@ def content_template_form(request, template_id=None):
         'nav_templates': Template.objects.filter(parent__isnull=True),
         'templates': paginate(Template.objects.all(), page=request.GET.get('page', 1), count=50)
     }
-
     return render(request, template, context)
+
+
+def handle_pop_add(new_object, to_field='id'):
+        return HttpResponse(
+            '<script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>' %
+            (escape(new_object._get_pk_val()), escape(new_object)))
